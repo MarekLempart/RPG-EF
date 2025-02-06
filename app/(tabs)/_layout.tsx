@@ -13,53 +13,47 @@ export default function TabLayout() {
 
   return (
     <Tabs
-      screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
-        headerShown: false,
-        tabBarButton: HapticTab,
-        tabBarBackground: TabBarBackground,
-        tabBarStyle: Platform.select({
-          ios: {
+        screenOptions={{
+            tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
+            headerShown: false,
+            tabBarButton: HapticTab,
+            tabBarBackground: TabBarBackground,
+            tabBarStyle: Platform.select({
+            ios: {
             // Use a transparent background on iOS to show the blur effect
             position: "absolute",
-          },
-          default: {},
-        }),
-      }}
-    >
-      <Tabs.Screen
-        name="index"
-        options={{
-          title: "Home",
-          tabBarIcon: ({ color }) => (
-            <IconSymbol size={28} name="house.fill" color={color} />
-          ),
+            },
+            default: {},
+            }),
         }}
-      />
-      <Tabs.Screen
-        name="location"
-        options={{
-          title: "Location",
-          tabBarIcon: ({ color }) => (
-            <IconSymbol size={28} name="paperplane.fill" color={color} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="camera"
-        options={{
-          title: "Camera",
-          tabBarIcon: ({ color }) => (
-            <IconSymbol size={28} name="chevron.right" color={color} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="counter"
-        options={{
-          title: "Counter",
-        }}
-      />
+        >
+        <Tabs.Screen
+            name="index"
+            options={{
+                title: "Home",
+                tabBarIcon: ({ color }) => (
+                    <IconSymbol size={28} name="house.fill" color={color} />
+                ),
+            }}
+        />
+        <Tabs.Screen
+            name="cards"
+            options={{
+                title: "Cards",
+                tabBarIcon: ({ color }) => (
+                <IconSymbol size={28} name="paperplane.fill" color={color} />
+            ),
+            }}
+        />
+        <Tabs.Screen
+            name="gameroom"
+            options={{
+                title: "Gameroom",
+                tabBarIcon: ({ color }) => (
+                    <IconSymbol size={28} name="chevron.right" color={color} />
+                ),
+            }}
+        />
     </Tabs>
-  );
+    );
 }

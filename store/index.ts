@@ -1,10 +1,13 @@
+// store/index.ts
 import { configureStore } from "@reduxjs/toolkit";
-import counterReducer from "./slices/counterSlice";
+import userReducer from "./slices/userSlice";
+import cardReducer from "./slices/cardSlice";
 
-const store = configureStore({
-  reducer: {
-    counter: counterReducer,
-  },
+export const store = configureStore({
+    reducer: {
+        user: userReducer,
+        card: cardReducer
+    }
 });
 
 export type RootState = ReturnType<typeof store.getState>;
