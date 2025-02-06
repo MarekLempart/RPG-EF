@@ -1,29 +1,26 @@
-// app/(tabs)/cards.tsx
+// app/details/detail.tsx
 import React from "react";
 import { View, Text, StyleSheet, Button } from "react-native";
 import { useRouter } from "expo-router";
 
-const CardsScreen = (): JSX.Element => {
+const DetailScreen = (): JSX.Element => {
     const router = useRouter();
-        
-        const handleResourcesPage = (): void => {
-            // Tymczasowe przekierowanie
-            router.push("/details/detail");
-        };
-
+    const handleDetails = (): void => {
+        // Tymczasowe przekierowanie
+        router.push("/(tabs)");
+    };
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Resources page:</Text>
-            <Text style={styles.title}>View character sheets</Text>
+            <Text style={styles.title}>Resource details</Text>
             <View style={styles.buttonContainer}>
-                <Button title="Resources" onPress={handleResourcesPage} />
+                <Button title="Details" onPress={handleDetails} />
                 <Button title="Back" onPress={() => router.back()} />
             </View>
         </View>
     );
 };
 
-export default CardsScreen;
+export default DetailScreen;
 
 const styles = StyleSheet.create({
     container: {
@@ -32,7 +29,7 @@ const styles = StyleSheet.create({
         justifyContent: "center"
     },
     title: {
-        fontSize: 24
+        fontSize: 24        
     },
     buttonContainer: {
         flexDirection: 'row',
