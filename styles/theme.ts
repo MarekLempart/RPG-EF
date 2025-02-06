@@ -26,20 +26,20 @@
         headerHeight: "70px",
         breakpoints: {
         mobile: "768px",
-        tablet: "1200px",
-        desktop: "1440px"
+        tabletS: "900px",
+        tabletL: "1200px"
         },
         media: {
         mobile: `(max-width: 767px)`,
-        tablet: `(min-width: 768px) and (max-width: 1199px)`,
-        desktop: `(min-width: 1200px)`,
-        mobileAndTablet: `(max-width: 1199px)`,
-        tabletAndDesktop: `(min-width: 768px)`
+        tabletS: `(min-width: 768px) and (max-width: 899px)`,
+        tabletL: `(min-width: 900px)`,
+        mobileAndTabletS: `(max-width: 899px)`,
+        tabletSAndL: `(min-width: 900px)`
         },
         spacing: {
         mobilePadding: "5px",
-        tabletPadding: "10px",
-        desktopPadding: "0px"
+        tabletSPadding: "10px",
+        tabletLPadding: "0px"
         }
     };
     

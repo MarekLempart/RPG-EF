@@ -1,21 +1,21 @@
-    // contexts/LanguageContext.tsx
-    import React, { createContext, useState, ReactNode } from "react";
+// contexts/LanguageContext.tsx
+import React, { createContext, useState, ReactNode } from "react";
 
-    interface LanguageContextProps {
+interface LanguageContextProps {
     language: string;
     toggleLanguage: () => void;
-    }
+}
 
-    export const LanguageContext = createContext<LanguageContextProps>({
+export const LanguageContext = createContext<LanguageContextProps>({
     language: "en",
     toggleLanguage: () => {}
-    });
+});
 
-    interface Props {
+interface Props {
     children: ReactNode;
-    }
+}
 
-    export const LanguageProvider = ({ children }: Props): JSX.Element => {
+export const LanguageProvider = ({ children }: Props): JSX.Element => {
     const [language, setLanguage] = useState<string>("en");
 
     const toggleLanguage = (): void => {
@@ -27,4 +27,4 @@
         {children}
         </LanguageContext.Provider>
     );
-    };
+};

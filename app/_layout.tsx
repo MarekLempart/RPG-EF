@@ -49,7 +49,7 @@
 //     );
 // }
 
-
+// app/_layout.tsx
 import React, { createContext, useContext, useState, ReactNode } from "react";
 import { lightTheme, darkTheme } from "@/styles/theme";
 import { ThemeType } from "@/styles/theme.types";

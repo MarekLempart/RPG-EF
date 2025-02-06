@@ -10,7 +10,7 @@ const LoginScreen = (): JSX.Element => {
 
     const handleLogin = (): void => {
         // Tymczasowe przekierowanie
-        router.push("/(tabs)/home");
+        router.push("/(tabs)");
     };
 
     return (

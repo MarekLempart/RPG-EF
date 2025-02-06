@@ -39,19 +39,19 @@ export type ThemeColors = {
     headerHeight: string;
     breakpoints: {
         mobile: string;
-        tablet: string;
-        desktop: string;
+        tabletS: string;
+        tabletL: string;
     };
     media: {
         mobile: string;
-        tablet: string;
-        desktop: string;
-        mobileAndTablet: string;
-        tabletAndDesktop: string;
+        tabletS: string;
+        tabletL: string;
+        mobileAndTabletS: string;
+        tabletSAndL: string;
     };
     spacing: {
         mobilePadding: string;
-        tabletPadding: string;
-        desktopPadding: string;
+        tabletSPadding: string;
+        tabletLPadding: string;
     };
 };
