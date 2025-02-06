@@ -7,9 +7,11 @@ import LanguageSwitcher from "@/components/LanguageSwitcher";
 const HomeScreen = (): JSX.Element => {
     return (
         <View style={styles.container}>
-        <Text style={styles.title}>Strona główna</Text>
-        <ThemeSwitcher />
-        <LanguageSwitcher />
+            <Text style={styles.title}>Homepage</Text>
+            <View style={styles.buttonContainer}>
+                <ThemeSwitcher />
+                <LanguageSwitcher />
+            </View>
         </View>
     );
 };
@@ -25,5 +27,10 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 24,
         marginBottom: 20
+    },
+    buttonContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        width: '100%',
     }
 });

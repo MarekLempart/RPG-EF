@@ -20,16 +20,16 @@ const RegisterScreen = (): JSX.Element => {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Rejestracja</Text>
+            <Text style={styles.title}>Register</Text>
             <TextInput
                 style={styles.input}
-                placeholder="Imię"
+                placeholder="First name"
                 value={firstName}
                 onChangeText={setFirstName}
             />
             <TextInput
                 style={styles.input}
-                placeholder="Nazwisko"
+                placeholder="Last name"
                 value={lastName}
                 onChangeText={setLastName}
             />
@@ -41,29 +41,32 @@ const RegisterScreen = (): JSX.Element => {
             />
             <TextInput
                 style={styles.input}
-                placeholder="Hasło"
+                placeholder="Password"
                 secureTextEntry
                 value={password}
                 onChangeText={setPassword}
             />
             <TextInput
                 style={styles.input}
-                placeholder="Powtórz hasło"
+                placeholder="Repeat Password"
                 secureTextEntry
                 value={repeatPassword}
                 onChangeText={setRepeatPassword}
             />
-            <Text style={styles.label}>Wybierz funkcję:</Text>
+            <Text style={styles.label}>Select function:</Text>
             <Picker
                 selectedValue={role}
                 onValueChange={(itemValue: "gm" | "player") => setRole(itemValue)}
                 style={styles.input}
             >
-                <Picker.Item label="Mistrz gry" value="gm" />
-                <Picker.Item label="Gracz" value="player" />
+                <Picker.Item label="Game master (GM)" value="gm" />
+                <Picker.Item label="Player Character (PC)" value="player" />
             </Picker>
-            <Button title="Zarejestruj" onPress={handleRegister} />
-            <Button title="Loguj" onPress={() => router.push("/login")} />
+            <View style={styles.buttonContainer}>
+                <Button title="Register" onPress={handleRegister} />
+                <Button title="Login" onPress={() => router.push("/login")} />
+                <Button title="Back" onPress={() => router.back()} />
+            </View>            
         </View>
     );
 };
@@ -90,4 +93,9 @@ const styles = StyleSheet.create({
     label: {
         marginBottom: 5
     },
+    buttonContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        width: '100%',
+    }
 });

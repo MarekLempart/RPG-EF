@@ -15,7 +15,7 @@ const LoginScreen = (): JSX.Element => {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Logowanie</Text>
+            <Text style={styles.title}>Login</Text>
             <TextInput
                 style={styles.input}
                 placeholder="E-mail"
@@ -24,13 +24,15 @@ const LoginScreen = (): JSX.Element => {
             />
             <TextInput
                 style={styles.input}
-                placeholder="Hasło"
+                placeholder="Password"
                 secureTextEntry
                 value={password}
                 onChangeText={setPassword}
             />
-            <Button title="Loguj" onPress={handleLogin} />
-            <Button title="Wróć" onPress={() => router.back()} />
+            <View style={styles.buttonContainer}>
+                <Button title="Login" onPress={handleLogin} />
+                <Button title="Back" onPress={() => router.back()} />
+            </View>            
         </View>
     );
 };
@@ -53,5 +55,10 @@ const styles = StyleSheet.create({
         padding: 10,
         marginBottom: 15,
         borderRadius: 5
+    },
+    buttonContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        width: '100%',
     }
 });
