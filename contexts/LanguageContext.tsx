@@ -24,7 +24,7 @@ export const LanguageProvider = ({ children }: Props): JSX.Element => {
 
     return (
         <LanguageContext.Provider value={{ language, toggleLanguage }}>
-        {children}
+            {children}
         </LanguageContext.Provider>
     );
 };

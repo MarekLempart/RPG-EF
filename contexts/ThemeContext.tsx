@@ -20,7 +20,6 @@ type ThemeProviderProps = {
 };
 
 export const ThemeProvider = ({ children }: ThemeProviderProps) => {
-  // Używamy stanu, aby przechowywać aktualny motyw
   const [theme, setTheme] = useState<ThemeType>(lightTheme);
 
   const toggleTheme = () => {
