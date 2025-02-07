@@ -3,11 +3,16 @@ import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import ThemeSwitcher from "@/components/ThemeSwitcher";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
+import { useTheme } from "@/contexts/ThemeContext";
 
 const HomeScreen = (): JSX.Element => {
+    const { theme } = useTheme();
+
     return (
-        <View style={styles.container}>
-            <Text style={styles.title}>Homepage</Text>
+        <View style={[styles.container, { backgroundColor: theme.colors.bgPrimary }]}>
+            <Text style={[styles.title, { color: theme.colors.textPrimary }]}>
+                Homepage
+            </Text>
             <View style={styles.buttonContainer}>
                 <ThemeSwitcher />
                 <LanguageSwitcher />

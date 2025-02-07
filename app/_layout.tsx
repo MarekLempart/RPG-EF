@@ -50,99 +50,90 @@
 // }
 
 // app/_layout.tsx
-import React, { createContext, useContext, useState, ReactNode } from "react";
-import { lightTheme, darkTheme } from "@/styles/theme";
-import { ThemeType } from "@/styles/theme.types";
+import React, { useEffect } from "react";
+import { useFonts } from "expo-font";
+import * as SplashScreen from "expo-splash-screen";
+import { StatusBar } from "expo-status-bar";
+import "react-native-reanimated";
+import { Stack } from "expo-router";
+import { Provider as ReduxProvider } from "react-redux";
 
-type ThemeContextType = {
-  theme: ThemeType;
-  toggleTheme: () => void;
-};
+import store from "@/store";
+import { ThemeProvider } from "@/contexts/ThemeContext";
 
-const ThemeContext = createContext<ThemeContextType>({
-  theme: lightTheme, // wartość domyślna
-  toggleTheme: () => {}, // funkcja domyślna nic nie robiąca
-});
+SplashScreen.preventAutoHideAsync();
 
-export const useTheme = () => useContext(ThemeContext);
+export default function RootLayout() {
+  const [loaded] = useFonts({
+    SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
+  });
 
-type ThemeProviderProps = {
-  children: ReactNode;
-};
+  useEffect(() => {
+    if (loaded) {
+      SplashScreen.hideAsync();
+    }
+  }, [loaded]);
 
-export const ThemeProvider = ({ children }: ThemeProviderProps) => {
-  // Używamy stanu, aby przechowywać aktualny motyw
-  const [theme, setTheme] = useState<ThemeType>(lightTheme);
-
-  const toggleTheme = () => {
-    setTheme((prevTheme) =>
-      prevTheme === lightTheme ? darkTheme : lightTheme
-    );
-  };
+  if (!loaded) {
+    return null;
+  }
 
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme }}>
-      {children}
-    </ThemeContext.Provider>
+    <ReduxProvider store={store}>
+      {/* Opakowujemy aplikację w nasz własny ThemeProvider */}
+      <ThemeProvider>
+        <Stack>
+          <Stack.Screen
+            name="(tabs)"
+            options={{ title: "Home", headerShown: false }}
+          />
+          <Stack.Screen name="+not-found" />
+        </Stack>
+        <StatusBar style="auto" />
+      </ThemeProvider>
+    </ReduxProvider>
   );
-};
-
-export { ThemeContext };
+}
 
 
-// import React, { useEffect } from 'react';
-// import { Stack } from 'expo-router';
-// import * as SplashScreen from 'expo-splash-screen';
-// import { StatusBar } from 'expo-status-bar';
-// import { useFonts } from 'expo-font';
-// import 'react-native-reanimated';
 
-// import { useColorScheme } from '@/hooks/useColorScheme';
-// import { Provider as ReduxProvider } from 'react-redux';
-// import store from '@/store';
+// // app/_layout.tsx
+// import React, { createContext, useContext, useState, ReactNode } from "react";
+// import { lightTheme, darkTheme } from "@/styles/theme";
+// import { ThemeType } from "@/styles/theme.types";
 
-// // Importujemy nasze niestandardowe motywy
-// import { lightTheme, darkTheme } from '@/styles/theme';
+// type ThemeContextType = {
+//   theme: ThemeType;
+//   toggleTheme: () => void;
+// };
 
-// // Importujemy nasz ThemeProvider, który udostępnia globalne style
-// import { ThemeProvider } from '@/contexts/ThemeContext';
+// const ThemeContext = createContext<ThemeContextType>({
+//   theme: lightTheme, // wartość domyślna
+//   toggleTheme: () => {}, // funkcja domyślna nic nie robiąca
+// });
 
-// // Zapobiegamy automatycznemu ukryciu splash screena
-// SplashScreen.preventAutoHideAsync();
+// export const useTheme = () => useContext(ThemeContext);
 
-// export default function RootLayout() {
-//     const colorScheme = useColorScheme();
-//     const [loaded] = useFonts({
-//         SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
-//     });
+// type ThemeProviderProps = {
+//   children: ReactNode;
+// };
 
-//   useEffect(() => {
-//     if (loaded) {
-//         SplashScreen.hideAsync();
-//     }
-//   }, [loaded]);
+// export const ThemeProvider = ({ children }: ThemeProviderProps) => {
+//   // Używamy stanu, aby przechowywać aktualny motyw
+//   const [theme, setTheme] = useState<ThemeType>(lightTheme);
 
-//   if (!loaded) {
-//     return null;
-//   }
-
-//   // Wybieramy motyw na podstawie schematu kolorów systemu
-//     const appTheme = colorScheme === 'dark' ? darkTheme : lightTheme;
-
-//     return (
-//         <ReduxProvider store={store}>
-//         {/* Nasz ThemeProvider udostępnia globalny obiekt motywu */}
-//             <ThemeProvider value={appTheme}>
-//           {/* expo-router automatycznie opakowuje nawigację w NavigationContainer */}
-//                 <Stack>
-//                     <Stack.Screen
-//                         name="(tabs)"
-//                         options={{ title: "Home", headerShown: false }}
-//                     />
-//                     <Stack.Screen name="+not-found" />
-//                 </Stack>
-//                 <StatusBar style="auto" />
-//             </ThemeProvider>
-//         </ReduxProvider>
+//   const toggleTheme = () => {
+//     setTheme((prevTheme) =>
+//       prevTheme === lightTheme ? darkTheme : lightTheme
 //     );
-// }
+//   };
+
+//   return (
+//     <ThemeContext.Provider value={{ theme, toggleTheme }}>
+//       {children}
+//     </ThemeContext.Provider>
+//   );
+// };
+
+// export { ThemeContext };
+

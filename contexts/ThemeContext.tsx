@@ -1,5 +1,12 @@
 // contexts/ThemeContext.tsx
-import React, { createContext, useContext, useState, ReactNode } from "react";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  ReactNode,
+  useEffect
+} from "react";
+import { useColorScheme as useSystemColorScheme } from "react-native";
 import { lightTheme, darkTheme } from "@/styles/theme";
 import { ThemeType } from "@/styles/theme.types";
 
@@ -20,13 +27,22 @@ type ThemeProviderProps = {
 };
 
 export const ThemeProvider = ({ children }: ThemeProviderProps) => {
-  const [theme, setTheme] = useState<ThemeType>(lightTheme);
+  // Pobieramy aktualny motyw systemowy
+  const systemColorScheme = useSystemColorScheme();
+  // Ustawiamy początkowy motyw w zależności od systemu
+  const [theme, setTheme] = useState<ThemeType>(
+    systemColorScheme === "dark" ? darkTheme : lightTheme
+  );
 
   const toggleTheme = () => {
     setTheme((prevTheme) =>
       prevTheme === lightTheme ? darkTheme : lightTheme
     );
   };
+  // Zmiana motywu systemowego automatycznie aktualizowała motyw aplikacji,
+  useEffect(() => {
+    setTheme(systemColorScheme === "dark" ? darkTheme : lightTheme);
+  }, [systemColorScheme]);
 
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
@@ -35,4 +51,4 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
   );
 };
 
-export { ThemeContext };
+export default ThemeContext;
