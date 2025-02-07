@@ -3,9 +3,11 @@ import React, { useState } from "react";
 import { View, Text, TextInput, Button, StyleSheet } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import { useRouter } from "expo-router";
+import { useTheme } from "@/contexts/ThemeContext";
 
 const RegisterScreen = (): JSX.Element => {
     const router = useRouter();
+    const { theme } = useTheme();
     const [firstName, setFirstName] = useState<string>("");
     const [lastName, setLastName] = useState<string>("");
     const [email, setEmail] = useState<string>("");
@@ -19,8 +21,8 @@ const RegisterScreen = (): JSX.Element => {
     };
 
     return (
-        <View style={styles.container}>
-            <Text style={styles.title}>Register</Text>
+        <View style={[styles.container, { backgroundColor: theme.colors.bgPrimary }]}>
+            <Text style={[styles.title, { color: theme.colors.textPrimary }]}>Register</Text>
             <TextInput
                 style={styles.input}
                 placeholder="First name"

@@ -8,7 +8,9 @@
 import { View, ViewStyle } from "react-native";
 
 interface TabBarBackgroundProps {
+
   style?: ViewStyle; // Obsługa stylów
+
 }
 
 export default function TabBarBackground({ style }: TabBarBackgroundProps) {

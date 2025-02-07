@@ -48,9 +48,9 @@
         colors: {
         ...theme.colors,
         bgPrimary: theme.colors.colMilkPunch,
-        bgSecondary: theme.colors.colPickledBluewood,
+        bgSecondary: theme.colors.bgJacarandaLight,
         textPrimary: theme.colors.colPickledBluewood,
-        textSecondary: theme.colors.colMilkPunch,
+        textSecondary: theme.colors.textDarkBlue,
         accent: theme.colors.colGrannySmith,
         hover: theme.colors.colGrannySmith,
         hoverButton: theme.colors.colAvocado,
@@ -63,9 +63,9 @@
         colors: {
         ...theme.colors,
         bgPrimary: theme.colors.colPickledBluewood,
-        bgSecondary: theme.colors.colPickledBluewood,
+        bgSecondary: theme.colors.bgDarkNavy,
         textPrimary: theme.colors.colMilkPunch,
-        textSecondary: theme.colors.colMilkPunch,
+        textSecondary: theme.colors.colGrannySmith,
         accent: theme.colors.colTeak,
         hover: theme.colors.colTallow,
         hoverButton: theme.colors.colAvocado,
