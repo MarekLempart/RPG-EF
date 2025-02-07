@@ -17,28 +17,26 @@ export default function TabLayout() {
     return (
         <Tabs
             screenOptions={{
-                // tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
                 tabBarActiveTintColor: theme.colors.accent,
                 tabBarInactiveTintColor: theme.colors.textSecondary,
                 headerShown: false,
                 tabBarButton: HapticTab,
                 tabBarBackground: () => {
                     const Background = TabBarBackground ?? (() => null);
-                    return <Background style={{ backgroundColor: theme.colors.bgPrimary }} />;
+                    return <Background style={{ backgroundColor: theme.colors.bgSecondary }} />;
                 },
-                // tabBarBackground: TabBarBackground,
                 tabBarStyle: Platform.select({
-                ios: {
-                // Use a transparent background on iOS to show the blur effect
-                position: "absolute",
-                backgroundColor: theme.colors.bgPrimary,
-                },
-                default: {
-                    backgroundColor: theme.colors.bgPrimary,
-                },                
+                    ios: {
+                    // Use a transparent background on iOS to show the blur effect
+                        position: "absolute",
+                        backgroundColor: theme.colors.bgSecondary,
+                    },
+                    default: {
+                        backgroundColor: theme.colors.bgSecondary,
+                    },                
                 }),
                 tabBarLabelStyle: {
-                    color: theme.colors.textPrimary,
+                    color: theme.colors.textSecondary,
                 },
             }}
         >

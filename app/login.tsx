@@ -2,9 +2,11 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, Button, StyleSheet } from "react-native";
 import { useRouter } from "expo-router";
+import { useTheme } from "@/contexts/ThemeContext";
 
 const LoginScreen = (): JSX.Element => {
     const router = useRouter();
+    const { theme } = useTheme();
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
 
@@ -14,8 +16,8 @@ const LoginScreen = (): JSX.Element => {
     };
 
     return (
-        <View style={styles.container}>
-            <Text style={styles.title}>Login</Text>
+        <View style={[styles.container, { backgroundColor: theme.colors.bgPrimary }]}>
+            <Text style={[styles.title, { color: theme.colors.textPrimary }]}>Login</Text>
             <TextInput
                 style={styles.input}
                 placeholder="E-mail"
