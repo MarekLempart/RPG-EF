@@ -38,9 +38,9 @@ export default function TabLayout() {
                 }),
                 tabBarLabelStyle: {
                     color: theme.colors.textSecondary,
-
                 },
             }}
+        >
             <Tabs.Screen
                 name="index"
                 options={{
