@@ -3,10 +3,12 @@ import React from "react";
 import { View, Text, StyleSheet, Button } from "react-native";
 import { useRouter } from "expo-router";
 import { useTheme } from "@/contexts/ThemeContext";
+import { useTranslation } from "react-i18next";
 
 const GameRoomScreen = (): JSX.Element => {
     const router = useRouter();
     const { theme } = useTheme();
+    const { t } = useTranslation();
 
     const handleGameRoom = (): void => {
         // Tymczasowe przekierowanie
@@ -15,10 +17,10 @@ const GameRoomScreen = (): JSX.Element => {
 
     return (
         <View style={[styles.container, { backgroundColor: theme.colors.bgPrimary }]}>
-            <Text style={[styles.title, { color: theme.colors.textPrimary }]}>Game room</Text>
+            <Text style={[styles.title, { color: theme.colors.textPrimary }]}>{t("game_room")}</Text>
             <View style={styles.buttonContainer}>
-                <Button title="GameRoom" onPress={handleGameRoom} />
-                <Button title="Back" onPress={() => router.back()} />
+                <Button title={t("game_room")} onPress={handleGameRoom} />
+                <Button title={t("back")} onPress={() => router.back()} />
             </View>
         </View>
     );
