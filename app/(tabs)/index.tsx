@@ -4,14 +4,16 @@ import { View, Text, StyleSheet } from "react-native";
 import ThemeSwitcher from "@/components/ThemeSwitcher";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { useTheme } from "@/contexts/ThemeContext";
+import { useTranslation } from "react-i18next";
 
 const HomeScreen = (): JSX.Element => {
     const { theme } = useTheme();
+    const { t } = useTranslation();
 
     return (
         <View style={[styles.container, { backgroundColor: theme.colors.bgPrimary }]}>
             <Text style={[styles.title, { color: theme.colors.textPrimary }]}>
-                Homepage
+                {t("homepage")}
             </Text>
             <View style={styles.buttonContainer}>
                 <ThemeSwitcher />

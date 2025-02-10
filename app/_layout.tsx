@@ -9,6 +9,7 @@ import { Provider as ReduxProvider } from "react-redux";
 
 import store from "@/store";
 import { ThemeProvider } from "@/contexts/ThemeContext";
+import { LanguageProvider } from "@/contexts/LanguageContext";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -30,14 +31,16 @@ export default function RootLayout() {
   return (
     <ReduxProvider store={store}>
       <ThemeProvider>
-        <Stack>
-          <Stack.Screen
-            name="(tabs)"
-            options={{ title: "Home", headerShown: false }}
-          />
-          <Stack.Screen name="+not-found" />
-        </Stack>
-        <StatusBar style="auto" />
+        <LanguageProvider>
+          <Stack>
+            <Stack.Screen
+              name="(tabs)"
+              options={{ title: "Home", headerShown: false }}
+            />
+            <Stack.Screen name="+not-found" />
+          </Stack>
+          <StatusBar style="auto" />
+        </LanguageProvider>
       </ThemeProvider>
     </ReduxProvider>
   );
