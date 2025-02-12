@@ -1,20 +1,16 @@
 // styles/theme.types.ts
 export type ThemeColors = {
-    textWhite: string;
-    textDarkNavy: string;
-    textDarkBlue: string;
-    textOrange: string;
-    textBrightBrown: string;
-    textChickenComb: string;
-    bgWhite: string;
-    bgLightGray: string;
-    bgDarkGray: string;
-    bgRichPewter: string;
-    bgDarkNavy: string;
-    bgJacarandaLight: string;
-    bgCrowBlack: string;
-    bgOrange: string;
-    bgBrightBrown: string;
+    colWhite: string;
+    colDarkNavy: string;
+    colDarkBlue: string;
+    colOrange: string;
+    colBrightBrown: string;
+    colChickenComb: string;
+    colLightGray: string;
+    colDarkGray: string;
+    colRichPewter: string;
+    colJacarandaLight: string;
+    colCrowBlack: string;
     colGrannySmith: string;
     colPickledBluewood: string;
     colMilkPunch: string;
@@ -22,9 +18,9 @@ export type ThemeColors = {
     colTeak: string;
     colAvocado: string;
     // …oraz dodatkowe kolory, jeśli są potrzebne
-  };
-  
-  export type ThemeType = {
+};
+
+export type ThemeType = {
     colors: ThemeColors & {
       // Dodatkowe aliasy dla motywu
         bgPrimary: string;

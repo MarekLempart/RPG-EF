@@ -6,15 +6,26 @@
 // }
 
 import { View, ViewStyle } from "react-native";
+import { useTheme } from "@/contexts/ThemeContext";
 
 interface TabBarBackgroundProps {
-
-  style?: ViewStyle; // Obsługa stylów
-
+  style?: ViewStyle;
 }
 
+// export default function TabBarBackground({ style }: TabBarBackgroundProps) {
+//   return <View style={[{ backgroundColor: "transparent" }, style]} />;
+// }
 export default function TabBarBackground({ style }: TabBarBackgroundProps) {
-  return <View style={[{ backgroundColor: "transparent" }, style]} />;
+  const { theme } = useTheme();
+
+return (
+  <View
+    style={[
+      { backgroundColor: theme.colors.bgSecondary },
+      style,
+    ]}
+  />
+);
 }
 
 export function useBottomTabOverflow() {
