@@ -17,6 +17,7 @@ export type ThemeColors = {
     colTallow: string;
     colTeak: string;
     colAvocado: string;
+    colTan: string;
     // …oraz dodatkowe kolory, jeśli są potrzebne
 };
 
