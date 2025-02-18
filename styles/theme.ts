@@ -17,7 +17,8 @@ export const theme = {
         colMilkPunch: "#fff5d6",
         colTallow: "#a8a28a",
         colTeak: "#b38b6d",
-        colAvocado: "#8f9b69"
+        colAvocado: "#8f9b69",
+        colTan: "#d4aa8a"
     },
     headerHeight: "70px",
         breakpoints: {

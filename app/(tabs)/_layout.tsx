@@ -6,6 +6,7 @@ import { Platform, StatusBar } from "react-native";
 import { HapticTab } from "@/components/HapticTab";
 import { IconSymbol } from "@/components/ui/IconSymbol";
 import TabBarBackground from "@/components/ui/TabBarBackground";
+import HeaderActions from "@/components/HeaderActions";
 // import { Colors } from "@/constants/Colors";
 // import { useColorScheme } from "@/hooks/useColorScheme";
 import { useTheme } from "@/contexts/ThemeContext";
@@ -32,10 +33,13 @@ export default function TabLayout() {
                 tabBarActiveTintColor: theme.colors.accent,
                 tabBarInactiveTintColor: theme.colors.textSecondary,
                 headerShown: true,
+                headerRight: () => <HeaderActions />,
                 tabBarButton: HapticTab,
                 tabBarBackground: () => {
                     const Background = TabBarBackground ?? (() => <></>);
-                    return <Background style={{ backgroundColor: theme.colors.bgSecondary }} />;
+                    return (
+                        <Background style={{ backgroundColor: theme.colors.bgSecondary }} />
+                    );
                 },
                 tabBarStyle: Platform.select({
                     ios: {
