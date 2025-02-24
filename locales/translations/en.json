@@ -6,5 +6,18 @@
     "game_room": "Game room",
     "resources": "Resources",
     "resources_page": "Resources page",
-    "view_character_sheets": "View character sheets"
+    "view_character_sheets": "View character sheets",
+    "welcome": "Welcome to the world of role-playing games on the Year Zero Engine",
+    "hello_user": "Hello, {{name}}!",
+    "edit_data": "Edit Data",
+    "logout": "Logout",
+    "first_name": "First Name",
+    "last_name": "Last Name",
+    "email": "Email",
+    "preferred_role": "Preferred Role",
+    "game_master": "Game Master",
+    "player": "Player",
+    "update_data": "Update Data",
+    "permission_denied": "Permission Denied",
+    "media_library_permission": "Permission to access media library is required."
 }

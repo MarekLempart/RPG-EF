@@ -38,11 +38,12 @@ const styles = StyleSheet.create({
         justifyContent: "center"
     },
     title: {
+        textAlign: "center",
         fontSize: 24
     },
     buttonContainer: {
         flexDirection: 'row',
         justifyContent: 'space-around',
-        width: '100%',
+        width: '100%'
     }
 });

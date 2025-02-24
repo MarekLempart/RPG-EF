@@ -15,7 +15,7 @@ const ANIMATION_RANGE = SLIDER_WIDTH - BUTTON_SIZE - 2 * PADDING;
 const LanguageToggle = (): JSX.Element => {
     const { language, toggleLanguage } = useContext(LanguageContext);
     const { theme } = useTheme();
-    const isActive = language === "pl";
+    const isActive = language === "en";
     const isDarkMode = theme === darkTheme;
     const animation = useRef(new Animated.Value(isActive ? ANIMATION_RANGE : 0)).current;
 
@@ -28,7 +28,7 @@ useEffect(() => {
     }).start();
 }, [isActive, animation]);
 
-const flagCode = isActive ? "PL" : "GB";
+const flagCode = isActive ? "GB" : "PL";
 
     return (
         <TouchableOpacity onPress={toggleLanguage} activeOpacity={0.8}>
