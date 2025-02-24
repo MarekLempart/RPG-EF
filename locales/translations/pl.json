@@ -6,5 +6,18 @@
     "game_room": "Pokój gier",
     "resources": "Zasoby",
     "resources_page": "Strona zasobów",
-    "view_character_sheets": "Wyświetl arkusze postaci"
+    "view_character_sheets": "Wyświetl arkusze postaci",
+    "welcome": "Witamy w świecie gier fabularnych na silniku Year Zero Engine",
+    "hello_user": "Witaj, {{name}}!",
+    "edit_data": "Zmień dane",
+    "logout": "Wyloguj",
+    "first_name": "Imię",
+    "last_name": "Nazwisko",
+    "email": "Email",
+    "preferred_role": "Preferowana funkcja",
+    "game_master": "Mistrz gry",
+    "player": "Gracz",
+    "update_data": "Zaktualizuj dane",
+    "permission_denied": "Brak uprawnień",
+    "media_library_permission": "Dostęp do biblioteki zdjęć jest wymagany."
 }
