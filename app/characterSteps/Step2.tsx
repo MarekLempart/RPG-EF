@@ -24,7 +24,9 @@ const Step2: React.FC<StepProps> = ({
       style={[styles.container, { backgroundColor: theme.colors.bgPrimary }]}
     >
       <View style={styles.container}>
-        <Text style={styles.title}>Character Description</Text>
+        <Text style={[styles.greeting, { color: theme.colors.textPrimary }]}>
+          Character Description
+        </Text>
         <TextInput
           style={styles.input}
           placeholder="Description"
@@ -44,7 +46,11 @@ export default Step2;
 
 const styles = StyleSheet.create({
   container: { flex: 1, justifyContent: "center", alignItems: "center" },
-  title: { fontSize: 20, marginBottom: 10 },
   input: { width: "80%", borderWidth: 1, padding: 10, marginBottom: 10 },
   buttonContainer: { flexDirection: "row", gap: 10 },
+  greeting: {
+    fontSize: 24,
+    textAlign: "center",
+    marginVertical: 10,
+  },
 });

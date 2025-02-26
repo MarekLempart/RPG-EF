@@ -24,7 +24,9 @@ const Step7: React.FC<StepProps> = ({
       style={[styles.container, { backgroundColor: theme.colors.bgPrimary }]}
     >
       <View style={styles.container}>
-        <Text style={styles.title}>Items</Text>
+        <Text style={[styles.greeting, { color: theme.colors.textPrimary }]}>
+          Items
+        </Text>
         <TextInput
           style={styles.input}
           placeholder="Description"
@@ -44,7 +46,11 @@ export default Step7;
 
 const styles = StyleSheet.create({
   container: { flex: 1, justifyContent: "center", alignItems: "center" },
-  title: { fontSize: 20, marginBottom: 10 },
   input: { width: "80%", borderWidth: 1, padding: 10, marginBottom: 10 },
   buttonContainer: { flexDirection: "row", gap: 10 },
+  greeting: {
+    fontSize: 24,
+    textAlign: "center",
+    marginVertical: 10,
+  },
 });

@@ -17,7 +17,8 @@ const AddCharacterScreen = (): JSX.Element => {
   const { theme } = useTheme();
   const { t } = useTranslation();
   const [step, setStep] = useState(1);
-  const [name, setName] = useState("");
+  const [gameSystem, setGameSystem] = useState("");
+  const [setting, setSetting] = useState("");
   const [description, setDescription] = useState("");
 
   const handleSubmit = () => {
@@ -30,7 +31,13 @@ const AddCharacterScreen = (): JSX.Element => {
     >
       <View style={styles.container}>
         {step === 1 && (
-          <Step1 name={name} setName={setName} nextStep={() => setStep(2)} />
+          <Step1
+            gameSystem={gameSystem}
+            setGameSystem={setGameSystem}
+            setting={setting}
+            setSetting={setSetting}
+            nextStep={() => setStep(2)}
+          />
         )}
         {step === 2 && (
           <Step2
