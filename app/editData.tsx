@@ -77,7 +77,6 @@ const EditDataScreen = (): JSX.Element => {
         return true;
     };
 
-
     const pickImage = async (): Promise<void> => {
         const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
         if (status !== "granted") {
