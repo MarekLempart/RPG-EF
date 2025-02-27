@@ -8,7 +8,6 @@ interface TabBarBackgroundProps {
   style?: ViewStyle;
 }
 
-// export default function BlurTabBarBackground({ style }: TabBarBackgroundProps) {
 export default function TabBarBackground({ style }: TabBarBackgroundProps) {
   const { theme } = useTheme();
   return (
@@ -17,7 +16,6 @@ export default function TabBarBackground({ style }: TabBarBackgroundProps) {
       // and matches the native tab bar appearance on iOS.
       tint="systemChromeMaterial"
       intensity={100}
-      // style={StyleSheet.absoluteFill}
       style={[
         StyleSheet.absoluteFill,
         { backgroundColor: theme.colors.bgSecondary },

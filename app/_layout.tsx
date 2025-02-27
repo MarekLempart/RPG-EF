@@ -6,6 +6,8 @@ import { StatusBar } from "expo-status-bar";
 import "react-native-reanimated";
 import { Stack } from "expo-router";
 import { Provider as ReduxProvider } from "react-redux";
+import Toast from "react-native-toast-message";
+import { useTranslation } from "react-i18next";
 
 import store from "@/store";
 import { ThemeProvider } from "@/contexts/ThemeContext";
@@ -13,9 +15,9 @@ import { LanguageProvider } from "@/contexts/LanguageContext";
 
 SplashScreen.preventAutoHideAsync();
 
-export default function RootLayout() {
+export default function RootLayout(): JSX.Element | null {
   const [loaded] = useFonts({
-    SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
+    SpaceMono: require("@/assets/fonts/SpaceMono-Regular.ttf"),
   });
 
   useEffect(() => {
@@ -23,6 +25,8 @@ export default function RootLayout() {
       SplashScreen.hideAsync();
     }
   }, [loaded]);
+
+  const { t } = useTranslation();
 
   if (!loaded) {
     return null;
@@ -35,11 +39,12 @@ export default function RootLayout() {
           <Stack>
             <Stack.Screen
               name="(tabs)"
-              options={{ title: "Home", headerShown: false }}
+              options={{ title: t("homepage"), headerShown: false }}
             />
             <Stack.Screen name="+not-found" />
           </Stack>
           <StatusBar style="auto" />
+          <Toast />
         </LanguageProvider>
       </ThemeProvider>
     </ReduxProvider>

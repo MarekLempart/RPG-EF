@@ -19,5 +19,17 @@
     "player": "Player",
     "update_data": "Update Data",
     "permission_denied": "Permission Denied",
-    "media_library_permission": "Permission to access media library is required."
+    "media_library_permission": "Permission to access media library is required.",
+    "password": "Password",
+    "repeat_password": "Repeat Password",
+    "login": "Login",
+    "register": "Register",
+    "select_function": "Select function:",
+    "login_error": "Login Error",
+    "login_error_message": "An error occurred during login",
+    "registration_error": "Registration Error",
+    "registration_error_message": "An error occurred during registration",
+    "passwords_do_not_match": "Passwords do not match",
+    "success": "Success",
+    "registration_success": "Registration successful! Please login."
 }

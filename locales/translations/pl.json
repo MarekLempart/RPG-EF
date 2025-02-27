@@ -19,5 +19,17 @@
     "player": "Gracz",
     "update_data": "Zaktualizuj dane",
     "permission_denied": "Brak uprawnień",
-    "media_library_permission": "Dostęp do biblioteki zdjęć jest wymagany."
+    "media_library_permission": "Dostęp do biblioteki zdjęć jest wymagany.",
+    "password": "Hasło",
+    "repeat_password": "Powtórz hasło",
+    "login": "Zaloguj",
+    "register": "Zarejestruj",
+    "select_function": "Wybierz funkcję:",
+    "login_error": "Błąd logowania",
+    "login_error_message": "Wystąpił błąd podczas logowania",
+    "registration_error": "Błąd rejestracji",
+    "registration_error_message": "Wystąpił błąd podczas rejestracji",
+    "passwords_do_not_match": "Hasła nie są zgodne",
+    "success": "Sukces",
+    "registration_success": "Rejestracja przebiegła pomyślnie! Zaloguj się."
 }
