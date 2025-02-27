@@ -18,7 +18,11 @@ export const theme = {
         colTallow: "#a8a28a",
         colTeak: "#b38b6d",
         colAvocado: "#8f9b69",
-        colTan: "#d4aa8a"
+        colTan: "#d4aa8a",
+        colIvory: "#FFFFF0",
+        colGainsboro: "#DCDCDC",
+        colCharcoal: "#36454F",
+        colSlateGray: "#708090"
     },
     headerHeight: "70px",
         breakpoints: {
@@ -51,7 +55,9 @@ export const lightTheme = {
         accent: theme.colors.colGrannySmith,
         hover: theme.colors.colGrannySmith,
         hoverButton: theme.colors.colAvocado,
-        distinction: theme.colors.colGrannySmith
+        distinction: theme.colors.colGrannySmith,
+        inputBackground: theme.colors.colIvory,
+        inputBorder: theme.colors.colGainsboro,
     }
 };
     
@@ -66,6 +72,8 @@ export const darkTheme = {
         accent: theme.colors.colTeak,
         hover: theme.colors.colTallow,
         hoverButton: theme.colors.colAvocado,
-        distinction: theme.colors.colGrannySmith
+        distinction: theme.colors.colGrannySmith,
+        inputBackground: theme.colors.colCharcoal,
+        inputBorder: theme.colors.colSlateGray
     }
 };

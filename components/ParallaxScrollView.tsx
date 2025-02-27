@@ -1,5 +1,4 @@
 import type { PropsWithChildren, ReactElement } from 'react';
-// import { StyleSheet, useColorScheme } from 'react-native';
 import { StyleSheet } from 'react-native';
 import Animated, {
   interpolate,
@@ -27,7 +26,6 @@ export default function ParallaxScrollView({
 }: Props) {
   const { theme } = useTheme();
   const mode = theme === darkTheme ? 'dark' : 'light';
-  // const colorScheme = useColorScheme() ?? 'light';
   const scrollRef = useAnimatedRef<Animated.ScrollView>();
   const scrollOffset = useScrollViewOffset(scrollRef);
   const bottom = useBottomTabOverflow();
@@ -63,7 +61,6 @@ export default function ParallaxScrollView({
         <Animated.View
           style={[
             styles.header,
-            // { backgroundColor: headerBackgroundColor[colorScheme] },
             { backgroundColor: headerBackgroundColor[mode] },
             headerAnimatedStyle,
           ]}>

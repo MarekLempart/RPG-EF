@@ -10,13 +10,13 @@ export default function WelcomeScreen() {
 
     return (
         <View style={[styles.container, { backgroundColor: theme.colors.bgPrimary }]}>
-        <Text style={[styles.title, { color: theme.colors.textPrimary }]}>
-            Application for RPGs with the system Year Zero Engine
-        </Text>
-        <View style={styles.buttonContainer}>
-            <Button title="Login" onPress={() => router.push("/login")} />
-            <Button title="Register" onPress={() => router.push("/register")} />
-        </View>
+            <Text style={[styles.title, { color: theme.colors.textPrimary }]}>
+                Application for RPGs with the system Year Zero Engine
+            </Text>
+            <View style={styles.buttonContainer}>
+                <Button title="Login" onPress={() => router.push("/login")} />
+                <Button title="Register" onPress={() => router.push("/register")} />
+            </View>
         </View>
     );
 }

@@ -7,7 +7,11 @@ import { useTheme } from "@/contexts/ThemeContext";
 import { useTranslation } from "react-i18next";
 import * as ImagePicker from "expo-image-picker";
 import { useRouter } from "expo-router";
-// import { logout, updateUser } from "@/store/slices/userSlice"; // Przykładowe akcje do aktualizacji danych
+import axios, { AxiosError } from "axios";
+import Toast from "react-native-toast-message";
+import { setUser } from "@/store/slices/userSlice";
+import { Picker } from "@react-native-picker/picker";
+import LogoutButton from "@/components/LogoutButton";
 
 const EditDataScreen = (): JSX.Element => {
     const { theme } = useTheme();
@@ -15,16 +19,64 @@ const EditDataScreen = (): JSX.Element => {
     const router = useRouter();
     const dispatch = useDispatch();
 
-    // Pobranie danych użytkownika ze store
+    // Pobieramy dane użytkownika z Reduxa
     const user = useSelector((state: RootState) => state.user);
-    const [firstName, setFirstName] = useState<string>(user.name ? user.name.split(" ")[0] : "");
-    const [lastName, setLastName] = useState<string>(user.name ? user.name.split(" ")[1] || "" : "");
-    const [email, setEmail] = useState<string>(""); // Na razie puste, pobierane z backendu
-    const [role, setRole] = useState<"gm" | "player">(user.role || "player");
 
-    // Zarządzanie awatarem
-    // Początkowy placeholder – umieść plik w assets/images/avatar-placeholder.png
-    const [avatarUri, setAvatarUri] = useState<string>("");
+    const [firstName, setFirstName] = useState<string>(user.firstName || "");
+    const [lastName, setLastName] = useState<string>(user.lastName || "");
+    const [email, setEmail] = useState<string>(user.email || "");
+    const [password, setPassword] = useState<string>(""); // opcjonalna zmiana hasła
+    const [role, setRole] = useState<"gm" | "player">(user.role || "player");
+    const [avatarUri, setAvatarUri] = useState<string>(user.avatar || "");;
+
+    // Funkcja walidująca adres e-mail
+    const isValidEmail = (email: string): boolean => {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    };
+
+    // Walidacja hasła – minimum 6 znaków, co najmniej 1 duża, 1 mała litera i 1 cyfra
+    const isValidPassword = (password: string): boolean => {
+        return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$/.test(password);
+    };
+
+    // Walidacja formularza
+    const validateForm = (): boolean => {
+        if (firstName.trim().length < 3) {
+            Toast.show({
+                type: "error",
+                text1: t("update_data_error"),
+                text2: t("First name must be at least 3 characters")
+            });
+            return false;
+        }
+        if (lastName.trim().length < 3) {
+            Toast.show({
+                type: "error",
+                text1: t("update_data_error"),
+                text2: t("Last name must be at least 3 characters")
+            });
+            return false;
+        }
+        if (!isValidEmail(email)) {
+            Toast.show({
+                type: "error",
+                text1: t("update_data_error"),
+                text2: t("Please enter a valid email address")
+            });
+            return false;
+        }
+        // Walidujemy hasło tylko jeśli użytkownik je wpisał
+        if (password && !isValidPassword(password)) {
+            Toast.show({
+                type: "error",
+                text1: t("update_data_error"),
+                text2: t("Password must be at least 6 characters long and include uppercase, lowercase and a number")
+            });
+            return false;
+        }
+        return true;
+    };
+
 
     const pickImage = async (): Promise<void> => {
         const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -32,14 +84,14 @@ const EditDataScreen = (): JSX.Element => {
             Alert.alert(t("permission_denied"), t("media_library_permission"));
             return;
         }
-        const result: ImagePicker.ImagePickerResult = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ['images'],
+        const result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ["images"],
             allowsEditing: true,
             aspect: [600, 750],
             quality: 1,
         });
 
-        // Sprawdzamy, czy operacja nie została anulowana i czy mamy jakieś assety
+        // Sprawdzam, czy operacja nie została anulowana i czy mam jakieś assety
         if (!result.canceled && result.assets && result.assets.length > 0) {
             setAvatarUri(result.assets[0].uri);
             // Propozycja zapisu lokalnego oraz wysyłki na serwer:
@@ -48,63 +100,146 @@ const EditDataScreen = (): JSX.Element => {
         }
     };
 
-    const handleUpdateData = () => {
-        console.log("Aktualizacja danych:", { firstName, lastName, email, role, avatarUri });
-        // Przykładowy kod aktualizacji – odkomentować, gdy backend będzie gotowy:
-        // dispatch(updateUser({ firstName, lastName, email, role, avatar: avatarUri }));
-        router.back();
-    };
+    const handleUpdateData = async (): Promise<void> => {
+        if (!validateForm()) {
+            return;
+        }
+        try {
+            const updatePayload = {
+                firstName,
+                lastName,
+                email,
+                role,
+                avatar: avatarUri,
+                ...(password ? { password } : {})
+            };
 
-    const handleLogout = () => {
-    // Proponowany kod wylogowania – odkomentować, gdy backend będzie gotowy:
-    // dispatch(logout());
-    // router.push("/login");
-    console.log("Wylogowanie - funkcja tymczasowa, backend nie jest gotowy");
+            const response = await axios.patch("http://localhost:5100/api/auth/update", updatePayload, {
+                headers: { Authorization: `Bearer ${user.token}` },
+            });
+            const updatedUser = response.data.user;
+            dispatch(
+                setUser({
+                    id: updatedUser._id,
+                    firstName: updatedUser.firstName,
+                    lastName: updatedUser.lastName,
+                    email: updatedUser.email,
+                    role: updatedUser.role,
+                    avatar: updatedUser.avatar, // zakładam, że backend zwraca adres awatara
+                    token: user.token,
+                })
+            );
+            Toast.show({
+                type: "success",
+                text1: t("success"),
+                text2: t("Data updated successfully")
+            });
+            router.push("/(tabs)");
+        } catch (error) {
+            const err = error as AxiosError;
+            console.error("Update error:", err.response?.data || err.message);
+            Toast.show({
+                type: "error",
+                text1: t("update_data_error"),
+                text2: (err.response?.data as { message?: string })?.message || "Failed to update data"
+            });
+        }
     };
 
 return (
     <View style={[styles.container, { backgroundColor: theme.colors.bgPrimary }]}>
         <Text style={[styles.greeting, { color: theme.colors.textPrimary }]}>
-            {t("hello_user", { name: user.name || "" })}
+            {t("hello_user", { name: `${firstName} ${lastName}` || "" })}
         </Text>
         <View style={styles.profileContainer}>
             <TouchableOpacity onPress={pickImage}>
                 {avatarUri ? (
                     <Image source={{ uri: avatarUri }} style={styles.avatar} />
                 ) : (
-                    <Image source={require("../assets/images/avatar-placeholder.png")} style={styles.avatar} />
+                    <Image source={require("@/assets/images/avatar-placeholder.png")} style={styles.avatar} />
                 )}
         </TouchableOpacity>
         <View style={styles.infoContainer}>
             <TextInput
-                style={[styles.input, { color: theme.colors.textPrimary, borderColor: theme.colors.textSecondary }]}
+                style={[
+                    styles.input,
+                    {
+                        backgroundColor: theme.colors.inputBackground,
+                        borderColor: theme.colors.inputBorder,
+                        color: theme.colors.textPrimary,
+                    }]}
                 placeholder={t("first_name")}
                 placeholderTextColor={theme.colors.textSecondary}
                 value={firstName}
                 onChangeText={setFirstName}
             />
             <TextInput
-                style={[styles.input, { color: theme.colors.textPrimary, borderColor: theme.colors.textSecondary }]}
+                style={[
+                    styles.input,
+                    {
+                        backgroundColor: theme.colors.inputBackground,
+                        borderColor: theme.colors.inputBorder,
+                        color: theme.colors.textPrimary,
+                    }]}
                 placeholder={t("last_name")}
                 placeholderTextColor={theme.colors.textSecondary}
                 value={lastName}
                 onChangeText={setLastName}
             />
             <TextInput
-                style={[styles.input, { color: theme.colors.textPrimary, borderColor: theme.colors.textSecondary }]}
+                style={[
+                    styles.input,
+                    {
+                        backgroundColor: theme.colors.inputBackground,
+                        borderColor: theme.colors.inputBorder,
+                        color: theme.colors.textPrimary,
+                    }]}
                 placeholder={t("email")}
                 placeholderTextColor={theme.colors.textSecondary}
                 value={email}
                 onChangeText={setEmail}
+                autoCapitalize="none"
+                keyboardType="email-address"
+            />
+            <TextInput
+                style={[
+                    styles.input,
+                        {
+                            backgroundColor: theme.colors.inputBackground,
+                            borderColor: theme.colors.inputBorder,
+                            color: theme.colors.textPrimary,
+                        },
+                ]}
+                placeholder={`${t("password")} (${t("optional")})`}
+                placeholderTextColor={theme.colors.textSecondary}
+                secureTextEntry
+                value={password}
+                onChangeText={setPassword}
             />
             <Text style={[styles.roleText, { color: theme.colors.textPrimary }]}>
                 {t("preferred_role")}: {role === "gm" ? t("game_master") : t("player")}
             </Text>
+            <Picker
+                selectedValue={role}
+                onValueChange={(itemValue: "gm" | "player") => setRole(itemValue)}
+                style={[
+                    styles.input,
+                    {
+                        backgroundColor: theme.colors.inputBackground,
+                        color: theme.colors.textPrimary,
+                        borderColor: theme.colors.inputBorder,
+                    },
+                ]}
+                dropdownIconColor={theme.colors.textPrimary}
+            >
+                <Picker.Item label={t("game_master")} value="gm" />
+                <Picker.Item label={t("player")} value="player" />
+            </Picker>
         </View>
     </View>
         <View style={styles.bottomButtons}>
             <Button title={t("update_data")} onPress={handleUpdateData} />
-            <Button title={t("logout")} onPress={handleLogout} />
+            <LogoutButton />
         </View>
     </View>
     );
@@ -144,15 +279,23 @@ const styles = StyleSheet.create({
         padding: 10,
         marginBottom: 10,
     },
+    picker: {
+        height: 40,
+        fontSize: 14,
+        borderRadius: 5,
+        paddingHorizontal: 8,
+        marginBottom: 10,
+    },
     roleText: {
         fontSize: 16,
+        marginBottom: 10,
     },
     bottomButtons: {
         flexDirection: "row",
         justifyContent: "space-around",
+        width: '100%',
+        marginTop: 20,
         position: "absolute",
         bottom: 80,
-        left: 0,
-        right: 0,
     },
 });

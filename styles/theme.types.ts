@@ -18,6 +18,10 @@ export type ThemeColors = {
     colTeak: string;
     colAvocado: string;
     colTan: string;
+    colIvory: string;
+    colGainsboro: string;
+    colCharcoal: string;
+    colSlateGray: string;
     // …oraz dodatkowe kolory, jeśli są potrzebne
 };
 
@@ -32,6 +36,8 @@ export type ThemeType = {
         hover: string;
         hoverButton: string;
         distinction: string;
+        inputBackground: string;
+        inputBorder: string;
     };
     headerHeight: string;
     breakpoints: {
