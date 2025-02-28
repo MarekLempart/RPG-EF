@@ -26,9 +26,7 @@ type ThemeProviderProps = {
 };
 
 export const ThemeProvider = ({ children }: ThemeProviderProps) => {
-  // Pobieramy aktualny motyw systemowy
   const systemColorScheme = useSystemColorScheme();
-  // Ustawiamy początkowy motyw w zależności od systemu
   const [theme, setTheme] = useState<ThemeType>(
     systemColorScheme === "dark" ? darkTheme : lightTheme
   );

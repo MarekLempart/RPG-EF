@@ -20,12 +20,10 @@ const RegisterForm = (): JSX.Element => {
     const [role, setRole] = useState<"gm" | "player">("player");
 
     const isValidEmail = (email: string): boolean => {
-        // Prosty wzorzec walidujący adres e-mail
         return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     };
 
     const isValidPassword = (password: string): boolean => {
-        // Minimum 6 znaków, co najmniej 1 duża litera, 1 mała litera, 1 cyfra
         return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$/.test(password);
     };
 

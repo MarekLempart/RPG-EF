@@ -22,12 +22,10 @@ export type ThemeColors = {
     colGainsboro: string;
     colCharcoal: string;
     colSlateGray: string;
-    // …oraz dodatkowe kolory, jeśli są potrzebne
 };
 
 export type ThemeType = {
     colors: ThemeColors & {
-      // Dodatkowe aliasy dla motywu
         bgPrimary: string;
         bgSecondary: string;
         textPrimary: string;

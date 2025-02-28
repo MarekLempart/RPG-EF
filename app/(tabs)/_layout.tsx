@@ -29,7 +29,6 @@ export default function TabLayout() {
 
     return (
         <>
-            {/* <StatusBar barStyle={isDarkTheme ? "light-content" : "dark-content"} /> */}
             <StatusBar
                 barStyle={isDarkTheme ? "light-content" : "dark-content"}
                 backgroundColor={theme.colors.bgPrimary}

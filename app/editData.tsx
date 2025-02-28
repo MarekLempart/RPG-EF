@@ -18,28 +18,23 @@ const EditDataScreen = (): JSX.Element => {
     const { t } = useTranslation();
     const router = useRouter();
     const dispatch = useDispatch();
-
-    // Pobieramy dane użytkownika z Reduxa
     const user = useSelector((state: RootState) => state.user);
 
     const [firstName, setFirstName] = useState<string>(user.firstName || "");
     const [lastName, setLastName] = useState<string>(user.lastName || "");
     const [email, setEmail] = useState<string>(user.email || "");
-    const [password, setPassword] = useState<string>(""); // opcjonalna zmiana hasła
+    const [password, setPassword] = useState<string>("");
     const [role, setRole] = useState<"gm" | "player">(user.role || "player");
     const [avatarUri, setAvatarUri] = useState<string>(user.avatar || "");;
 
-    // Funkcja walidująca adres e-mail
     const isValidEmail = (email: string): boolean => {
         return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     };
 
-    // Walidacja hasła – minimum 6 znaków, co najmniej 1 duża, 1 mała litera i 1 cyfra
     const isValidPassword = (password: string): boolean => {
         return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$/.test(password);
     };
 
-    // Walidacja formularza
     const validateForm = (): boolean => {
         if (firstName.trim().length < 3) {
             Toast.show({
@@ -65,7 +60,6 @@ const EditDataScreen = (): JSX.Element => {
             });
             return false;
         }
-        // Walidujemy hasło tylko jeśli użytkownik je wpisał
         if (password && !isValidPassword(password)) {
             Toast.show({
                 type: "error",
@@ -90,7 +84,6 @@ const EditDataScreen = (): JSX.Element => {
             quality: 1,
         });
 
-        // Sprawdzam, czy operacja nie została anulowana i czy mam jakieś assety
         if (!result.canceled && result.assets && result.assets.length > 0) {
             setAvatarUri(result.assets[0].uri);
             // Propozycja zapisu lokalnego oraz wysyłki na serwer:
@@ -124,7 +117,7 @@ const EditDataScreen = (): JSX.Element => {
                     lastName: updatedUser.lastName,
                     email: updatedUser.email,
                     role: updatedUser.role,
-                    avatar: updatedUser.avatar, // zakładam, że backend zwraca adres awatara
+                    avatar: updatedUser.avatar,
                     token: user.token,
                 })
             );
