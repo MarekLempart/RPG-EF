@@ -31,5 +31,19 @@
     "registration_error_message": "An error occurred during registration",
     "passwords_do_not_match": "Passwords do not match",
     "success": "Success",
-    "registration_success": "Registration successful! Please login."
+    "registration_success": "Registration successful! Please login.",
+    "exit_app_title": "Exit Application?",
+    "exit_app_message": "Are you sure you want to exit the application?",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "exit_app": "Exit App",
+    "logout_error": "Logout Error",
+    "logout_error_message": "Failed to logout",
+    "logged_out_message": "You have been logged out",
+    "login_with_biometrics": "Login with Biometrics",
+    "biometric_prompt": "Authenticate with Biometrics",
+    "biometric_success_message": "Biometric authentication succeeded.",
+    "biometric_fail_message": "Biometric authentication failed.",
+    "biometric_error_message": "An error occurred during biometric authentication.",
+    "login_success": "Success"
 }

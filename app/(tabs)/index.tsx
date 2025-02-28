@@ -6,19 +6,17 @@ import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import { useRouter } from "expo-router";
 import { RootState } from "@/store";
-import LogoutButton from "@/components/LogoutButton";
+// import LogoutButton from "@/components/LogoutButton";
+import ExitButton from "@/components/ExitButton";
 import { useFetchCurrentUser } from "@/hooks/useFetchCurrentUser";
 
 const HomeScreen = (): JSX.Element => {
     const { theme } = useTheme();
     const { t } = useTranslation();
     const router = useRouter();
-
-    // Pobieramy dane użytkownika z Reduxa
     const user = useSelector((state: RootState) => state.user);
-
-    // Pobieramy dane z backendu przy montowaniu komponentu za pomocą hooks
     const { fetchCurrentUser } = useFetchCurrentUser();
+
     useEffect(() => {
         if (user.token) {
             fetchCurrentUser();
@@ -50,7 +48,8 @@ const HomeScreen = (): JSX.Element => {
             </View>
                 <View style={styles.buttonContainer}>
                     <Button title={t("edit_data")} onPress={() => router.push("/editData")} />
-                    <LogoutButton />
+                    {/* <LogoutButton /> */}
+                    <ExitButton />
                 </View>
         </View>
     );

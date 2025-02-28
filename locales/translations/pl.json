@@ -31,5 +31,19 @@
     "registration_error_message": "Wystąpił błąd podczas rejestracji",
     "passwords_do_not_match": "Hasła nie są zgodne",
     "success": "Sukces",
-    "registration_success": "Rejestracja przebiegła pomyślnie! Zaloguj się."
+    "registration_success": "Rejestracja przebiegła pomyślnie! Zaloguj się.",
+    "exit_app_title": "Zakończyć aplikację?",
+    "exit_app_message": "Czy na pewno chcesz wyłączyć aplikację?",
+    "cancel": "Anuluj",
+    "confirm": "Potwierdź",
+    "exit_app": "Wyjdź z aplikacji",
+    "logout_error": "Błąd wylogowania",
+    "logout_error_message": "Nie udało się wylogować",
+    "logged_out_message": "Zostałeś wylogowany",
+    "login_with_biometrics": "Zaloguj przez biometrię",
+    "biometric_prompt": "Uwierzytelnij się biometrycznie",
+    "biometric_success_message": "Uwierzytelnienie biometryczne zakończone sukcesem.",
+    "biometric_fail_message": "Uwierzytelnienie biometryczne nie powiodło się.",
+    "biometric_error_message": "Wystąpił błąd podczas uwierzytelniania biometrycznego.",
+    "login_success": "Sukces"
 }

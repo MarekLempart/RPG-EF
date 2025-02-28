@@ -3,6 +3,7 @@ import React from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useTheme } from "@/contexts/ThemeContext";
+import ExitButton from '@/components/ExitButton';
 
 export default function WelcomeScreen() {
     const router = useRouter();
@@ -16,6 +17,7 @@ export default function WelcomeScreen() {
             <View style={styles.buttonContainer}>
                 <Button title="Login" onPress={() => router.push("/login")} />
                 <Button title="Register" onPress={() => router.push("/register")} />
+                <ExitButton />
             </View>
         </View>
     );

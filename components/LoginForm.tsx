@@ -8,6 +8,7 @@ import { setUser } from "@/store/slices/userSlice";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useTranslation } from "react-i18next";
 import Toast from "react-native-toast-message";
+import BiometricLoginButton from "./BiometricLoginButton";
 
 interface LoginResponse {
     user: {
@@ -109,6 +110,9 @@ const LoginForm = (): JSX.Element => {
             <View style={styles.buttonContainer}>
                 <Button title={t("login")} onPress={handleLogin} />
                 <Button title={t("back")} onPress={() => router.back()} />
+            </View>
+            <View style={styles.buttonContainer}>
+                <BiometricLoginButton />
             </View>
         </View>
     );
