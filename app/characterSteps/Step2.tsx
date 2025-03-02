@@ -1,42 +1,103 @@
 import React from "react";
-import { View, Text, TextInput, Button, StyleSheet } from "react-native";
+import { View, Text, TextInput, Button, StyleSheet, Image } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  setAvatar,
+  setName,
+  setArchetype,
+  setRace,
+  setAppearance,
+  setBigDream,
+} from "../../store/slices/characterSlice";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useTranslation } from "react-i18next";
+import * as ImagePicker from "expo-image-picker";
 
-interface StepProps {
-  description: string;
-  setDescription: (value: string) => void;
+interface Step2Props {
   nextStep: () => void;
   prevStep: () => void;
 }
 
-const Step2: React.FC<StepProps> = ({
-  description,
-  setDescription,
-  nextStep,
-  prevStep,
-}) => {
+const Step2: React.FC<Step2Props> = ({ nextStep, prevStep }) => {
   const { theme } = useTheme();
   const { t } = useTranslation();
+  const dispatch = useDispatch();
+
+  const { avatar, name, archetype, race, appearance, bigDream } = useSelector(
+    (state: any) => state.character
+  );
+
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      allowsEditing: true,
+      aspect: [1, 1],
+      quality: 1,
+    });
+
+    if (!result.canceled && result.assets.length > 0) {
+      dispatch(setAvatar(result.assets[0].uri));
+    }
+  };
 
   return (
     <View
       style={[styles.container, { backgroundColor: theme.colors.bgPrimary }]}
     >
-      <View style={styles.container}>
-        <Text style={[styles.greeting, { color: theme.colors.textPrimary }]}>
-          Character Description
-        </Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Description"
-          value={description}
-          onChangeText={setDescription}
-        />
-        <View style={styles.buttonContainer}>
-          <Button title="Back" onPress={prevStep} />
-          <Button title="Next" onPress={nextStep} />
-        </View>
+      <Text style={[styles.greeting, { color: theme.colors.textPrimary }]}>
+        {t("Character Description")}
+      </Text>
+
+      {/* Avatar Selection */}
+      {avatar ? (
+        <Image source={{ uri: avatar }} style={styles.avatar} />
+      ) : (
+        <Button title={t("Pick an Avatar")} onPress={pickImage} />
+      )}
+
+      {/* Name Input */}
+      <TextInput
+        style={styles.input}
+        placeholder={t("Enter Name")}
+        value={name}
+        onChangeText={(text) => dispatch(setName(text))}
+      />
+
+      {/* Archetype Input */}
+      <TextInput
+        style={styles.input}
+        placeholder={t("Enter Archetype")}
+        value={archetype}
+        onChangeText={(text) => dispatch(setArchetype(text))}
+      />
+
+      {/* Race Input */}
+      <TextInput
+        style={styles.input}
+        placeholder={t("Enter Race")}
+        value={race}
+        onChangeText={(text) => dispatch(setRace(text))}
+      />
+
+      {/* Appearance Input */}
+      <TextInput
+        style={styles.input}
+        placeholder={t("Describe Appearance")}
+        value={appearance}
+        onChangeText={(text) => dispatch(setAppearance(text))}
+      />
+
+      {/* Big Dream Input */}
+      <TextInput
+        style={styles.input}
+        placeholder={t("Enter Big Dream")}
+        value={bigDream}
+        onChangeText={(text) => dispatch(setBigDream(text))}
+      />
+
+      {/* Navigation Buttons */}
+      <View style={styles.buttonContainer}>
+        <Button title={t("Back")} onPress={prevStep} />
+        <Button title={t("Next")} onPress={nextStep} />
       </View>
     </View>
   );
@@ -46,11 +107,27 @@ export default Step2;
 
 const styles = StyleSheet.create({
   container: { flex: 1, justifyContent: "center", alignItems: "center" },
-  input: { width: "80%", borderWidth: 1, padding: 10, marginBottom: 10 },
-  buttonContainer: { flexDirection: "row", gap: 10 },
+  input: {
+    width: "80%",
+    borderWidth: 1,
+    padding: 10,
+    marginBottom: 10,
+    backgroundColor: "white",
+  },
   greeting: {
     fontSize: 24,
     textAlign: "center",
     marginVertical: 10,
+  },
+  avatar: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    marginBottom: 10,
+  },
+  buttonContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "80%",
   },
 });

@@ -42,12 +42,7 @@ const AddCharacterScreen = (): JSX.Element => {
     >
       {step === 1 && <Step1 nextStep={() => setStep(2)} />}
       {step === 2 && (
-        <Step2
-          description={description}
-          setDescription={setDescription}
-          nextStep={() => setStep(3)}
-          prevStep={() => setStep(1)}
-        />
+        <Step2 nextStep={() => setStep(3)} prevStep={() => setStep(1)} />
       )}
       {step === 3 && (
         <Step3
