@@ -1,82 +1,66 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import RNPickerSelect from "react-native-picker-select";
+import React, { useEffect } from "react";
 import { View, Text, Button, StyleSheet } from "react-native";
+import { Picker } from "@react-native-picker/picker";
+import { useDispatch, useSelector } from "react-redux";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useTranslation } from "react-i18next";
+import {
+  // fetchGameSystems,
+  setSelectedSystem,
+  setSelectedSetting,
+} from "../../store/slices/characterSlice";
 
-interface Step1Props {
-  gameSystem: string;
-  setGameSystem: (value: string) => void;
-  setting: string;
-  setSetting: (value: string) => void;
-  nextStep: () => void;
-}
-
-const Step1: React.FC<Step1Props> = ({
-  gameSystem,
-  setGameSystem,
-  setting,
-  setSetting,
-  nextStep,
-}) => {
+const Step1 = ({ nextStep }: { nextStep: () => void }) => {
   const { theme } = useTheme();
   const { t } = useTranslation();
-  const [systems, setSystems] = useState<{ label: string; value: string }[]>(
-    []
+  const dispatch = useDispatch();
+
+  const { gameSystems, selectedSystem, selectedSetting } = useSelector(
+    (state: any) => state.character
   );
-  const [settings, setSettings] = useState<{ label: string; value: string }[]>(
-    []
+
+  const systemsArray = Array.isArray(gameSystems) ? gameSystems : [];
+
+  const selectedSystemObj = systemsArray.find(
+    (system) => system.name === selectedSystem
   );
 
-  // Fetch dropdown options from backend
-  useEffect(() => {
-    const fetchOptions = async () => {
-      try {
-        const systemRes = await axios.get("https://your-api.com/game-systems");
-        const settingRes = await axios.get(
-          "https://your-api.com/game-settings"
-        );
-
-        setSystems(
-          systemRes.data.map((s: any) => ({ label: s.name, value: s.id }))
-        );
-        setSettings(
-          settingRes.data.map((s: any) => ({ label: s.name, value: s.id }))
-        );
-      } catch (error) {
-        console.error("Error fetching dropdown data:", error);
-      }
-    };
-
-    fetchOptions();
-  }, []);
+  // useEffect(() => {
+  //   dispatch(fetchGameSystems() as any);
+  // }, [dispatch]);
 
   return (
     <View
       style={[styles.container, { backgroundColor: theme.colors.bgPrimary }]}
     >
       <Text style={[styles.greeting, { color: theme.colors.textPrimary }]}>
-        Choose Your Game System
+        {t("Choose Your Game System")}
       </Text>
 
-      <Text>Choose System:</Text>
-      <RNPickerSelect
-        onValueChange={(value) => setGameSystem(value)}
-        items={systems}
-        value={gameSystem}
-        placeholder={{ label: "Select a system...", value: null }}
-      />
+      <Picker
+        selectedValue={selectedSystem}
+        onValueChange={(itemValue) => dispatch(setSelectedSystem(itemValue))}
+        style={styles.picker}
+      >
+        {gameSystems.map((system: string) => (
+          <Picker.Item key={system} label={system} value={system} />
+        ))}
+      </Picker>
 
-      <Text>Choose Setting:</Text>
-      <RNPickerSelect
-        onValueChange={(value) => setSetting(value)}
-        items={settings}
-        value={setting}
-        placeholder={{ label: "Select a setting...", value: null }}
-      />
+      <Text>{t("Choose Setting")}</Text>
+      <Picker
+        selectedValue={selectedSetting}
+        onValueChange={(itemValue) => dispatch(setSelectedSetting(itemValue))}
+        style={styles.picker}
+      >
+        {gameSystems
+          .find((system: any) => system.name === selectedSystem)
+          ?.settings?.map((setting: string) => (
+            <Picker.Item key={setting} label={setting} value={setting} />
+          ))}
+      </Picker>
 
-      <Button title="Next" onPress={nextStep} />
+      <Button title={t("Next")} onPress={nextStep} />
     </View>
   );
 };
@@ -85,10 +69,6 @@ export default Step1;
 
 const styles = StyleSheet.create({
   container: { flex: 1, justifyContent: "center", alignItems: "center" },
-  input: { width: "80%", borderWidth: 1, padding: 10, marginBottom: 10 },
-  greeting: {
-    fontSize: 24,
-    textAlign: "center",
-    marginVertical: 10,
-  },
+  greeting: { fontSize: 24, textAlign: "center", marginVertical: 10 },
+  picker: { width: 250, height: 50 },
 });
