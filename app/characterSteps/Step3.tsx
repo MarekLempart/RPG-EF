@@ -52,6 +52,10 @@ const Step3: React.FC<Step3Props> = ({ nextStep, prevStep }) => {
           />
         </View>
       ))}
+      <View style={styles.buttonContainer}>
+        <Button title="Back" onPress={prevStep} />
+        <Button title="Next" onPress={nextStep} />
+      </View>
     </View>
   );
 };
@@ -64,4 +68,5 @@ const styles = StyleSheet.create({
   statRow: { flexDirection: "row", alignItems: "center", marginBottom: 10 },
   statLabel: { fontSize: 16, width: 100 },
   statValue: { fontSize: 16, marginHorizontal: 10 },
+  buttonContainer: { flexDirection: "row", marginTop: 20, gap: 10 },
 });

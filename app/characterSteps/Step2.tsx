@@ -58,6 +58,7 @@ const Step2: React.FC<Step2Props> = ({ nextStep, prevStep }) => {
       <TextInput
         style={styles.input}
         placeholder={t("Enter Name")}
+        placeholderTextColor={theme.colors.textSecondary}
         value={name}
         onChangeText={(text) => dispatch(setName(text))}
       />
@@ -66,6 +67,7 @@ const Step2: React.FC<Step2Props> = ({ nextStep, prevStep }) => {
       <TextInput
         style={styles.input}
         placeholder={t("Enter Archetype")}
+        placeholderTextColor={theme.colors.textSecondary}
         value={archetype}
         onChangeText={(text) => dispatch(setArchetype(text))}
       />
@@ -74,6 +76,7 @@ const Step2: React.FC<Step2Props> = ({ nextStep, prevStep }) => {
       <TextInput
         style={styles.input}
         placeholder={t("Enter Race")}
+        placeholderTextColor={theme.colors.textSecondary}
         value={race}
         onChangeText={(text) => dispatch(setRace(text))}
       />
@@ -82,6 +85,7 @@ const Step2: React.FC<Step2Props> = ({ nextStep, prevStep }) => {
       <TextInput
         style={styles.input}
         placeholder={t("Describe Appearance")}
+        placeholderTextColor={theme.colors.textSecondary}
         value={appearance}
         onChangeText={(text) => dispatch(setAppearance(text))}
       />
@@ -90,11 +94,11 @@ const Step2: React.FC<Step2Props> = ({ nextStep, prevStep }) => {
       <TextInput
         style={styles.input}
         placeholder={t("Enter Big Dream")}
+        placeholderTextColor={theme.colors.textSecondary}
         value={bigDream}
         onChangeText={(text) => dispatch(setBigDream(text))}
       />
 
-      {/* Navigation Buttons */}
       <View style={styles.buttonContainer}>
         <Button title={t("Back")} onPress={prevStep} />
         <Button title={t("Next")} onPress={nextStep} />
