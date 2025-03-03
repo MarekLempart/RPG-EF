@@ -47,7 +47,7 @@ const HomeScreen = (): JSX.Element => {
                 </View>
             </View>
                 <View style={styles.buttonContainer}>
-                    <Button title={t("edit_data")} onPress={() => router.push("/editData")} />
+                    <Button title={t("edit_data")} onPress={() => router.push("/userEdit/editData")} />
                     {/* <LogoutButton /> */}
                     <ExitButton />
                 </View>

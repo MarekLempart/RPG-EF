@@ -45,5 +45,19 @@
     "biometric_success_message": "Biometric authentication succeeded.",
     "biometric_fail_message": "Biometric authentication failed.",
     "biometric_error_message": "An error occurred during biometric authentication.",
-    "login_success": "Success"
+    "login_success": "Success",
+    "welcome_gameroom": "Welcome {{name}} to the game room. You are a {{role}}, so please:",
+    "join_game": "Join Game",
+    "join_another_game": "Join Another Game",
+    "create_new_game": "Create New Game",
+    "choose_game_title": "Choose Game",
+    "game_code_placeholder": "Enter game name/code provided by GM",
+    "new_game": "New Game",
+    "game_name_placeholder": "Game Name",
+    "generate_code": "Generate Code",
+    "invite_players": "Invite Players",
+    "player_name_placeholder": "Player Name",
+    "send_invitation": "Send Invitation",
+    "next_player": "Next Player",
+    "create_game": "Create Game"
 }
