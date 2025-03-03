@@ -45,5 +45,19 @@
     "biometric_success_message": "Uwierzytelnienie biometryczne zakończone sukcesem.",
     "biometric_fail_message": "Uwierzytelnienie biometryczne nie powiodło się.",
     "biometric_error_message": "Wystąpił błąd podczas uwierzytelniania biometrycznego.",
-    "login_success": "Sukces"
+    "login_success": "Sukces",
+    "welcome_gameroom": "Witam {{name}} w pokoju gry. Jesteś {{role}}, więc zapraszam do:",
+    "join_game": "Dołącz do gry",
+    "join_another_game": "Dołącz do innej gry",
+    "create_new_game": "Stwórz nową grę",
+    "choose_game_title": "Wybór gry",
+    "game_code_placeholder": "Wpisz nazwę gry / podaj kod uzyskany od MG",
+    "new_game": "Nowa gra",
+    "game_name_placeholder": "Nazwa gry",
+    "generate_code": "Wygeneruj kod",
+    "invite_players": "Zaproś graczy",
+    "player_name_placeholder": "Nazwa gracza",
+    "send_invitation": "Wyślij zaproszenie",
+    "next_player": "Kolejny gracz",
+    "create_game": "Utwórz grę"
 }

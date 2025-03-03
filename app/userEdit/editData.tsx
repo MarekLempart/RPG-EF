@@ -1,4 +1,4 @@
-// app/editData.tsx
+// app/userEdit/editData.tsx
 import React, { useState } from "react";
 import { View, Text, StyleSheet, TextInput, Button, Image, TouchableOpacity, Alert } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
