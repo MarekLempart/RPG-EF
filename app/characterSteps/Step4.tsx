@@ -1,56 +1,66 @@
 import React from "react";
-import { View, Text, TextInput, Button, StyleSheet } from "react-native";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useTranslation } from "react-i18next";
+import { View, Text, Button, TextInput } from "react-native";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  updateSkill,
+  addAdditionalSkill,
+} from "../../store/slices/characterSlice";
+import { RootState } from "../../store/index";
 
-interface StepProps {
-  description: string;
-  setDescription: (value: string) => void;
-  nextStep: () => void;
-  prevStep: () => void;
-}
-
-const Step4: React.FC<StepProps> = ({
-  description,
-  setDescription,
-  nextStep,
-  prevStep,
-}) => {
+const Step4 = () => {
   const { theme } = useTheme();
   const { t } = useTranslation();
+  const dispatch = useDispatch();
+  const skills = useSelector((state: RootState) => state.character.skills);
+  const [newSkill, setNewSkill] = useState("");
+  const [linkedAttribute, setLinkedAttribute] = useState("Strength");
+
+  const handleSkillUpdate = (skillName: string, change: number) => {
+    const newValue = Math.max(0, (skills[skillName]?.value || 0) + change);
+    dispatch(updateSkill({ skillName, value: newValue, linkedAttribute }));
+  };
+
+  const handleAddSkill = () => {
+    if (newSkill.trim()) {
+      dispatch(
+        addAdditionalSkill({
+          displayName: newSkill,
+          value: 0,
+          linkedAttribute: linkedAttribute as
+            | "Strength"
+            | "Agility"
+            | "Wits"
+            | "Empathy",
+        })
+      );
+      setNewSkill("");
+    }
+  };
 
   return (
-    <View
-      style={[styles.container, { backgroundColor: theme.colors.bgPrimary }]}
-    >
-      <View style={styles.container}>
-        <Text style={[styles.greeting, { color: theme.colors.textPrimary }]}>
-          Stats and Skills
-        </Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Description"
-          value={description}
-          onChangeText={setDescription}
-        />
-        <View style={styles.buttonContainer}>
-          <Button title="Back" onPress={prevStep} />
-          <Button title="Next" onPress={nextStep} />
+    <View>
+      <Text>Character Skills</Text>
+      {Object.keys(skills).map((key) => (
+        <View key={key}>
+          <Text>{skills[key].displayName}</Text>
+          <Button title="-" onPress={() => handleSkillUpdate(key, -1)} />
+          <Text>{skills[key].value}</Text>
+          <Button title="+" onPress={() => handleSkillUpdate(key, 1)} />
         </View>
-      </View>
+      ))}
+
+      <Text>Add Custom Skill</Text>
+      <TextInput
+        placeholder="Skill Name"
+        value={newSkill}
+        onChangeText={setNewSkill}
+      />
+      <Button title="Add Skill" onPress={handleAddSkill} />
     </View>
   );
 };
 
 export default Step4;
-
-const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: "center", alignItems: "center" },
-  input: { width: "80%", borderWidth: 1, padding: 10, marginBottom: 10 },
-  buttonContainer: { flexDirection: "row", gap: 10 },
-  greeting: {
-    fontSize: 24,
-    textAlign: "center",
-    marginVertical: 10,
-  },
-});
