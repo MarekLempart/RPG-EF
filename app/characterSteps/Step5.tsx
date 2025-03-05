@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { View, Text, TextInput, Button } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
 import { updateTalents } from "../../store/slices/characterSlice";
 import { RootState } from "../../store/index";
 

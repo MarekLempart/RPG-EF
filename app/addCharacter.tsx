@@ -35,8 +35,8 @@ const AddCharacterScreen = (): JSX.Element => {
       {step === 3 && <Step3 />}
       {step === 4 && <Step4 />}
       {step === 5 && <Step5 />}
-      {step === 6 && <Step6 />}
-      {step === 7 && <Step7 />}
+      {/* {step === 6 && <Step6 />}
+      {step === 7 && <Step7 />} */}
       {step > 8 && (
         <View>
           <Button title="Placeholder Step" disabled />
