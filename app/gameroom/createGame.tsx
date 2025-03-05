@@ -5,6 +5,7 @@ import { useRouter } from "expo-router";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useTranslation } from "react-i18next";
 import Toast from "react-native-toast-message";
+import * as Clipboard from "expo-clipboard";
 
 const screenWidth = Dimensions.get("window").width;
 
@@ -50,6 +51,23 @@ const CreateGameScreen = (): JSX.Element => {
             type: "success",
             text1: t("success"),
             text2: t("code_generated")
+        });
+    };
+
+    const handleSaveCode = () => {
+        if (!generatedCode.trim()) {
+            Toast.show({
+                type: "error",
+                text1: t("error"),
+                text2: t("code_empty")
+            });
+            return;
+        }
+        Clipboard.setString(generatedCode);
+        Toast.show({
+            type: "success",
+            text1: t("success"),
+            text2: t("code_saved")
         });
     };
 
@@ -104,7 +122,7 @@ const CreateGameScreen = (): JSX.Element => {
                     onChangeText={setGameName}
                 />
                 <View style={styles.codeRow}>
-                    <View style={styles.codeButtonContainer}>
+                    <View style={styles.buttonContainer}>
                         <Button title={t("generate_code")} onPress={handleGenerateCode} />
                     </View>
                     <View style=
@@ -119,6 +137,9 @@ const CreateGameScreen = (): JSX.Element => {
                         }}>
                             {generatedCode}
                         </Text>
+                    </View>
+                    <View style={styles.buttonContainer}>
+                        <Button title={t("save_code")} onPress={handleSaveCode} />
                     </View>
                 </View>
                 <Text style={[styles.sectionTitle, { color: theme.colors.textPrimary }]}>
@@ -185,16 +206,17 @@ const styles = StyleSheet.create({
         alignItems: "center",
         marginBottom: 20,
     },
-    codeButtonContainer: {
+    buttonContainer: {
         flex: 1,
-        marginRight: 10,
+        marginHorizontal: 5,
     },
     codeOutputContainer: {
-        flex: 3,
+        flex: 2,
         padding: 10,
         borderWidth: 1,
         borderRadius: 5,
         justifyContent: "center",
+        backgroundColor: "transparent",
     },
     sectionTitle: {
         fontSize: 20,
