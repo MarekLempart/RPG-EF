@@ -59,5 +59,8 @@
     "player_name_placeholder": "Player Name",
     "send_invitation": "Send Invitation",
     "next_player": "Next Player",
-    "create_game": "Create Game"
+    "create_game": "Create Game",
+    "save_code": "Save Code",
+    "code_empty": "No code generated to save",
+    "code_saved": "Code copied to clipboard"
 }
