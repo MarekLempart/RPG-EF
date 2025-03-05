@@ -1,72 +1,52 @@
 import React from "react";
-import { View, Text, Button, StyleSheet } from "react-native";
+import { useTheme } from "@/contexts/ThemeContext";
+import { useTranslation } from "react-i18next";
+import { View, Text, Button, TextInput } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-import { setStats } from "../../store/slices/characterSlice";
-import { RootState } from "../../store";
+import { updateAttribute } from "../../store/slices/characterSlice";
+import { RootState } from "../../store/index";
 
-interface Step3Props {
-  nextStep: () => void;
-  prevStep: () => void;
-}
-
-const Step3: React.FC<Step3Props> = ({ nextStep, prevStep }) => {
+const Step3 = () => {
+  const { theme } = useTheme();
+  const { t } = useTranslation();
   const dispatch = useDispatch();
-  const stats = useSelector((state: RootState) => state.character.stats);
+  const attributes = useSelector(
+    (state: RootState) => state.character.attributes
+  );
 
-  const handleStatChange = (
-    statKey: "strength" | "agility" | "plot" | "empathy",
-    increment: boolean
-  ) => {
-    const newValue = increment
-      ? stats[statKey] + 1
-      : Math.max(0, stats[statKey] - 1);
-    dispatch(setStats({ stat: statKey, value: newValue }));
+  const handleUpdate = (attribute: keyof typeof attributes, change: number) => {
+    const newValue = Math.max(0, attributes[attribute].value + change);
+    dispatch(updateAttribute({ attribute, value: newValue }));
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Stats and Skills</Text>
-      {Object.entries(stats).map(([key, value]) => (
-        <View key={key} style={styles.statRow}>
-          <Text style={styles.statLabel}>
-            {key.charAt(0).toUpperCase() + key.slice(1)}
-          </Text>
-          <Button
-            title="-"
-            onPress={() =>
-              handleStatChange(
-                key as "strength" | "agility" | "plot" | "empathy",
-                false
-              )
-            }
-          />
-          <Text style={styles.statValue}>{String(value)}</Text>
-          <Button
-            title="+"
-            onPress={() =>
-              handleStatChange(
-                key as "strength" | "agility" | "plot" | "empathy",
-                true
-              )
-            }
-          />
-        </View>
-      ))}
-      <View style={styles.buttonContainer}>
-        <Button title="Back" onPress={prevStep} />
-        <Button title="Next" onPress={nextStep} />
-      </View>
+    <View>
+      <Text>Character Stats</Text>
+      {Object.keys(attributes).map((key) => {
+        const attributeKey = key as keyof typeof attributes; // Explicitly cast key
+        return (
+          <View key={attributeKey}>
+            <Text>{attributes[attributeKey].displayName}</Text>
+            <Button title="-" onPress={() => handleUpdate(attributeKey, -1)} />
+            <Text>{attributes[attributeKey].value}</Text>
+            <Button title="+" onPress={() => handleUpdate(attributeKey, 1)} />
+            <TextInput
+              value={attributes[attributeKey].displayName}
+              onChangeText={(text) =>
+                dispatch(
+                  updateAttribute({
+                    attribute: attributeKey,
+                    value: attributes[attributeKey].value,
+                    displayName: text,
+                  })
+                )
+              }
+            />
+          </View>
+        );
+      })}
     </View>
   );
 };
 
 export default Step3;
-
-const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: "center", alignItems: "center" },
-  title: { fontSize: 20, marginBottom: 20 },
-  statRow: { flexDirection: "row", alignItems: "center", marginBottom: 10 },
-  statLabel: { fontSize: 16, width: 100 },
-  statValue: { fontSize: 16, marginHorizontal: 10 },
-  buttonContainer: { flexDirection: "row", marginTop: 20, gap: 10 },
-});

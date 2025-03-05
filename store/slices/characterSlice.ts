@@ -1,113 +1,129 @@
-import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-const initialState = {
-  // gameSystems: [],
-  selectedSystem: "",
-  selectedSetting: "",
+interface Attribute {
+  value: number;
+  displayName: string;
+}
+
+interface Skill {
+  displayName: string;
+  value: number;
+  linkedAttribute: "Strength" | "Agility" | "Wits" | "Empathy";
+}
+
+interface Talent {
+  name: string;
+  description: string;
+  bonus: "+1" | "+2";
+  level: "1" | "2" | "3";
+  type: "General" | "Combat" | "Social";
+}
+
+interface CharacterState {
+  RPGSystem: string;
+  name: string;
+  age: "Young" | "Adult" | "Old";
+  archetype: string;
+  race: string;
+  attributes: {
+    Strength: Attribute;
+    Agility: Attribute;
+    Wits: Attribute;
+    Empathy: Attribute;
+  };
+  skills: Record<string, Skill>;
+  additionalSkills: Skill[];
+  talents: Talent[];
+}
+
+const initialState: CharacterState = {
+  RPGSystem: "Year Zero Engine",
   name: "",
-  description: "",
-  avatar: null,
+  age: "Adult",
   archetype: "",
   race: "",
-  appearance: "",
-  bigDream: "",
-  stats: {
-    strength: 0,
-    agility: 0,
-    plot: 0,
-    empathy: 0,
+  attributes: {
+    Strength: { value: 0, displayName: "Strength" },
+    Agility: { value: 0, displayName: "Agility" },
+    Wits: { value: 0, displayName: "Wits" },
+    Empathy: { value: 0, displayName: "Empathy" },
   },
-  skills: Array(12).fill(0),
-  bio: "",
-  gameSystems: [
-    // Hardcoded temporary game systems
-    { name: "Fantasy RPG", settings: ["Medieval", "High Fantasy"] },
-    { name: "Sci-Fi Adventure", settings: ["Space Colony", "Cyberpunk City"] },
-    {
-      name: "Post-Apocalyptic",
-      settings: ["Nuclear Wasteland", "Zombie Survival"],
-    },
-  ],
+  skills: {},
+  additionalSkills: [],
+  talents: [],
 };
-
-// export const fetchGameSystems = createAsyncThunk(
-//   "character/fetchGameSystems",
-//   async () => {
-//     const response = await axios.get(
-//       "https://your-backend.com/api/game-systems"
-//     );
-//     return response.data;
-//   }
-// );
 
 const characterSlice = createSlice({
   name: "character",
   initialState,
   reducers: {
-    setSelectedSystem: (state, action: PayloadAction<string>) => {
-      state.selectedSystem = action.payload;
-      state.selectedSetting = "";
+    setRPGSystem: (state, action: PayloadAction<string>) => {
+      state.RPGSystem = action.payload;
     },
-    setSelectedSetting: (state, action: PayloadAction<string>) => {
-      state.selectedSetting = action.payload;
-    },
-    setName: (state, action: PayloadAction<string>) => {
-      state.name = action.payload;
-    },
-    setDescription: (state, action: PayloadAction<string>) => {
-      state.description = action.payload;
-    },
-    setAvatar: (state, action: PayloadAction<any>) => {
-      state.avatar = action.payload;
-    },
-    setArchetype: (state, action: PayloadAction<string>) => {
-      state.archetype = action.payload;
-    },
-    setRace: (state, action: PayloadAction<string>) => {
-      state.race = action.payload;
-    },
-    setAppearance: (state, action: PayloadAction<string>) => {
-      state.appearance = action.payload;
-    },
-    setBigDream: (state, action: PayloadAction<string>) => {
-      state.bigDream = action.payload;
-    },
-    setStats: (
+    setCharacterDetails: (
       state,
-      action: PayloadAction<{ stat: keyof typeof state.stats; value: number }>
+      action: PayloadAction<{
+        name: string;
+        age: "Young" | "Adult" | "Old";
+        archetype: string;
+        race: string;
+      }>
     ) => {
-      state.stats[action.payload.stat] = action.payload.value;
+      state.name = action.payload.name;
+      state.age = action.payload.age;
+      state.archetype = action.payload.archetype;
+      state.race = action.payload.race;
     },
-    setSkills: (
+    updateAttribute: (
       state,
-      action: PayloadAction<{ index: number; value: number }>
+      action: PayloadAction<{
+        attribute: keyof CharacterState["attributes"];
+        value: number;
+        displayName?: string;
+      }>
     ) => {
-      state.skills[action.payload.index] = action.payload.value;
+      state.attributes[action.payload.attribute].value = action.payload.value;
+      if (action.payload.displayName) {
+        state.attributes[action.payload.attribute].displayName =
+          action.payload.displayName;
+      }
     },
-    setBio: (state, action: PayloadAction<string>) => {
-      state.bio = action.payload;
+    updateSkill: (
+      state,
+      action: PayloadAction<{
+        skillName: string;
+        value: number;
+        linkedAttribute: string;
+      }>
+    ) => {
+      state.skills[action.payload.skillName] = {
+        displayName: action.payload.skillName,
+        value: action.payload.value,
+        linkedAttribute: action.payload.linkedAttribute as
+          | "Strength"
+          | "Agility"
+          | "Wits"
+          | "Empathy",
+      };
     },
+    addAdditionalSkill: (state, action: PayloadAction<Skill>) => {
+      state.additionalSkills.push(action.payload);
+    },
+    updateTalents: (state, action: PayloadAction<Talent[]>) => {
+      state.talents = action.payload;
+    },
+    resetCharacter: () => initialState,
   },
-  // extraReducers: (builder) => {
-  //   builder.addCase(fetchGameSystems.fulfilled, (state, action) => {
-  //     state.gameSystems = action.payload;
-  //   });
-  // },
 });
 
 export const {
-  setSelectedSystem,
-  setSelectedSetting,
-  setName,
-  setDescription,
-  setAvatar,
-  setArchetype,
-  setRace,
-  setAppearance,
-  setBigDream,
-  setStats,
-  setSkills,
-  setBio,
+  setRPGSystem,
+  setCharacterDetails,
+  updateAttribute,
+  updateSkill,
+  addAdditionalSkill,
+  updateTalents,
+  resetCharacter,
 } = characterSlice.actions;
+
 export default characterSlice.reducer;
