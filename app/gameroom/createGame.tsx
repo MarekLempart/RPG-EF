@@ -54,7 +54,7 @@ const CreateGameScreen = (): JSX.Element => {
         });
     };
 
-    const handleSaveCode = () => {
+    const handleSaveCode = async () => {
         if (!generatedCode.trim()) {
             Toast.show({
                 type: "error",
@@ -63,7 +63,8 @@ const CreateGameScreen = (): JSX.Element => {
             });
             return;
         }
-        Clipboard.setString(generatedCode);
+      
+        Clipboard.setStringAsync(generatedCode);
         Toast.show({
             type: "success",
             text1: t("success"),
