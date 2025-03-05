@@ -63,6 +63,7 @@ const CreateGameScreen = (): JSX.Element => {
             });
             return;
         }
+      
         Clipboard.setStringAsync(generatedCode);
         Toast.show({
             type: "success",
