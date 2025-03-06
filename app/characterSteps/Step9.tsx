@@ -1,24 +1,22 @@
 import React from "react";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useTranslation } from "react-i18next";
-import { View, Text, TextInput, Button, StyleSheet } from "react-native";
+import { View, Text, TextInput, StyleSheet } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-import { setHistory } from "../../store/slices/characterSlice";
+import { setBigDream } from "../../store/slices/characterSlice";
 import { RootState } from "../../store/index";
 
-const Step8 = () => {
-  const { theme } = useTheme();
-  const { t } = useTranslation();
+const Step9 = () => {
   const dispatch = useDispatch();
-  const history = useSelector((state: RootState) => state.character.history);
+  const bigDream = useSelector((state: RootState) => state.character.bigDream);
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Character History</Text>
+      <Text style={styles.header}>Big Dream</Text>
       <TextInput
         style={styles.input}
-        value={history}
-        onChangeText={(text) => dispatch(setHistory(text))}
+        value={bigDream}
+        onChangeText={(text) => dispatch(setBigDream(text))}
         multiline
       />
     </View>
@@ -38,4 +36,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Step8;
+export default Step9;

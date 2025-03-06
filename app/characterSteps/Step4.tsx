@@ -1,7 +1,7 @@
 import React from "react";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useTranslation } from "react-i18next";
-import { View, Text, Button, TextInput } from "react-native";
+import { View, Text, Button, TextInput, StyleSheet } from "react-native";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -15,52 +15,183 @@ const Step4 = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const skills = useSelector((state: RootState) => state.character.skills);
-  const [newSkill, setNewSkill] = useState("");
-  const [linkedAttribute, setLinkedAttribute] = useState("Strength");
+  const additionalSkills = useSelector(
+    (state: RootState) => state.character.additionalSkills
+  );
+  const attributes = ["Strength", "Agility", "Wits", "Empathy"] as const;
 
-  const handleSkillUpdate = (skillName: string, change: number) => {
-    const newValue = Math.max(0, (skills[skillName]?.value || 0) + change);
-    dispatch(updateSkill({ skillName, value: newValue, linkedAttribute }));
+  const defaultSkills: Record<string, string[]> = {
+    Strength: ["Craft", "Endure", "Fight"],
+    Agility: ["Sneak", "Move", "Shoot"],
+    Wits: ["Scout", "Comprehend", "Survive"],
+    Empathy: ["Manipulate", "SenseEmotion", "Heal"],
   };
 
-  const handleAddSkill = () => {
-    if (newSkill.trim()) {
+  const [newSkills, setNewSkills] = useState<Record<string, boolean>>({});
+  const [skillNames, setSkillNames] = useState<Record<string, string>>({});
+
+  const handleSkillUpdate = (
+    skillName: string,
+    change: number,
+    linkedAttribute: string
+  ) => {
+    dispatch(
+      updateSkill({
+        skillName,
+        value: Math.max(0, (skills[skillName]?.value || 0) + change),
+        linkedAttribute,
+      })
+    );
+  };
+
+  const handleAdditionalSkillUpdate = (
+    skillName: string,
+    change: number,
+    linkedAttribute: string
+  ) => {
+    const existingSkill = additionalSkills.find(
+      (skill) => skill.displayName === skillName
+    );
+    if (existingSkill) {
+      const newValue = Math.max(0, existingSkill.value + change);
+      dispatch(updateSkill({ skillName, value: newValue, linkedAttribute }));
+    }
+  };
+
+  const handleShowSkillInput = (attribute: string) => {
+    setNewSkills((prev) => ({ ...prev, [attribute]: true }));
+  };
+
+  const handleAddSkill = (attribute: string) => {
+    if (skillNames[attribute]?.trim()) {
       dispatch(
         addAdditionalSkill({
-          displayName: newSkill,
+          displayName: skillNames[attribute],
           value: 0,
-          linkedAttribute: linkedAttribute as
+          linkedAttribute: attribute as
             | "Strength"
             | "Agility"
             | "Wits"
             | "Empathy",
         })
       );
-      setNewSkill("");
+      setNewSkills((prev) => ({ ...prev, [attribute]: false }));
+      setSkillNames((prev) => ({ ...prev, [attribute]: "" }));
     }
   };
 
   return (
-    <View>
-      <Text>Character Skills</Text>
-      {Object.keys(skills).map((key) => (
-        <View key={key}>
-          <Text>{skills[key].displayName}</Text>
-          <Button title="-" onPress={() => handleSkillUpdate(key, -1)} />
-          <Text>{skills[key].value}</Text>
-          <Button title="+" onPress={() => handleSkillUpdate(key, 1)} />
-        </View>
-      ))}
+    <View style={styles.container}>
+      <Text style={styles.header}>Character Skills</Text>
 
-      <Text>Add Custom Skill</Text>
-      <TextInput
-        placeholder="Skill Name"
-        value={newSkill}
-        onChangeText={setNewSkill}
-      />
-      <Button title="Add Skill" onPress={handleAddSkill} />
+      <View style={styles.gridContainer}>
+        {attributes.map((attribute) => (
+          <View key={attribute} style={styles.column}>
+            <Text style={styles.attributeTitle}>{attribute}</Text>
+            {defaultSkills[attribute].map((skillName) => (
+              <View key={skillName} style={styles.skillRow}>
+                <Text>{skillName}</Text>
+                <Button
+                  title="-"
+                  onPress={() => handleSkillUpdate(skillName, -1, attribute)}
+                />
+                <Text>{skills[skillName]?.value || 0}</Text>
+                <Button
+                  title="+"
+                  onPress={() => handleSkillUpdate(skillName, 1, attribute)}
+                />
+              </View>
+            ))}
+            {additionalSkills
+              .filter((skill) => skill.linkedAttribute === attribute)
+              .map((skill, index) => (
+                <View
+                  key={`${skill.displayName}-${index}`}
+                  style={styles.skillRow}
+                >
+                  <Text>{skill.displayName}</Text>
+                  <Button
+                    title="-"
+                    onPress={() =>
+                      handleAdditionalSkillUpdate(
+                        skill.displayName,
+                        -1,
+                        skill.linkedAttribute
+                      )
+                    }
+                  />
+                  <Text>{skill.value}</Text>
+                  <Button
+                    title="+"
+                    onPress={() =>
+                      handleAdditionalSkillUpdate(
+                        skill.displayName,
+                        1,
+                        skill.linkedAttribute
+                      )
+                    }
+                  />
+                </View>
+              ))}
+            {additionalSkills.filter(
+              (skill) => skill.linkedAttribute === attribute
+            ).length === 0 &&
+              (newSkills[attribute] ? (
+                <View>
+                  <TextInput
+                    placeholder="Skill Name"
+                    value={skillNames[attribute] || ""}
+                    onChangeText={(text) =>
+                      setSkillNames((prev) => ({ ...prev, [attribute]: text }))
+                    }
+                  />
+                  <Button
+                    title="Add"
+                    onPress={() => handleAddSkill(attribute)}
+                  />
+                </View>
+              ) : (
+                <Button
+                  title="+ Add Skill"
+                  onPress={() => handleShowSkillInput(attribute)}
+                />
+              ))}
+          </View>
+        ))}
+      </View>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    padding: 10,
+  },
+  header: {
+    fontSize: 20,
+    fontWeight: "bold",
+    marginBottom: 10,
+  },
+  gridContainer: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-between",
+  },
+  column: {
+    width: "48%",
+    marginBottom: 10,
+  },
+  attributeTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 5,
+  },
+  skillRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginBottom: 5,
+  },
+});
 
 export default Step4;

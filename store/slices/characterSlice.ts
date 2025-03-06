@@ -34,6 +34,14 @@ interface CharacterState {
   skills: Record<string, Skill>;
   additionalSkills: Skill[];
   talents: Talent[];
+  items: {
+    weapons: string;
+    armor: string;
+    gear: string;
+  };
+  appearance: string;
+  history: string;
+  bigDream: string;
 }
 
 const initialState: CharacterState = {
@@ -51,6 +59,14 @@ const initialState: CharacterState = {
   skills: {},
   additionalSkills: [],
   talents: [],
+  items: {
+    weapons: "",
+    armor: "",
+    gear: "",
+  },
+  appearance: "",
+  history: "",
+  bigDream: "",
 };
 
 const characterSlice = createSlice({
@@ -112,6 +128,21 @@ const characterSlice = createSlice({
     updateTalents: (state, action: PayloadAction<Talent[]>) => {
       state.talents = action.payload;
     },
+    setItems: (
+      state,
+      action: PayloadAction<{ weapons: string; armor: string; gear: string }>
+    ) => {
+      state.items = action.payload;
+    },
+    setAppearance: (state, action: PayloadAction<string>) => {
+      state.appearance = action.payload;
+    },
+    setHistory: (state, action: PayloadAction<string>) => {
+      state.history = action.payload;
+    },
+    setBigDream: (state, action: PayloadAction<string>) => {
+      state.bigDream = action.payload;
+    },
     resetCharacter: () => initialState,
   },
 });
@@ -124,6 +155,10 @@ export const {
   addAdditionalSkill,
   updateTalents,
   resetCharacter,
+  setItems,
+  setAppearance,
+  setHistory,
+  setBigDream,
 } = characterSlice.actions;
 
 export default characterSlice.reducer;

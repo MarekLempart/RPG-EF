@@ -13,6 +13,7 @@ import Step5 from "./characterSteps/Step5";
 import Step6 from "./characterSteps/Step6";
 import Step7 from "./characterSteps/Step7";
 import Step8 from "./characterSteps/Step8";
+import Step9 from "./characterSteps/Step9";
 
 const AddCharacterScreen = (): JSX.Element => {
   const { theme } = useTheme();
@@ -35,13 +36,10 @@ const AddCharacterScreen = (): JSX.Element => {
       {step === 3 && <Step3 />}
       {step === 4 && <Step4 />}
       {step === 5 && <Step5 />}
-      {/* {step === 6 && <Step6 />}
-      {step === 7 && <Step7 />} */}
-      {step > 8 && (
-        <View>
-          <Button title="Placeholder Step" disabled />
-        </View>
-      )}
+      {step === 6 && <Step6 />}
+      {step === 7 && <Step7 />}
+      {step === 8 && <Step8 />}
+      {step === 9 && <Step9 />}
 
       <Button title="Back" onPress={handleBack} disabled={step === 1} />
       {step < 9 ? (

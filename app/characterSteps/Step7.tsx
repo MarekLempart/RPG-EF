@@ -1,56 +1,43 @@
 import React from "react";
-import { View, Text, TextInput, Button, StyleSheet } from "react-native";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useTranslation } from "react-i18next";
+import { View, Text, TextInput, Button, StyleSheet } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
+import { setAppearance } from "../../store/slices/characterSlice";
+import { RootState } from "../../store/index";
 
-interface StepProps {
-  description: string;
-  setDescription: (value: string) => void;
-  nextStep: () => void;
-  prevStep: () => void;
-}
-
-const Step7: React.FC<StepProps> = ({
-  description,
-  setDescription,
-  nextStep,
-  prevStep,
-}) => {
+const Step7 = () => {
   const { theme } = useTheme();
   const { t } = useTranslation();
+  const dispatch = useDispatch();
+  const appearance = useSelector(
+    (state: RootState) => state.character.appearance
+  );
 
   return (
-    <View
-      style={[styles.container, { backgroundColor: theme.colors.bgPrimary }]}
-    >
-      <View style={styles.container}>
-        <Text style={[styles.greeting, { color: theme.colors.textPrimary }]}>
-          Items
-        </Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Description"
-          value={description}
-          onChangeText={setDescription}
-        />
-        <View style={styles.buttonContainer}>
-          <Button title="Back" onPress={prevStep} />
-          <Button title="Next" onPress={nextStep} />
-        </View>
-      </View>
+    <View style={styles.container}>
+      <Text style={styles.header}>Appearance</Text>
+      <TextInput
+        style={styles.input}
+        value={appearance}
+        onChangeText={(text) => dispatch(setAppearance(text))}
+        multiline
+      />
     </View>
   );
 };
 
-export default Step7;
-
 const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: "center", alignItems: "center" },
-  input: { width: "80%", borderWidth: 1, padding: 10, marginBottom: 10 },
-  buttonContainer: { flexDirection: "row", gap: 10 },
-  greeting: {
-    fontSize: 24,
-    textAlign: "center",
-    marginVertical: 10,
+  container: { padding: 10 },
+  header: { fontSize: 20, fontWeight: "bold", marginBottom: 10 },
+  input: {
+    borderWidth: 1,
+    borderColor: "#ccc",
+    padding: 10,
+    borderRadius: 5,
+    minHeight: 40,
+    textAlignVertical: "top",
   },
 });
+
+export default Step7;
