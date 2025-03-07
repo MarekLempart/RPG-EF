@@ -138,20 +138,20 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   nameAgeContainer: {
-    width: "50%",
+    width: "48%",
     alignSelf: "flex-end",
     marginLeft: 10,
     marginBottom: 20,
   },
   archRaceContainer: {
     flexDirection: "row",
+    justifyContent: "space-between",
   },
   archBox: {
-    width: "45%",
-    marginRight: 13,
+    width: "48%",
   },
   raceBox: {
-    width: "50%",
+    width: "48%",
   },
   label: {
     fontSize: 16,
@@ -163,13 +163,8 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   dropdown: {
-    borderColor: "#ccc",
     borderWidth: 1,
     borderRadius: 5,
-    backgroundColor: "white",
-  },
-  dropdownMenu: {
-    borderColor: "#ccc",
   },
   input: {
     borderWidth: 1,
