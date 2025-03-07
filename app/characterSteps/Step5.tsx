@@ -1,12 +1,21 @@
 import React from "react";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useTranslation } from "react-i18next";
-import { View, Text, TextInput, Button } from "react-native";
-import { Picker } from "@react-native-picker/picker";
+import { View, Text, TextInput, StyleSheet } from "react-native";
+import DropDownPicker from "react-native-dropdown-picker";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import { updateTalents } from "../../store/slices/characterSlice";
 import { RootState } from "../../store/index";
+
+// type Talent = {
+//   name: string;
+//   description: string;
+//   bonus: string;
+//   level: string;
+//   class: string;
+//   talentType: string;
+// };
 
 const Step5 = () => {
   const { theme } = useTheme();
@@ -15,11 +24,30 @@ const Step5 = () => {
   const talents = useSelector((state: RootState) => state.character.talents);
 
   const [talent1, setTalent1] = useState(
-    talents[0] || { name: "", bonus: "+1", level: "1", type: "General" }
+    talents[0] || {
+      name: "",
+      description: "",
+      bonus: "+1",
+      level: "1",
+      talentType: "Active",
+    }
   );
   const [talent2, setTalent2] = useState(
-    talents[1] || { name: "", bonus: "+1", level: "1", type: "General" }
+    talents[1] || {
+      name: "",
+      description: "",
+      bonus: "+1",
+      level: "1",
+      talentType: "Active",
+    }
   );
+
+  const [bonusOpen1, setBonusOpen1] = useState(false);
+  const [bonusOpen2, setBonusOpen2] = useState(false);
+  const [levelOpen1, setLevelOpen1] = useState(false);
+  const [levelOpen2, setLevelOpen2] = useState(false);
+  const [typeOpen1, setTypeOpen1] = useState(false);
+  const [typeOpen2, setTypeOpen2] = useState(false);
 
   const handleSave = () => {
     const newTalents = talent1.bonus === "+2" ? [talent1] : [talent1, talent2];
@@ -27,34 +55,148 @@ const Step5 = () => {
   };
 
   return (
-    <View>
-      <Text>Talent 1</Text>
-      <TextInput
-        placeholder="Name"
-        value={talent1.name}
-        onChangeText={(text) => setTalent1({ ...talent1, name: text })}
-      />
-      <Picker
-        selectedValue={talent1.bonus}
-        onValueChange={(value) => setTalent1({ ...talent1, bonus: value })}
-      >
-        <Picker.Item label="+1" value="+1" />
-        <Picker.Item label="+2" value="+2" />
-      </Picker>
-      <Button title="Save Talents" onPress={handleSave} />
-
-      {talent1.bonus !== "+2" && (
-        <View>
-          <Text>Talent 2</Text>
+    <View
+      style={[styles.container, { backgroundColor: theme.colors.bgPrimary }]}
+    >
+      {[talent1, talent2].map((talent, index) => (
+        <View
+          key={index}
+          style={[
+            styles.talentContainer,
+            talent1.bonus === "+2" && index === 1 ? styles.disabled : null,
+          ]}
+        >
           <TextInput
-            placeholder="Name"
-            value={talent2.name}
-            onChangeText={(text) => setTalent2({ ...talent2, name: text })}
+            style={[
+              styles.input,
+              {
+                color: theme.colors.textPrimary,
+                borderColor: theme.colors.textSecondary,
+              },
+            ]}
+            placeholder="Talent Name"
+            placeholderTextColor={theme.colors.textSecondary}
+            value={talent.name}
+            onChangeText={(text) =>
+              index === 0
+                ? setTalent1({ ...talent1, name: text })
+                : setTalent2({ ...talent2, name: text })
+            }
+            editable={index === 0 || talent1.bonus !== "+2"}
+          />
+          <TextInput
+            style={[
+              styles.input,
+              {
+                color: theme.colors.textPrimary,
+                borderColor: theme.colors.textSecondary,
+              },
+            ]}
+            placeholder="Description"
+            placeholderTextColor={theme.colors.textSecondary}
+            value={talent.description}
+            onChangeText={(text) =>
+              index === 0
+                ? setTalent1({ ...talent1, description: text })
+                : setTalent2({ ...talent2, description: text })
+            }
+            editable={index === 0 || talent1.bonus !== "+2"}
+          />
+          <DropDownPicker
+            open={index === 0 ? bonusOpen1 : bonusOpen2}
+            setOpen={index === 0 ? setBonusOpen1 : setBonusOpen2}
+            value={talent.bonus}
+            items={[
+              { label: "+1", value: "+1" },
+              { label: "+2", value: "+2" },
+            ]}
+            setValue={(callback) =>
+              index === 0
+                ? setTalent1((prev) => ({
+                    ...prev,
+                    bonus: callback(prev.bonus),
+                  }))
+                : setTalent2((prev) => ({
+                    ...prev,
+                    bonus: callback(prev.bonus),
+                  }))
+            }
+            disabled={index === 1 && talent1.bonus === "+2"}
+            containerStyle={styles.dropdownContainer}
+          />
+          <DropDownPicker
+            open={index === 0 ? levelOpen1 : levelOpen2}
+            setOpen={index === 0 ? setLevelOpen1 : setLevelOpen2}
+            value={talent.level}
+            items={[
+              { label: "1", value: "1" },
+              { label: "2", value: "2" },
+              { label: "3", value: "3" },
+            ]}
+            setValue={(callback) =>
+              index === 0
+                ? setTalent1((prev) => ({
+                    ...prev,
+                    level: callback(prev.level),
+                  }))
+                : setTalent2((prev) => ({
+                    ...prev,
+                    level: callback(prev.level),
+                  }))
+            }
+            disabled={index === 1 && talent1.bonus === "+2"}
+            containerStyle={styles.dropdownContainer}
+          />
+          <DropDownPicker
+            open={index === 0 ? typeOpen1 : typeOpen2}
+            setOpen={index === 0 ? setTypeOpen1 : setTypeOpen2}
+            value={talent.talentType}
+            items={[
+              { label: "Active", value: "Active" },
+              { label: "Passive", value: "Passive" },
+              { label: "Situational", value: "Situational" },
+            ]}
+            setValue={(callback) =>
+              index === 0
+                ? setTalent1((prev) => ({
+                    ...prev,
+                    talentType: callback(prev.talentType),
+                  }))
+                : setTalent2((prev) => ({
+                    ...prev,
+                    talentType: callback(prev.talentType),
+                  }))
+            }
+            disabled={index === 1 && talent1.bonus === "+2"}
+            containerStyle={styles.dropdownContainer}
           />
         </View>
-      )}
+      ))}
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 20,
+    borderRadius: 5,
+  },
+  talentContainer: {
+    marginBottom: 15,
+  },
+  disabled: {
+    opacity: 0.5,
+  },
+  input: {
+    borderWidth: 1,
+    borderRadius: 5,
+    padding: 10,
+    marginBottom: 10,
+  },
+  dropdownContainer: {
+    marginBottom: 10,
+  },
+});
 
 export default Step5;

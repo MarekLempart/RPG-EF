@@ -81,7 +81,9 @@ const Step4 = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <View
+      style={[styles.container, { backgroundColor: theme.colors.bgPrimary }]}
+    >
       <Text style={styles.header}>Character Skills</Text>
 
       <View style={styles.gridContainer}>
@@ -165,7 +167,9 @@ const Step4 = () => {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 10,
+    flex: 1,
+    padding: 20,
+    borderRadius: 5,
   },
   header: {
     fontSize: 20,

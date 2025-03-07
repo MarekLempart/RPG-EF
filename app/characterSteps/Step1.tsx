@@ -23,8 +23,12 @@ const Step1 = () => {
   ]);
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.label}>{t("Choose RPG System")}</Text>
+    <View
+      style={[styles.container, { backgroundColor: theme.colors.bgPrimary }]}
+    >
+      <Text style={[styles.label, { color: theme.colors.textPrimary }]}>
+        {t("Choose RPG System")}
+      </Text>
       <DropDownPicker
         open={open}
         value={RPGSystem} // Controlled by Redux
@@ -38,19 +42,43 @@ const Step1 = () => {
         setItems={setItems}
         placeholder={t("Select an RPG System")}
         containerStyle={styles.dropdownContainer}
-        style={styles.dropdown}
-        dropDownContainerStyle={styles.dropdownMenu}
+        style={[
+          styles.dropdown,
+          {
+            backgroundColor: theme.colors.bgPrimary,
+            borderColor: theme.colors.textSecondary,
+          },
+        ]}
+        textStyle={{ color: theme.colors.textPrimary }}
+        dropDownContainerStyle={{
+          backgroundColor: theme.colors.bgPrimary,
+          borderColor: theme.colors.textSecondary,
+        }}
       />
 
-      <Text style={styles.label}>{t("Choose Setting")}</Text>
-      <TextInput placeholder={t("Choose Setting")} style={styles.input} />
+      <Text style={[styles.label, { color: theme.colors.textPrimary }]}>
+        {t("Choose Setting")}
+      </Text>
+      <TextInput
+        placeholder={t("Choose Setting")}
+        placeholderTextColor={theme.colors.textSecondary}
+        style={[
+          styles.input,
+          {
+            color: theme.colors.textPrimary,
+            borderColor: theme.colors.textSecondary,
+          },
+        ]}
+      />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    padding: 10,
+    flex: 1,
+    padding: 20,
+    borderRadius: 5,
   },
   label: {
     fontSize: 16,
@@ -61,20 +89,16 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   dropdown: {
-    borderColor: "#ccc",
     borderWidth: 1,
     borderRadius: 5,
-    backgroundColor: "white",
-  },
-  dropdownMenu: {
-    borderColor: "#ccc",
+    padding: 10,
+    marginBottom: 10,
   },
   input: {
     borderWidth: 1,
-    borderColor: "#ccc",
     borderRadius: 5,
-    padding: 10,
-    marginTop: 5,
+    padding: 16,
+    marginBottom: 10,
   },
 });
 

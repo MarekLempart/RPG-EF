@@ -16,7 +16,7 @@ interface Talent {
   description: string;
   bonus: "+1" | "+2";
   level: "1" | "2" | "3";
-  type: "General" | "Combat" | "Social";
+  talentType: "Active" | "Passive" | "Situational";
 }
 
 interface CharacterState {

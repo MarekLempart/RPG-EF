@@ -15,7 +15,9 @@ const Step7 = () => {
   );
 
   return (
-    <View style={styles.container}>
+    <View
+      style={[styles.container, { backgroundColor: theme.colors.bgPrimary }]}
+    >
       <Text style={styles.header}>Appearance</Text>
       <TextInput
         style={styles.input}
@@ -28,7 +30,11 @@ const Step7 = () => {
 };
 
 const styles = StyleSheet.create({
-  container: { padding: 10 },
+  container: {
+    flex: 1,
+    padding: 20,
+    borderRadius: 5,
+  },
   header: { fontSize: 20, fontWeight: "bold", marginBottom: 10 },
   input: {
     borderWidth: 1,

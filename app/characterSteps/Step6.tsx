@@ -20,7 +20,9 @@ const Step6 = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <View
+      style={[styles.container, { backgroundColor: theme.colors.bgPrimary }]}
+    >
       <Text style={styles.header}>Items</Text>
 
       <Text style={styles.label}>Weapons</Text>
@@ -51,7 +53,11 @@ const Step6 = () => {
 };
 
 const styles = StyleSheet.create({
-  container: { padding: 10 },
+  container: {
+    flex: 1,
+    padding: 20,
+    borderRadius: 5,
+  },
   header: { fontSize: 20, fontWeight: "bold", marginBottom: 10 },
   label: { fontSize: 16, fontWeight: "bold", marginTop: 10 },
   input: {

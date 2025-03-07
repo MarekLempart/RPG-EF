@@ -7,11 +7,15 @@ import { setBigDream } from "../../store/slices/characterSlice";
 import { RootState } from "../../store/index";
 
 const Step9 = () => {
+  const { theme } = useTheme();
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const bigDream = useSelector((state: RootState) => state.character.bigDream);
 
   return (
-    <View style={styles.container}>
+    <View
+      style={[styles.container, { backgroundColor: theme.colors.bgPrimary }]}
+    >
       <Text style={styles.header}>Big Dream</Text>
       <TextInput
         style={styles.input}
@@ -24,7 +28,11 @@ const Step9 = () => {
 };
 
 const styles = StyleSheet.create({
-  container: { padding: 10 },
+  container: {
+    flex: 1,
+    padding: 20,
+    borderRadius: 5,
+  },
   header: { fontSize: 20, fontWeight: "bold", marginBottom: 10 },
   input: {
     borderWidth: 1,

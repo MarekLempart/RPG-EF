@@ -1,7 +1,7 @@
 import React from "react";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useTranslation } from "react-i18next";
-import { View, Text, Button, TextInput } from "react-native";
+import { View, Text, Button, TextInput, StyleSheet } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { updateAttribute } from "../../store/slices/characterSlice";
 import { RootState } from "../../store/index";
@@ -20,10 +20,12 @@ const Step3 = () => {
   };
 
   return (
-    <View>
+    <View
+      style={[styles.container, { backgroundColor: theme.colors.bgPrimary }]}
+    >
       <Text>Character Stats</Text>
       {Object.keys(attributes).map((key) => {
-        const attributeKey = key as keyof typeof attributes; // Explicitly cast key
+        const attributeKey = key as keyof typeof attributes;
         return (
           <View key={attributeKey}>
             <Text>{attributes[attributeKey].displayName}</Text>
@@ -48,5 +50,13 @@ const Step3 = () => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 20,
+    borderRadius: 5,
+  },
+});
 
 export default Step3;

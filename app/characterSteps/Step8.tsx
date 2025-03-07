@@ -13,7 +13,9 @@ const Step8 = () => {
   const history = useSelector((state: RootState) => state.character.history);
 
   return (
-    <View style={styles.container}>
+    <View
+      style={[styles.container, { backgroundColor: theme.colors.bgPrimary }]}
+    >
       <Text style={styles.header}>Character History</Text>
       <TextInput
         style={styles.input}
@@ -26,7 +28,11 @@ const Step8 = () => {
 };
 
 const styles = StyleSheet.create({
-  container: { padding: 10 },
+  container: {
+    flex: 1,
+    padding: 20,
+    borderRadius: 5,
+  },
   header: { fontSize: 20, fontWeight: "bold", marginBottom: 10 },
   input: {
     borderWidth: 1,
