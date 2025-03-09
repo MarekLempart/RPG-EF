@@ -1,8 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useTranslation } from "react-i18next";
 import { View, Text, Button, TextInput, StyleSheet } from "react-native";
-import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   updateSkill,

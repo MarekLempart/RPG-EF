@@ -1,10 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useTranslation } from "react-i18next";
 import { View, Text, TextInput, StyleSheet } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 import { useDispatch, useSelector } from "react-redux";
-import { useState } from "react";
 import { setRPGSystem } from "../../store/slices/characterSlice";
 import { RootState } from "../../store/index";
 
@@ -87,6 +86,7 @@ const styles = StyleSheet.create({
   },
   dropdownContainer: {
     width: "100%",
+    marginBottom: 20,
   },
   dropdown: {
     borderWidth: 1,
