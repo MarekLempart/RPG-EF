@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   updateSkill,
   addAdditionalSkill,
+  updateAdditionalSkill,
 } from "../../store/slices/characterSlice";
 import { RootState } from "../../store/index";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -49,33 +50,51 @@ const Step4 = () => {
   const [skillNames, setSkillNames] = useState<Record<string, string>>({});
 
   useEffect(() => {
+    const totalUsedPoints =
+      Object.values(skills).reduce((sum, skill) => sum + skill.value, 0) +
+      additionalSkills.reduce((sum, skill) => sum + skill.value, 0);
+
     setRemainingSkillPoints(
-      MAX_SKILL_POINTS[age] -
-        Object.values(skills).reduce((sum, skill) => sum + skill.value, 0)
+      Math.max(0, MAX_SKILL_POINTS[age] - totalUsedPoints)
     );
-  }, [skills, age]);
+  }, [skills, additionalSkills, age]);
 
   const handleSkillUpdate = (
     skillName: string,
     change: number,
-    linkedAttribute: string
+    linkedAttribute: "Strength" | "Agility" | "Wits" | "Empathy"
   ) => {
-    if (change > 0 && remainingSkillPoints <= 0) return;
-    dispatch(
-      updateSkill({
-        skillName,
-        value: Math.max(0, (skills[skillName]?.value || 0) + change),
-        linkedAttribute,
-      })
-    );
+    if (change > 0 && remainingSkillPoints <= 0) return; // Prevent increasing if no points left
+
+    if (skills[skillName]) {
+      // ✅ Update default skill
+      dispatch(
+        updateSkill({
+          skillName,
+          value: Math.max(0, skills[skillName].value + change),
+          linkedAttribute,
+        })
+      );
+    } else {
+      // ✅ Update additional skill separately
+      dispatch(
+        updateAdditionalSkill({
+          skillName,
+          value: Math.max(
+            0,
+            (additionalSkills.find((skill) => skill.displayName === skillName)
+              ?.value || 0) + change
+          ),
+        })
+      );
+    }
   };
 
   const handleAddSkill = (attribute: string) => {
     if (skillNames[attribute]?.trim()) {
       dispatch(
         addAdditionalSkill({
-          displayName: skillNames[attribute],
-          value: 0,
+          skillName: skillNames[attribute],
           linkedAttribute: attribute as
             | "Strength"
             | "Agility"
@@ -191,8 +210,11 @@ const Step4 = () => {
             ))}
             {additionalSkills
               .filter((skill) => skill.linkedAttribute === attribute)
-              .map((skill) => (
-                <View key={skill.displayName} style={styles.skillRow}>
+              .map((skill, index) => (
+                <View
+                  key={`${skill.displayName}-${index}`}
+                  style={styles.skillRow}
+                >
                   <Text style={[{ color: theme.colors.textPrimary }]}>
                     {skill.displayName}
                   </Text>
@@ -224,32 +246,35 @@ const Step4 = () => {
                   </View>
                 </View>
               ))}
-            {newSkills[attribute] ? (
-              <View>
-                <TextInput
-                  placeholder="Skill Name"
-                  value={skillNames[attribute] || ""}
-                  onChangeText={(text) =>
-                    setSkillNames((prev) => ({ ...prev, [attribute]: text }))
-                  }
-                />
+            {!additionalSkills.some(
+              (skill) => skill.linkedAttribute === attribute
+            ) &&
+              (newSkills[attribute] ? (
+                <View>
+                  <TextInput
+                    placeholder="Skill Name"
+                    value={skillNames[attribute] || ""}
+                    onChangeText={(text) =>
+                      setSkillNames((prev) => ({ ...prev, [attribute]: text }))
+                    }
+                  />
+                  <TouchableOpacity
+                    onPress={() => handleAddSkill(attribute)}
+                    style={styles.addButton}
+                  >
+                    <Text style={styles.buttonText}>Add</Text>
+                  </TouchableOpacity>
+                </View>
+              ) : (
                 <TouchableOpacity
-                  onPress={() => handleAddSkill(attribute)}
+                  onPress={() =>
+                    setNewSkills((prev) => ({ ...prev, [attribute]: true }))
+                  }
                   style={styles.addButton}
                 >
-                  <Text style={styles.buttonText}>Add</Text>
+                  <Text style={styles.buttonText}>+</Text>
                 </TouchableOpacity>
-              </View>
-            ) : (
-              <TouchableOpacity
-                onPress={() =>
-                  setNewSkills((prev) => ({ ...prev, [attribute]: true }))
-                }
-                style={styles.addButton}
-              >
-                <Text style={styles.buttonText}>+</Text>
-              </TouchableOpacity>
-            )}
+              ))}
           </View>
         ))}
       </View>

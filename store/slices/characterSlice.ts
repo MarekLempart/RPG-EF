@@ -44,6 +44,29 @@ interface CharacterState {
   bigDream: string;
 }
 
+const defaultSkills: Record<string, Skill> = {
+  Craft: { displayName: "Craft", value: 0, linkedAttribute: "Strength" },
+  Endure: { displayName: "Endure", value: 0, linkedAttribute: "Strength" },
+  Fight: { displayName: "Fight", value: 0, linkedAttribute: "Strength" },
+  Sneak: { displayName: "Sneak", value: 0, linkedAttribute: "Agility" },
+  Move: { displayName: "Move", value: 0, linkedAttribute: "Agility" },
+  Shoot: { displayName: "Shoot", value: 0, linkedAttribute: "Agility" },
+  Scout: { displayName: "Scout", value: 0, linkedAttribute: "Wits" },
+  Comprehend: { displayName: "Comprehend", value: 0, linkedAttribute: "Wits" },
+  Survive: { displayName: "Survive", value: 0, linkedAttribute: "Wits" },
+  Manipulate: {
+    displayName: "Manipulate",
+    value: 0,
+    linkedAttribute: "Empathy",
+  },
+  SenseEmotion: {
+    displayName: "Sense Emotion",
+    value: 0,
+    linkedAttribute: "Empathy",
+  },
+  Heal: { displayName: "Heal", value: 0, linkedAttribute: "Empathy" },
+};
+
 const initialState: CharacterState = {
   RPGSystem: "Year Zero Engine",
   name: "",
@@ -56,7 +79,7 @@ const initialState: CharacterState = {
     Wits: { value: 0, displayName: "Wits" },
     Empathy: { value: 0, displayName: "Empathy" },
   },
-  skills: {},
+  skills: defaultSkills,
   additionalSkills: [],
   talents: [],
   items: {
@@ -109,21 +132,41 @@ const characterSlice = createSlice({
       action: PayloadAction<{
         skillName: string;
         value: number;
-        linkedAttribute: string;
+        linkedAttribute: "Strength" | "Agility" | "Wits" | "Empathy";
       }>
     ) => {
-      state.skills[action.payload.skillName] = {
-        displayName: action.payload.skillName,
-        value: action.payload.value,
-        linkedAttribute: action.payload.linkedAttribute as
-          | "Strength"
-          | "Agility"
-          | "Wits"
-          | "Empathy",
-      };
+      if (state.skills[action.payload.skillName]) {
+        state.skills[action.payload.skillName].value = action.payload.value;
+      }
     },
-    addAdditionalSkill: (state, action: PayloadAction<Skill>) => {
-      state.additionalSkills.push(action.payload);
+    addAdditionalSkill: (
+      state,
+      action: PayloadAction<{
+        skillName: string;
+        linkedAttribute: "Strength" | "Agility" | "Wits" | "Empathy";
+      }>
+    ) => {
+      // Add new additional skill with an initial value of 0
+      state.additionalSkills.push({
+        displayName: action.payload.skillName,
+        value: 0,
+        linkedAttribute: action.payload.linkedAttribute,
+      });
+    },
+
+    updateAdditionalSkill: (
+      state,
+      action: PayloadAction<{
+        skillName: string;
+        value: number;
+      }>
+    ) => {
+      const skill = state.additionalSkills.find(
+        (s) => s.displayName === action.payload.skillName
+      );
+      if (skill) {
+        skill.value = action.payload.value;
+      }
     },
     updateTalents: (state, action: PayloadAction<Talent[]>) => {
       state.talents = action.payload;
@@ -153,6 +196,7 @@ export const {
   updateAttribute,
   updateSkill,
   addAdditionalSkill,
+  updateAdditionalSkill,
   updateTalents,
   resetCharacter,
   setItems,
