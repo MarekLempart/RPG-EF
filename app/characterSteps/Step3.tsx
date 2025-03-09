@@ -247,7 +247,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   button: {
-    padding: 5,
+    paddingHorizontal: 10,
+    paddingVertical: 4,
     marginHorizontal: 5,
     borderWidth: 1,
     borderRadius: 100,
