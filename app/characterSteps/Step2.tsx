@@ -1,7 +1,15 @@
 import React, { useState } from "react";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useTranslation } from "react-i18next";
-import { View, Text, TextInput, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+} from "react-native";
+import * as ImagePicker from "expo-image-picker";
 import DropDownPicker from "react-native-dropdown-picker";
 import { useDispatch, useSelector } from "react-redux";
 import { setCharacterDetails } from "../../store/slices/characterSlice";
@@ -14,6 +22,9 @@ const Step2 = () => {
   const { name, age, archetype, race } = useSelector(
     (state: RootState) => state.character
   );
+  const [avatar, setAvatar] = useState<string | null>(null);
+
+  const placeholderAvatar = require("../../assets/images/avatar-placeholder.png");
 
   // State for Age Dropdown
   const [ageOpen, setAgeOpen] = useState(false);
@@ -23,69 +34,99 @@ const Step2 = () => {
     { label: "Old", value: "Old" },
   ]);
 
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: "images",
+      allowsEditing: true,
+      aspect: [1, 1],
+      quality: 1,
+    });
+
+    if (!result.canceled) {
+      setAvatar(result.assets[0].uri);
+    }
+  };
+
   return (
     <View
       style={[styles.container, { backgroundColor: theme.colors.bgPrimary }]}
     >
-      <View style={styles.nameAgeContainer}>
-        {/* Character Name */}
-        <Text style={[styles.label, { color: theme.colors.textPrimary }]}>
-          {t("Name")}
-        </Text>
-        <TextInput
-          value={name}
-          onChangeText={(text) =>
-            dispatch(setCharacterDetails({ name: text, age, archetype, race }))
-          }
-          placeholderTextColor={theme.colors.textSecondary}
-          style={[
-            styles.input,
-            {
-              color: theme.colors.textPrimary,
-              borderColor: theme.colors.textSecondary,
-            },
-          ]}
-        />
+      <View style={styles.mainContainer}>
+        {/* Avatar Upload */}
+        <TouchableOpacity onPress={pickImage} style={styles.avatarContainer}>
+          <Image
+            source={avatar ? { uri: avatar } : placeholderAvatar}
+            style={styles.avatar}
+          />
+          <Text
+            style={[styles.uploadText, { color: theme.colors.textSecondary }]}
+          >
+            Upload Avatar
+          </Text>
+        </TouchableOpacity>
 
-        {/* Age Dropdown */}
-        <Text style={[styles.label, { color: theme.colors.textPrimary }]}>
-          {t("Age")}
-        </Text>
-        <DropDownPicker
-          open={ageOpen}
-          value={age} // Redux state value
-          items={ageItems}
-          setOpen={setAgeOpen}
-          setValue={(callback) => {
-            const newValue =
-              typeof callback === "function" ? callback(age) : callback;
-            dispatch(
-              setCharacterDetails({ name, age: newValue, archetype, race })
-            );
-          }}
-          setItems={setAgeItems}
-          placeholder={t("Select Age")}
-          containerStyle={styles.dropdownContainer}
-          style={[
-            styles.dropdown,
-            {
+        <View style={styles.rightContainer}>
+          {/* Character Name */}
+          <Text style={[styles.label, { color: theme.colors.textPrimary }]}>
+            Name
+          </Text>
+          <TextInput
+            value={name}
+            onChangeText={(text) =>
+              dispatch(
+                setCharacterDetails({ name: text, age, archetype, race })
+              )
+            }
+            placeholderTextColor={theme.colors.textSecondary}
+            style={[
+              styles.input,
+              {
+                color: theme.colors.textPrimary,
+                borderColor: theme.colors.textSecondary,
+              },
+            ]}
+          />
+
+          {/* Age Dropdown */}
+          <Text style={[styles.label, { color: theme.colors.textPrimary }]}>
+            Age
+          </Text>
+          <DropDownPicker
+            open={ageOpen}
+            value={age} // Redux state value
+            items={ageItems}
+            setOpen={setAgeOpen}
+            setValue={(callback) => {
+              const newValue =
+                typeof callback === "function" ? callback(age) : callback;
+              dispatch(
+                setCharacterDetails({ name, age: newValue, archetype, race })
+              );
+            }}
+            setItems={setAgeItems}
+            placeholder="Select Age"
+            containerStyle={styles.dropdownContainer}
+            style={[
+              styles.dropdown,
+              {
+                backgroundColor: theme.colors.bgPrimary,
+                borderColor: theme.colors.textSecondary,
+              },
+            ]}
+            textStyle={{ color: theme.colors.textPrimary }}
+            dropDownContainerStyle={{
               backgroundColor: theme.colors.bgPrimary,
               borderColor: theme.colors.textSecondary,
-            },
-          ]}
-          textStyle={{ color: theme.colors.textPrimary }}
-          dropDownContainerStyle={{
-            backgroundColor: theme.colors.bgPrimary,
-            borderColor: theme.colors.textSecondary,
-          }}
-        />
+            }}
+          />
+        </View>
       </View>
 
       <View style={styles.archRaceContainer}>
         {/* Archetype */}
         <View style={styles.archBox}>
           <Text style={[styles.label, { color: theme.colors.textPrimary }]}>
-            {t("Archetype")}
+            Archetype
           </Text>
           <TextInput
             value={archetype}
@@ -107,7 +148,7 @@ const Step2 = () => {
         {/* Race */}
         <View style={styles.raceBox}>
           <Text style={[styles.label, { color: theme.colors.textPrimary }]}>
-            {t("Race")}
+            Race
           </Text>
           <TextInput
             value={race}
@@ -136,15 +177,34 @@ const styles = StyleSheet.create({
     padding: 20,
     borderRadius: 5,
   },
-  nameAgeContainer: {
+  mainContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  avatarContainer: {
     width: "48%",
-    alignSelf: "flex-end",
-    marginLeft: 10,
-    marginBottom: 20,
+    alignItems: "center",
+    marginRight: 15,
+  },
+  avatar: {
+    width: "100%",
+    aspectRatio: 1,
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: "#ccc",
+  },
+  uploadText: {
+    marginTop: 5,
+    fontSize: 12,
+  },
+  rightContainer: {
+    flex: 1,
+    width: "48%",
   },
   archRaceContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
+    marginTop: 20,
   },
   archBox: {
     width: "48%",
