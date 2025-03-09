@@ -32,6 +32,14 @@ const Step3 = () => {
       Object.values(attributes).reduce((sum, attr) => sum + attr.value, 0)
   );
   const [editing, setEditing] = useState<{ [key: string]: boolean }>({});
+  const [editedNames, setEditedNames] = useState<{ [key: string]: string }>(
+    () => {
+      return Object.keys(attributes).reduce((acc, key) => {
+        acc[key] = attributes[key as keyof typeof attributes].displayName;
+        return acc;
+      }, {} as { [key: string]: string });
+    }
+  );
 
   useEffect(() => {
     setRemainingPoints(
@@ -62,6 +70,21 @@ const Step3 = () => {
     });
   };
 
+  const handleNameChange = (attributeKey: string, text: string) => {
+    setEditedNames((prev) => ({ ...prev, [attributeKey]: text }));
+  };
+
+  const handleNameBlur = (attributeKey: keyof typeof attributes) => {
+    dispatch(
+      updateAttribute({
+        attribute: attributeKey,
+        value: attributes[attributeKey].value,
+        displayName: editedNames[attributeKey],
+      })
+    );
+    setEditing((prev) => ({ ...prev, [attributeKey]: false }));
+  };
+
   return (
     <View
       style={[styles.container, { backgroundColor: theme.colors.bgPrimary }]}
@@ -70,9 +93,7 @@ const Step3 = () => {
         <View
           style={[
             styles.pointsBox,
-            {
-              borderColor: theme.colors.textSecondary,
-            },
+            { borderColor: theme.colors.textSecondary },
           ]}
         >
           <Text
@@ -105,19 +126,9 @@ const Step3 = () => {
             <View style={styles.headerRow}>
               {editing[attributeKey] ? (
                 <TextInput
-                  value={attributes[attributeKey].displayName}
-                  onChangeText={(text) =>
-                    dispatch(
-                      updateAttribute({
-                        attribute: attributeKey,
-                        value: attributes[attributeKey].value,
-                        displayName: text,
-                      })
-                    )
-                  }
-                  onBlur={() =>
-                    setEditing({ ...editing, [attributeKey]: false })
-                  }
+                  value={editedNames[attributeKey]}
+                  onChangeText={(text) => handleNameChange(attributeKey, text)}
+                  onBlur={() => handleNameBlur(attributeKey)}
                   autoFocus
                   style={[
                     styles.attributeNameInput,
@@ -140,7 +151,7 @@ const Step3 = () => {
                       { color: theme.colors.textPrimary },
                     ]}
                   >
-                    {attributes[attributeKey].displayName}
+                    {editedNames[attributeKey]}
                   </Text>
                   <MaterialIcons
                     name="edit"
@@ -206,11 +217,12 @@ const styles = StyleSheet.create({
   },
   pointsBox: {
     borderWidth: 1,
+    borderRadius: 5,
     marginRight: 10,
     paddingHorizontal: 5,
   },
   remainingPoints: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: "bold",
   },
   randomButton: {
