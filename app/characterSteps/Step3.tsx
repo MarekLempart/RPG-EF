@@ -23,14 +23,17 @@ const Step3 = () => {
     <View
       style={[styles.container, { backgroundColor: theme.colors.bgPrimary }]}
     >
-      <Text>Character Stats</Text>
       {Object.keys(attributes).map((key) => {
         const attributeKey = key as keyof typeof attributes;
         return (
           <View key={attributeKey}>
-            <Text>{attributes[attributeKey].displayName}</Text>
+            <Text style={[styles.label, { color: theme.colors.textPrimary }]}>
+              {attributes[attributeKey].displayName}
+            </Text>
             <Button title="-" onPress={() => handleUpdate(attributeKey, -1)} />
-            <Text>{attributes[attributeKey].value}</Text>
+            <Text style={[styles.label, { color: theme.colors.textPrimary }]}>
+              {attributes[attributeKey].value}
+            </Text>
             <Button title="+" onPress={() => handleUpdate(attributeKey, 1)} />
             <TextInput
               value={attributes[attributeKey].displayName}
@@ -56,6 +59,11 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
     borderRadius: 5,
+  },
+  label: {
+    fontSize: 16,
+    fontWeight: "bold",
+    marginBottom: 5,
   },
 });
 

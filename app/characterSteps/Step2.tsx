@@ -53,6 +53,7 @@ const Step2 = () => {
     >
       <View style={styles.mainContainer}>
         {/* Avatar Upload */}
+
         <TouchableOpacity onPress={pickImage} style={styles.avatarContainer}>
           <Image
             source={avatar ? { uri: avatar } : placeholderAvatar}
@@ -187,7 +188,8 @@ const styles = StyleSheet.create({
     marginRight: 15,
   },
   avatar: {
-    width: "100%",
+    width: 120,
+    height: 150,
     aspectRatio: 1,
     borderRadius: 5,
     borderWidth: 1,
