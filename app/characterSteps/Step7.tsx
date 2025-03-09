@@ -18,12 +18,13 @@ const Step7 = () => {
     <View
       style={[styles.container, { backgroundColor: theme.colors.bgPrimary }]}
     >
-      <Text style={styles.header}>Appearance</Text>
       <TextInput
         style={styles.input}
         value={appearance}
         onChangeText={(text) => dispatch(setAppearance(text))}
         multiline
+        placeholder="Describe your character's appearance"
+        placeholderTextColor={theme.colors.textSecondary}
       />
     </View>
   );
@@ -41,7 +42,7 @@ const styles = StyleSheet.create({
     borderColor: "#ccc",
     padding: 10,
     borderRadius: 5,
-    minHeight: 40,
+    minHeight: "60%",
     textAlignVertical: "top",
   },
 });

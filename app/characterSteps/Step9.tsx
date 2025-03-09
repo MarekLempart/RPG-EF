@@ -16,12 +16,13 @@ const Step9 = () => {
     <View
       style={[styles.container, { backgroundColor: theme.colors.bgPrimary }]}
     >
-      <Text style={styles.header}>Big Dream</Text>
       <TextInput
         style={styles.input}
         value={bigDream}
         onChangeText={(text) => dispatch(setBigDream(text))}
         multiline
+        placeholder="Describe your character's big dream"
+        placeholderTextColor={theme.colors.textSecondary}
       />
     </View>
   );
@@ -39,7 +40,7 @@ const styles = StyleSheet.create({
     borderColor: "#ccc",
     padding: 10,
     borderRadius: 5,
-    minHeight: 40,
+    minHeight: "60%",
     textAlignVertical: "top",
   },
 });

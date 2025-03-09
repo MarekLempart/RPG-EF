@@ -7,15 +7,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateTalents } from "../../store/slices/characterSlice";
 import { RootState } from "../../store/index";
 
-// type Talent = {
-//   name: string;
-//   description: string;
-//   bonus: string;
-//   level: string;
-//   class: string;
-//   talentType: string;
-// };
-
 const Step5 = () => {
   const { theme } = useTheme();
   const { t } = useTranslation();
@@ -106,121 +97,123 @@ const Step5 = () => {
             }
             editable={index === 0 || talent1.bonus !== "+2"}
           /> */}
-          <View style={styles.dropdownContainer}>
-            <Text style={[styles.label, { color: theme.colors.textPrimary }]}>
-              {t("Bonus")}
-            </Text>
-            <DropDownPicker
-              open={index === 0 ? bonusOpen1 : bonusOpen2}
-              setOpen={index === 0 ? setBonusOpen1 : setBonusOpen2}
-              value={talent.bonus}
-              items={[
-                { label: "+1", value: "+1" },
-                { label: "+2", value: "+2" },
-              ]}
-              setValue={(callback) =>
-                index === 0
-                  ? setTalent1((prev) => ({
-                      ...prev,
-                      bonus: callback(prev.bonus),
-                    }))
-                  : setTalent2((prev) => ({
-                      ...prev,
-                      bonus: callback(prev.bonus),
-                    }))
-              }
-              disabled={index === 1 && talent1.bonus === "+2"}
-              style={[
-                styles.dropdown,
-                {
+          <View style={styles.dropdownBox}>
+            <View style={styles.dropdownContainer}>
+              <Text style={[styles.label, { color: theme.colors.textPrimary }]}>
+                {t("Bonus")}
+              </Text>
+              <DropDownPicker
+                open={index === 0 ? bonusOpen1 : bonusOpen2}
+                setOpen={index === 0 ? setBonusOpen1 : setBonusOpen2}
+                value={talent.bonus}
+                items={[
+                  { label: "+1", value: "+1" },
+                  { label: "+2", value: "+2" },
+                ]}
+                setValue={(callback) =>
+                  index === 0
+                    ? setTalent1((prev) => ({
+                        ...prev,
+                        bonus: callback(prev.bonus),
+                      }))
+                    : setTalent2((prev) => ({
+                        ...prev,
+                        bonus: callback(prev.bonus),
+                      }))
+                }
+                disabled={index === 1 && talent1.bonus === "+2"}
+                style={[
+                  styles.dropdown,
+                  {
+                    backgroundColor: theme.colors.bgPrimary,
+                    borderColor: theme.colors.textSecondary,
+                  },
+                ]}
+                textStyle={{ color: theme.colors.textPrimary }}
+                dropDownContainerStyle={{
                   backgroundColor: theme.colors.bgPrimary,
                   borderColor: theme.colors.textSecondary,
-                },
-              ]}
-              textStyle={{ color: theme.colors.textPrimary }}
-              dropDownContainerStyle={{
-                backgroundColor: theme.colors.bgPrimary,
-                borderColor: theme.colors.textSecondary,
-              }}
-            />
-          </View>
-          <View style={styles.dropdownContainer}>
-            <Text style={[styles.label, { color: theme.colors.textPrimary }]}>
-              {t("Level")}
-            </Text>
-            <DropDownPicker
-              open={index === 0 ? levelOpen1 : levelOpen2}
-              setOpen={index === 0 ? setLevelOpen1 : setLevelOpen2}
-              value={talent.level}
-              items={[
-                { label: "1", value: "1" },
-                { label: "2", value: "2" },
-                { label: "3", value: "3" },
-              ]}
-              setValue={(callback) =>
-                index === 0
-                  ? setTalent1((prev) => ({
-                      ...prev,
-                      level: callback(prev.level),
-                    }))
-                  : setTalent2((prev) => ({
-                      ...prev,
-                      level: callback(prev.level),
-                    }))
-              }
-              disabled={index === 1 && talent1.bonus === "+2"}
-              style={[
-                styles.dropdown,
-                {
+                }}
+              />
+            </View>
+            <View style={styles.dropdownContainer}>
+              <Text style={[styles.label, { color: theme.colors.textPrimary }]}>
+                {t("Level")}
+              </Text>
+              <DropDownPicker
+                open={index === 0 ? levelOpen1 : levelOpen2}
+                setOpen={index === 0 ? setLevelOpen1 : setLevelOpen2}
+                value={talent.level}
+                items={[
+                  { label: "1", value: "1" },
+                  { label: "2", value: "2" },
+                  { label: "3", value: "3" },
+                ]}
+                setValue={(callback) =>
+                  index === 0
+                    ? setTalent1((prev) => ({
+                        ...prev,
+                        level: callback(prev.level),
+                      }))
+                    : setTalent2((prev) => ({
+                        ...prev,
+                        level: callback(prev.level),
+                      }))
+                }
+                disabled={index === 1 && talent1.bonus === "+2"}
+                style={[
+                  styles.dropdown,
+                  {
+                    backgroundColor: theme.colors.bgPrimary,
+                    borderColor: theme.colors.textSecondary,
+                  },
+                ]}
+                textStyle={{ color: theme.colors.textPrimary }}
+                dropDownContainerStyle={{
                   backgroundColor: theme.colors.bgPrimary,
                   borderColor: theme.colors.textSecondary,
-                },
-              ]}
-              textStyle={{ color: theme.colors.textPrimary }}
-              dropDownContainerStyle={{
-                backgroundColor: theme.colors.bgPrimary,
-                borderColor: theme.colors.textSecondary,
-              }}
-            />
-          </View>
-          <View style={styles.dropdownContainer}>
-            <Text style={[styles.label, { color: theme.colors.textPrimary }]}>
-              {t("Type")}
-            </Text>
-            <DropDownPicker
-              open={index === 0 ? typeOpen1 : typeOpen2}
-              setOpen={index === 0 ? setTypeOpen1 : setTypeOpen2}
-              value={talent.talentType}
-              items={[
-                { label: "Active", value: "Active" },
-                { label: "Passive", value: "Passive" },
-                { label: "Situational", value: "Situational" },
-              ]}
-              setValue={(callback) =>
-                index === 0
-                  ? setTalent1((prev) => ({
-                      ...prev,
-                      talentType: callback(prev.talentType),
-                    }))
-                  : setTalent2((prev) => ({
-                      ...prev,
-                      talentType: callback(prev.talentType),
-                    }))
-              }
-              disabled={index === 1 && talent1.bonus === "+2"}
-              style={[
-                styles.dropdown,
-                {
+                }}
+              />
+            </View>
+            <View style={styles.dropdownContainerTwo}>
+              <Text style={[styles.label, { color: theme.colors.textPrimary }]}>
+                {t("Type")}
+              </Text>
+              <DropDownPicker
+                open={index === 0 ? typeOpen1 : typeOpen2}
+                setOpen={index === 0 ? setTypeOpen1 : setTypeOpen2}
+                value={talent.talentType}
+                items={[
+                  { label: "Active", value: "Active" },
+                  { label: "Passive", value: "Passive" },
+                  { label: "Situational", value: "Situational" },
+                ]}
+                setValue={(callback) =>
+                  index === 0
+                    ? setTalent1((prev) => ({
+                        ...prev,
+                        talentType: callback(prev.talentType),
+                      }))
+                    : setTalent2((prev) => ({
+                        ...prev,
+                        talentType: callback(prev.talentType),
+                      }))
+                }
+                disabled={index === 1 && talent1.bonus === "+2"}
+                style={[
+                  styles.dropdown,
+                  {
+                    backgroundColor: theme.colors.bgPrimary,
+                    borderColor: theme.colors.textSecondary,
+                  },
+                ]}
+                textStyle={{ color: theme.colors.textPrimary }}
+                dropDownContainerStyle={{
                   backgroundColor: theme.colors.bgPrimary,
                   borderColor: theme.colors.textSecondary,
-                },
-              ]}
-              textStyle={{ color: theme.colors.textPrimary }}
-              dropDownContainerStyle={{
-                backgroundColor: theme.colors.bgPrimary,
-                borderColor: theme.colors.textSecondary,
-              }}
-            />
+                }}
+              />
+            </View>
           </View>
         </View>
       ))}
@@ -235,11 +228,22 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   talentContainer: {
-    flexDirection: "row",
+    flexDirection: "column",
     marginBottom: 100,
   },
   nameContainer: {
-    width: "30%",
+    width: "50%",
+  },
+  dropdownBox: {
+    flexDirection: "row",
+  },
+  dropdownContainer: {
+    flexDirection: "column",
+    width: "25%",
+  },
+  dropdownContainerTwo: {
+    flexDirection: "column",
+    width: "50%",
   },
   disabled: {
     opacity: 0.5,
@@ -254,9 +258,6 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     padding: 17,
     marginBottom: 10,
-  },
-  dropdownContainer: {
-    width: "23%",
   },
   dropdown: {
     borderWidth: 1,

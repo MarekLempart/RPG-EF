@@ -23,9 +23,9 @@ const Step6 = () => {
     <View
       style={[styles.container, { backgroundColor: theme.colors.bgPrimary }]}
     >
-      <Text style={styles.header}>Items</Text>
-
-      <Text style={styles.label}>Weapons</Text>
+      <Text style={[styles.label, { color: theme.colors.textPrimary }]}>
+        Weapons
+      </Text>
       <TextInput
         style={styles.input}
         value={items.weapons}
@@ -33,7 +33,9 @@ const Step6 = () => {
         multiline
       />
 
-      <Text style={styles.label}>Armor</Text>
+      <Text style={[styles.label, { color: theme.colors.textPrimary }]}>
+        Armor
+      </Text>
       <TextInput
         style={styles.input}
         value={items.armor}
@@ -41,7 +43,9 @@ const Step6 = () => {
         multiline
       />
 
-      <Text style={styles.label}>Gear</Text>
+      <Text style={[styles.label, { color: theme.colors.textPrimary }]}>
+        Gear
+      </Text>
       <TextInput
         style={styles.input}
         value={items.gear}

@@ -16,12 +16,13 @@ const Step8 = () => {
     <View
       style={[styles.container, { backgroundColor: theme.colors.bgPrimary }]}
     >
-      <Text style={styles.header}>Character History</Text>
       <TextInput
         style={styles.input}
         value={history}
         onChangeText={(text) => dispatch(setHistory(text))}
         multiline
+        placeholder="Describe your character's history"
+        placeholderTextColor={theme.colors.textSecondary}
       />
     </View>
   );
@@ -39,7 +40,7 @@ const styles = StyleSheet.create({
     borderColor: "#ccc",
     padding: 10,
     borderRadius: 5,
-    minHeight: 40,
+    minHeight: "60%",
     textAlignVertical: "top",
   },
 });

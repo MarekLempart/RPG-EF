@@ -34,7 +34,9 @@ const Step4 = () => {
   );
   const age = useSelector((state: RootState) => state.character.age);
 
-  const attributes = ["Strength", "Agility", "Wits", "Empathy"] as const;
+  const attributes = useSelector(
+    (state: RootState) => state.character.attributes
+  );
   const defaultSkills: Record<string, string[]> = {
     Strength: ["Craft", "Endure", "Fight"],
     Agility: ["Sneak", "Move", "Shoot"],
@@ -126,8 +128,9 @@ const Step4 = () => {
           skillName: key,
           value: newValues[index],
           linkedAttribute:
-            attributes.find((attr) => defaultSkills[attr].includes(key)) ||
-            "Strength",
+            (Object.keys(attributes) as (keyof typeof attributes)[]).find(
+              (attr) => defaultSkills[attr].includes(key)
+            ) || "Strength",
         })
       );
     });
@@ -159,69 +162,40 @@ const Step4 = () => {
         </TouchableOpacity>
       </View>
       <View style={styles.gridContainer}>
-        {attributes.map((attribute) => (
-          <View
-            key={attribute}
-            style={[styles.column, { borderColor: theme.colors.textSecondary }]}
-          >
+        {Object.keys(attributes).map((key) => {
+          const attributeKey = key as keyof typeof attributes;
+          return (
             <View
+              key={attributeKey}
               style={[
-                styles.attributeTitleContainer,
+                styles.column,
                 { borderColor: theme.colors.textSecondary },
               ]}
             >
-              <Text
+              <View
                 style={[
-                  styles.attributeTitle,
-                  { color: theme.colors.textPrimary },
+                  styles.attributeTitleContainer,
+                  { borderColor: theme.colors.textSecondary },
                 ]}
               >
-                {attribute}
-              </Text>
-            </View>
-            {defaultSkills[attribute].map((skillName) => (
-              <View key={skillName} style={styles.skillRow}>
-                <Text style={[{ color: theme.colors.textPrimary }]}>
-                  {skillName}
-                </Text>
-                <View style={styles.valueControls}>
-                  <TouchableOpacity
-                    onPress={() => handleSkillUpdate(skillName, -1, attribute)}
-                    style={styles.button}
-                  >
-                    <Text style={styles.buttonText}>-</Text>
-                  </TouchableOpacity>
-                  <Text
-                    style={[
-                      styles.skillValue,
-                      { color: theme.colors.textPrimary },
-                    ]}
-                  >
-                    {skills[skillName]?.value || 0}
-                  </Text>
-                  <TouchableOpacity
-                    onPress={() => handleSkillUpdate(skillName, 1, attribute)}
-                    style={styles.button}
-                  >
-                    <Text style={styles.buttonText}>+</Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
-            ))}
-            {additionalSkills
-              .filter((skill) => skill.linkedAttribute === attribute)
-              .map((skill, index) => (
-                <View
-                  key={`${skill.displayName}-${index}`}
-                  style={styles.skillRow}
+                <Text
+                  style={[
+                    styles.attributeTitle,
+                    { color: theme.colors.textPrimary },
+                  ]}
                 >
+                  {attributes[attributeKey].displayName}
+                </Text>
+              </View>
+              {defaultSkills[attributeKey]?.map((skillName) => (
+                <View key={skillName} style={styles.skillRow}>
                   <Text style={[{ color: theme.colors.textPrimary }]}>
-                    {skill.displayName}
+                    {skillName}
                   </Text>
                   <View style={styles.valueControls}>
                     <TouchableOpacity
                       onPress={() =>
-                        handleSkillUpdate(skill.displayName, -1, attribute)
+                        handleSkillUpdate(skillName, -1, attributeKey)
                       }
                       style={styles.button}
                     >
@@ -233,11 +207,11 @@ const Step4 = () => {
                         { color: theme.colors.textPrimary },
                       ]}
                     >
-                      {skill.value}
+                      {skills[skillName]?.value || 0}
                     </Text>
                     <TouchableOpacity
                       onPress={() =>
-                        handleSkillUpdate(skill.displayName, 1, attribute)
+                        handleSkillUpdate(skillName, 1, attributeKey)
                       }
                       style={styles.button}
                     >
@@ -246,37 +220,82 @@ const Step4 = () => {
                   </View>
                 </View>
               ))}
-            {!additionalSkills.some(
-              (skill) => skill.linkedAttribute === attribute
-            ) &&
-              (newSkills[attribute] ? (
-                <View>
-                  <TextInput
-                    placeholder="Skill Name"
-                    value={skillNames[attribute] || ""}
-                    onChangeText={(text) =>
-                      setSkillNames((prev) => ({ ...prev, [attribute]: text }))
-                    }
-                  />
+              {additionalSkills
+                .filter((skill) => skill.linkedAttribute === attributeKey)
+                .map((skill, index) => (
+                  <View
+                    key={`${skill.displayName}-${index}`}
+                    style={styles.skillRow}
+                  >
+                    <Text style={[{ color: theme.colors.textPrimary }]}>
+                      {skill.displayName}
+                    </Text>
+                    <View style={styles.valueControls}>
+                      <TouchableOpacity
+                        onPress={() =>
+                          handleSkillUpdate(skill.displayName, -1, attributeKey)
+                        }
+                        style={styles.button}
+                      >
+                        <Text style={styles.buttonText}>-</Text>
+                      </TouchableOpacity>
+                      <Text
+                        style={[
+                          styles.skillValue,
+                          { color: theme.colors.textPrimary },
+                        ]}
+                      >
+                        {skill.value}
+                      </Text>
+                      <TouchableOpacity
+                        onPress={() =>
+                          handleSkillUpdate(skill.displayName, 1, attributeKey)
+                        }
+                        style={styles.button}
+                      >
+                        <Text style={styles.buttonText}>+</Text>
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                ))}
+              {!additionalSkills.some(
+                (skill) => skill.linkedAttribute === attributeKey
+              ) &&
+                (newSkills[attributeKey] ? (
+                  <View>
+                    <TextInput
+                      placeholder="Skill Name"
+                      value={skillNames[attributeKey] || ""}
+                      onChangeText={(text) =>
+                        setSkillNames((prev) => ({
+                          ...prev,
+                          [attributeKey]: text,
+                        }))
+                      }
+                    />
+                    <TouchableOpacity
+                      onPress={() => handleAddSkill(attributeKey)}
+                      style={styles.addButton}
+                    >
+                      <Text style={styles.buttonText}>Add</Text>
+                    </TouchableOpacity>
+                  </View>
+                ) : (
                   <TouchableOpacity
-                    onPress={() => handleAddSkill(attribute)}
+                    onPress={() =>
+                      setNewSkills((prev) => ({
+                        ...prev,
+                        [attributeKey]: true,
+                      }))
+                    }
                     style={styles.addButton}
                   >
-                    <Text style={styles.buttonText}>Add</Text>
+                    <Text style={styles.buttonText}>+</Text>
                   </TouchableOpacity>
-                </View>
-              ) : (
-                <TouchableOpacity
-                  onPress={() =>
-                    setNewSkills((prev) => ({ ...prev, [attribute]: true }))
-                  }
-                  style={styles.addButton}
-                >
-                  <Text style={styles.buttonText}>+</Text>
-                </TouchableOpacity>
-              ))}
-          </View>
-        ))}
+                ))}
+            </View>
+          );
+        })}
       </View>
     </View>
   );
