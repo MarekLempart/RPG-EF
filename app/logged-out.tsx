@@ -1,9 +1,10 @@
 // app/logged-out.tsx
 import React from 'react';
-import { View, Text, Button, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useTranslation } from "react-i18next";
 import { useTheme } from "@/contexts/ThemeContext";
+import CustomButton from "@/components/CustomButton";
 
 export default function LoggedOutScreen() {
     const { t } = useTranslation();
@@ -15,7 +16,11 @@ export default function LoggedOutScreen() {
         <Text style={[styles.message, { color: theme.colors.textPrimary }]}>
             {t("logged_out_message")}
         </Text>
-            <Button title={t("login")} onPress={() => router.push("/login")} />
+            <CustomButton
+                title={t("login")}
+                onPress={() => router.push("/login")}
+                theme={theme}
+            />
         </View>
     );
 }

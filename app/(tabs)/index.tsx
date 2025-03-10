@@ -1,6 +1,6 @@
 // app/(tabs)/index.tsx
 import React, { useEffect } from "react";
-import { View, Text, StyleSheet, Image, Button } from "react-native";
+import { View, Text, StyleSheet, Image } from "react-native";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
@@ -8,6 +8,7 @@ import { useRouter } from "expo-router";
 import { RootState } from "@/store";
 // import LogoutButton from "@/components/LogoutButton";
 import ExitButton from "@/components/ExitButton";
+import CustomButton from "@/components/CustomButton";
 import { useFetchCurrentUser } from "@/hooks/useFetchCurrentUser";
 
 const HomeScreen = (): JSX.Element => {
@@ -47,7 +48,11 @@ const HomeScreen = (): JSX.Element => {
                 </View>
             </View>
                 <View style={styles.buttonContainer}>
-                    <Button title={t("edit_data")} onPress={() => router.push("/userEdit/editData")} />
+                    <CustomButton
+                        title={t("edit_data")}
+                        onPress={() => router.push("/userEdit/editData")}
+                        theme={theme}
+                    />
                     {/* <LogoutButton /> */}
                     <ExitButton />
                 </View>

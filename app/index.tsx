@@ -4,6 +4,7 @@ import { View, Text, Button, StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useTheme } from "@/contexts/ThemeContext";
 import ExitButton from '@/components/ExitButton';
+import CustomButton from "@/components/CustomButton";
 
 export default function WelcomeScreen() {
     const router = useRouter();
@@ -15,8 +16,16 @@ export default function WelcomeScreen() {
                 Application for RPGs with the system Year Zero Engine
             </Text>
             <View style={styles.buttonContainer}>
-                <Button title="Login" onPress={() => router.push("/login")} />
-                <Button title="Register" onPress={() => router.push("/register")} />
+                <CustomButton
+                    title="Login"
+                    onPress={() => router.push("/login")}
+                    theme={theme}
+                />
+                <CustomButton
+                    title="Register"
+                    onPress={() => router.push("/register")}
+                    theme={theme}
+                    />
                 <ExitButton />
             </View>
         </View>

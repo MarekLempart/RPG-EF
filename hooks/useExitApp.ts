@@ -28,7 +28,7 @@ export const useExitApp = () => {
                     onPress: async () => {
                         if (user.token) {
                             try {
-                                await axios.post("http://localhost:5100/api/auth/logout", null, {
+                                await axios.post("https://rpg-app-backend.onrender.com/api/auth/logout", null, {
                                     headers: { Authorization: `Bearer ${user.token}` },
                                 });
                                 dispatch(logout());

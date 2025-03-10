@@ -1,12 +1,13 @@
 // components/RegisterForm.tsx
 import React, { useState } from "react";
-import { View, Text, TextInput, Button, StyleSheet } from "react-native";
+import { View, Text, TextInput, StyleSheet } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import axios, { AxiosError } from "axios";
 import { useRouter } from "expo-router";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useTranslation } from "react-i18next";
 import Toast from "react-native-toast-message";
+import CustomButton from "@/components/CustomButton";
 
 const RegisterForm = (): JSX.Element => {
     const { theme } = useTheme();
@@ -76,7 +77,7 @@ const RegisterForm = (): JSX.Element => {
             return;
         }
         try {
-            await axios.post("http://localhost:5100/api/auth/register", {
+            await axios.post("https://rpg-app-backend.onrender.com/api/auth/register", {
                 firstName,
                 lastName,
                 email,
@@ -194,9 +195,21 @@ const RegisterForm = (): JSX.Element => {
             <Picker.Item label={t("player")} value="player" />
         </Picker>
         <View style={styles.buttonContainer}>
-            <Button title={t("register")} onPress={handleRegister} />
-            <Button title={t("login")} onPress={() => router.push("/login")} />
-            <Button title={t("back")} onPress={() => router.back()} />
+            <CustomButton
+                title={t("register")}
+                onPress={handleRegister}
+                theme={theme}
+            />
+            <CustomButton
+                title={t("login")}
+                onPress={() => router.push("/login")}
+                theme={theme}
+            />
+            <CustomButton
+                title={t("back")}
+                onPress={() => router.back()}
+                theme={theme}
+            />
         </View>
         </View>
     );

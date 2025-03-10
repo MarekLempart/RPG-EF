@@ -1,10 +1,11 @@
 // app/gameroom/joinGame.tsx
 import React, { useState } from "react";
-import { View, Text, TextInput, Button, StyleSheet } from "react-native";
+import { View, Text, TextInput, StyleSheet } from "react-native";
 import { useRouter } from "expo-router";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useTranslation } from "react-i18next";
 import Toast from "react-native-toast-message";
+import CustomButton from "@/components/CustomButton";
 
 const JoinGameScreen = (): JSX.Element => {
     const { theme } = useTheme();
@@ -49,8 +50,16 @@ const JoinGameScreen = (): JSX.Element => {
                 onChangeText={setGameCode}
             />
             <View style={styles.buttonContainer}>
-                <Button title={t("join_game")} onPress={handleJoin} />
-                <Button title={t("back")} onPress={() => router.back()} />
+                <CustomButton
+                    title={t("join_game")}
+                    onPress={handleJoin}
+                    theme={theme}
+                />
+                <CustomButton
+                    title={t("back")}
+                    onPress={() => router.back()}
+                    theme={theme}
+                />
             </View>
         </View>
     );

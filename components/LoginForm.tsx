@@ -1,6 +1,6 @@
 // components/LoginForm.tsx
 import React, { useState } from "react";
-import { View, Text, TextInput, Button, StyleSheet } from "react-native";
+import { View, Text, TextInput, StyleSheet } from "react-native";
 import axios, { AxiosError } from "axios";
 import { useDispatch } from "react-redux";
 import { useRouter } from "expo-router";
@@ -9,6 +9,7 @@ import { useTheme } from "@/contexts/ThemeContext";
 import { useTranslation } from "react-i18next";
 import Toast from "react-native-toast-message";
 import BiometricLoginButton from "./BiometricLoginButton";
+import CustomButton from "@/components/CustomButton";
 
 interface LoginResponse {
     user: {
@@ -40,7 +41,7 @@ const LoginForm = (): JSX.Element => {
             return;
         }
         try {
-            const response = await axios.post<LoginResponse>("http://localhost:5100/api/auth/login", {
+            const response = await axios.post<LoginResponse>("https://rpg-app-backend.onrender.com/api/auth/login", {
                 email,
                 password,
             });
@@ -108,8 +109,16 @@ const LoginForm = (): JSX.Element => {
                 onChangeText={setPassword}
             />
             <View style={styles.buttonContainer}>
-                <Button title={t("login")} onPress={handleLogin} />
-                <Button title={t("back")} onPress={() => router.back()} />
+                <CustomButton
+                    title={t("login")}
+                    onPress={handleLogin}
+                    theme={theme}
+                />
+                <CustomButton
+                    title={t("back")}
+                    onPress={() => router.back()}
+                    theme={theme}
+                />
             </View>
             <View style={styles.buttonContainer}>
                 <BiometricLoginButton />
