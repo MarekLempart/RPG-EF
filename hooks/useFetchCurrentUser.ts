@@ -14,7 +14,7 @@ export const useFetchCurrentUser = () => {
     const fetchCurrentUser = async (): Promise<void> => {
         if (!user.token) return;
         try {
-            const response = await axios.get("http://localhost:5100/api/auth/current", {
+            const response = await axios.get("https://rpg-app-backend.onrender.com/api/auth/current", {
                 headers: {
                     Authorization: `Bearer ${user.token}`,
                 },

@@ -1,13 +1,16 @@
 // components/BiometricLoginButton.tsx
 import React from "react";
-import { Button, View, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { useBiometricAuth } from "@/hooks/useBiometricAuth";
 import { useRouter } from "expo-router";
 import Toast from "react-native-toast-message";
+import { useTheme } from "@/contexts/ThemeContext";
 import { useTranslation } from "react-i18next";
+import CustomButton from "@/components/CustomButton";
 
 const BiometricLoginButton = (): JSX.Element => {
     const { biometricAuth } = useBiometricAuth();
+    const { theme } = useTheme();
     const { t } = useTranslation();
     const router = useRouter();
 
@@ -40,7 +43,11 @@ const BiometricLoginButton = (): JSX.Element => {
 
     return (
         <View style={styles.container}>
-            <Button title={t("login_with_biometrics")} onPress={handleBiometricLogin} />
+            <CustomButton
+                title={t("login_with_biometrics")}
+                onPress={handleBiometricLogin}
+                theme={theme}
+            />
         </View>
     );
 };

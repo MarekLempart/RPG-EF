@@ -1,6 +1,6 @@
 // app/userEdit/editData.tsx
 import React, { useState } from "react";
-import { View, Text, StyleSheet, TextInput, Button, Image, TouchableOpacity, Alert } from "react-native";
+import { View, Text, StyleSheet, TextInput, Image, TouchableOpacity, Alert } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/store";
 import { useTheme } from "@/contexts/ThemeContext";
@@ -12,6 +12,7 @@ import Toast from "react-native-toast-message";
 import { setUser } from "@/store/slices/userSlice";
 import { Picker } from "@react-native-picker/picker";
 import LogoutButton from "@/components/LogoutButton";
+import CustomButton from "@/components/CustomButton";
 
 const EditDataScreen = (): JSX.Element => {
     const { theme } = useTheme();
@@ -106,7 +107,7 @@ const EditDataScreen = (): JSX.Element => {
                 ...(password ? { password } : {})
             };
 
-            const response = await axios.patch("http://localhost:5100/api/auth/update", updatePayload, {
+            const response = await axios.patch("https://rpg-app-backend.onrender.com/api/auth/update", updatePayload, {
                 headers: { Authorization: `Bearer ${user.token}` },
             });
             const updatedUser = response.data.user;
@@ -230,7 +231,11 @@ return (
         </View>
     </View>
         <View style={styles.bottomButtons}>
-            <Button title={t("update_data")} onPress={handleUpdateData} />
+            <CustomButton
+                title={t("update_data")}
+                onPress={handleUpdateData}
+                theme={theme}
+            />
             <LogoutButton />
         </View>
     </View>

@@ -22,6 +22,22 @@ export type ThemeColors = {
     colGainsboro: string;
     colCharcoal: string;
     colSlateGray: string;
+    colHippieGreen: string;
+    colMossGreen: string;
+    colZanah: string;
+    colLynch: string;
+    colPoloBlue: string;
+    colHeather: string;
+    colAuChico: string;
+    colJaponica: string;
+    colColdTurkey: string;
+    // Nowe kolory
+    colMossGreen2: string;
+    colRegentStBlue: string;
+    colShilo: string;
+    colOlivine: string;
+    colPoloBlue2: string;
+    colPuce: string;
 };
 
 export type ThemeType = {
@@ -36,6 +52,22 @@ export type ThemeType = {
         distinction: string;
         inputBackground: string;
         inputBorder: string;
+        diceFeature: string;
+        diceFeatureSelected: string;
+        diceAbility: string;
+        diceAbilitySelected: string;
+        diceItem: string;
+        diceItemSelected: string;
+        colDiceFeatureUnselected: string;
+        colDiceAbilityUnselected: string;
+        colDiceItemUnselected: string;
+        colDiceContainerAttribute: string;
+        colDiceContainerSkill: string;
+        colDiceContainerItem: string;
+        button: string;
+        activeButton: string;
+        textOnButton: string;
+        shadowColor: string;
     };
     headerHeight: string;
     breakpoints: {

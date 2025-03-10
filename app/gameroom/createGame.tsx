@@ -6,6 +6,8 @@ import { useTheme } from "@/contexts/ThemeContext";
 import { useTranslation } from "react-i18next";
 import Toast from "react-native-toast-message";
 import * as Clipboard from "expo-clipboard";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import CustomButton from "@/components/CustomButton";
 
 const screenWidth = Dimensions.get("window").width;
 
@@ -63,7 +65,6 @@ const CreateGameScreen = (): JSX.Element => {
             });
             return;
         }
-      
         Clipboard.setStringAsync(generatedCode);
         Toast.show({
             type: "success",
@@ -124,7 +125,17 @@ const CreateGameScreen = (): JSX.Element => {
                 />
                 <View style={styles.codeRow}>
                     <View style={styles.buttonContainer}>
-                        <Button title={t("generate_code")} onPress={handleGenerateCode} />
+                        <CustomButton
+                            icon={
+                                <MaterialCommunityIcons
+                                    name="key"
+                                    size={24}
+                                    color={theme.colors.textOnButton}
+                                />
+                            }
+                            onPress={handleGenerateCode}
+                            theme={theme}
+                        />
                     </View>
                     <View style=
                         {[styles.codeOutputContainer,
@@ -140,7 +151,17 @@ const CreateGameScreen = (): JSX.Element => {
                         </Text>
                     </View>
                     <View style={styles.buttonContainer}>
-                        <Button title={t("save_code")} onPress={handleSaveCode} />
+                        <CustomButton
+                            icon={
+                                <MaterialCommunityIcons
+                                    name="content-save"
+                                    size={24}
+                                    color={theme.colors.textOnButton}
+                                />
+                            }
+                            onPress={handleSaveCode}
+                            theme={theme}
+                        />
                     </View>
                 </View>
                 <Text style={[styles.sectionTitle, { color: theme.colors.textPrimary }]}>
@@ -166,16 +187,32 @@ const CreateGameScreen = (): JSX.Element => {
                                 setInvitations(newInvitations);
                             }}
                         />
-                        <Button title={t("send_invitation")} onPress={() => handleSendInvitation(index)} />
+                        <CustomButton
+                            title={t("send_invitation")}
+                            onPress={() => handleSendInvitation(index)}
+                            theme={theme}
+                        />
                     </View>
                 ))}
                 <View style={styles.addPlayerButton}>
-                    <Button title={t("next_player")} onPress={handleAddInvitationRow} />
+                    <CustomButton
+                        title={t("next_player")}
+                        onPress={handleAddInvitationRow}
+                        theme={theme}
+                    />
                 </View>
                 <View style={styles.bottomRow}>
                     <View style={styles.bottomButton}>
-                        <Button title={t("create_game")} onPress={handleCreateGame} />
-                        <Button title={t("back")} onPress={() => router.back()} />
+                        <CustomButton
+                            title={t("create_game")}
+                            onPress={handleCreateGame}
+                            theme={theme}
+                        />
+                        <CustomButton
+                            title={t("back")}
+                            onPress={() => router.back()}
+                            theme={theme}
+                        />
                     </View>
                 </View>
             </View>
