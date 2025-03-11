@@ -4,7 +4,6 @@ import { useTranslation } from "react-i18next";
 import {
   View,
   Text,
-  Button,
   TextInput,
   StyleSheet,
   TouchableOpacity,
@@ -17,6 +16,7 @@ import {
 } from "../../store/slices/characterSlice";
 import { RootState } from "../../store/index";
 import { MaterialIcons } from "@expo/vector-icons";
+import CustomButton from "@/components/CustomButton";
 
 const MAX_SKILL_POINTS = {
   Young: 8,
@@ -69,7 +69,7 @@ const Step4 = () => {
     if (change > 0 && remainingSkillPoints <= 0) return; // Prevent increasing if no points left
 
     if (skills[skillName]) {
-      // ✅ Update default skill
+      // Update default skill
       dispatch(
         updateSkill({
           skillName,
@@ -78,7 +78,7 @@ const Step4 = () => {
         })
       );
     } else {
-      // ✅ Update additional skill separately
+      // Update additional skill separately
       dispatch(
         updateAdditionalSkill({
           skillName,
@@ -153,13 +153,18 @@ const Step4 = () => {
             {remainingSkillPoints}
           </Text>
         </View>
-        <TouchableOpacity onPress={handleRandomize} style={styles.randomButton}>
-          <MaterialIcons
-            name="casino"
-            size={20}
-            color={theme.colors.textPrimary}
-          />
-        </TouchableOpacity>
+        <CustomButton
+          icon={
+            <MaterialIcons
+              name="casino"
+              size={20}
+              color={theme.colors.textOnButton}
+            />
+          }
+          onPress={handleRandomize}
+          theme={theme}
+          style={styles.randomButton}
+        />
       </View>
       <View style={styles.gridContainer}>
         {Object.keys(attributes).map((key) => {
@@ -193,14 +198,14 @@ const Step4 = () => {
                     {skillName}
                   </Text>
                   <View style={styles.valueControls}>
-                    <TouchableOpacity
+                    <CustomButton
+                      title="-"
                       onPress={() =>
                         handleSkillUpdate(skillName, -1, attributeKey)
                       }
+                      theme={theme}
                       style={styles.button}
-                    >
-                      <Text style={styles.buttonText}>-</Text>
-                    </TouchableOpacity>
+                    />
                     <Text
                       style={[
                         styles.skillValue,
@@ -209,14 +214,14 @@ const Step4 = () => {
                     >
                       {skills[skillName]?.value || 0}
                     </Text>
-                    <TouchableOpacity
+                    <CustomButton
+                      title="+"
                       onPress={() =>
                         handleSkillUpdate(skillName, 1, attributeKey)
                       }
+                      theme={theme}
                       style={styles.button}
-                    >
-                      <Text style={styles.buttonText}>+</Text>
-                    </TouchableOpacity>
+                    />
                   </View>
                 </View>
               ))}
@@ -231,14 +236,14 @@ const Step4 = () => {
                       {skill.displayName}
                     </Text>
                     <View style={styles.valueControls}>
-                      <TouchableOpacity
+                      <CustomButton
+                        title="-"
                         onPress={() =>
                           handleSkillUpdate(skill.displayName, -1, attributeKey)
                         }
+                        theme={theme}
                         style={styles.button}
-                      >
-                        <Text style={styles.buttonText}>-</Text>
-                      </TouchableOpacity>
+                      />
                       <Text
                         style={[
                           styles.skillValue,
@@ -247,14 +252,14 @@ const Step4 = () => {
                       >
                         {skill.value}
                       </Text>
-                      <TouchableOpacity
+                      <CustomButton
+                        title="+"
                         onPress={() =>
                           handleSkillUpdate(skill.displayName, 1, attributeKey)
                         }
+                        theme={theme}
                         style={styles.button}
-                      >
-                        <Text style={styles.buttonText}>+</Text>
-                      </TouchableOpacity>
+                      />
                     </View>
                   </View>
                 ))}
@@ -273,25 +278,25 @@ const Step4 = () => {
                         }))
                       }
                     />
-                    <TouchableOpacity
+                    <CustomButton
+                      title="Add Skill"
                       onPress={() => handleAddSkill(attributeKey)}
+                      theme={theme}
                       style={styles.addButton}
-                    >
-                      <Text style={styles.buttonText}>Add</Text>
-                    </TouchableOpacity>
+                    />
                   </View>
                 ) : (
-                  <TouchableOpacity
+                  <CustomButton
+                    title="+"
                     onPress={() =>
                       setNewSkills((prev) => ({
                         ...prev,
                         [attributeKey]: true,
                       }))
                     }
+                    theme={theme}
                     style={styles.addButton}
-                  >
-                    <Text style={styles.buttonText}>+</Text>
-                  </TouchableOpacity>
+                  />
                 ))}
             </View>
           );
@@ -315,12 +320,14 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 5,
     marginRight: 10,
-    paddingHorizontal: 5,
+    marginVertical: 5,
+    paddingHorizontal: 10,
+    paddingTop: 5,
   },
   pointsRow: {
     flexDirection: "row",
     justifyContent: "center",
-    marginBottom: 10,
+    marginBottom: 5,
   },
   pointsText: {
     fontSize: 20,
@@ -329,13 +336,14 @@ const styles = StyleSheet.create({
   randomButton: {
     flexDirection: "row",
     alignItems: "center",
+    paddingHorizontal: 5,
+    paddingVertical: 7,
   },
   column: {
     borderWidth: 1,
     borderRadius: 5,
     width: "50%",
-    paddingHorizontal: 5,
-    paddingVertical: 10,
+    padding: 5,
   },
   attributeTitleContainer: {
     borderBottomWidth: 1,
@@ -351,7 +359,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    marginBottom: 15,
+    marginBottom: 10,
   },
   skillText: {
     fontSize: 16,
@@ -362,15 +370,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   button: {
-    paddingHorizontal: 5,
-    paddingVertical: 2,
-    marginHorizontal: 5,
-    borderWidth: 1,
-    borderRadius: 100,
-  },
-  buttonText: {
+    minWidth: 20,
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 50,
     fontSize: 15,
-    fontWeight: "bold",
   },
   skillValue: {
     fontSize: 12,
@@ -385,9 +389,9 @@ const styles = StyleSheet.create({
   addButton: {
     alignItems: "center",
     padding: 3,
-    borderWidth: 1,
     borderRadius: 5,
     marginTop: 10,
+    marginBottom: 5,
   },
 });
 

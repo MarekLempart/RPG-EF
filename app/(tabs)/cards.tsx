@@ -44,10 +44,15 @@ const CardsScreen = (): JSX.Element => {
       style={[styles.container, { backgroundColor: theme.colors.bgPrimary }]}
     >
       <View style={styles.buttonContainer}>
-        <Button
-          title="Add Character"
+        <CustomButton
+          title="Add New Character"
           onPress={() => router.push("/addCharacter")}
+          theme={theme}
         />
+        {/* <Button
+          title="Add New Character"
+          onPress={() => router.push("/addCharacter")}
+        /> */}
       </View>
       <Text style={[styles.title, { color: theme.colors.textPrimary }]}>
         Your Characters Cards
@@ -85,6 +90,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
     width: "100%",
     marginBottom: 50,
+    marginTop: 10,
   },
   card: {
     backgroundColor: "#fff",

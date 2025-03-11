@@ -6,6 +6,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { resetCharacter } from "../store/slices/characterSlice";
 import { RootState } from "../store/index";
+import CustomButton from "@/components/CustomButton";
 import Step1 from "./characterSteps/Step1";
 import Step2 from "./characterSteps/Step2";
 import Step3 from "./characterSteps/Step3";
@@ -46,24 +47,54 @@ const AddCharacterScreen = (): JSX.Element => {
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <TouchableOpacity onPress={handleBack} disabled={step === 1}>
-          <Ionicons
-            name="arrow-back"
-            size={24}
-            color={step === 1 ? "gray" : "black"}
-          />
-        </TouchableOpacity>
-        <Text style={styles.title}>{getStepTitle()}</Text>
+    <View
+      style={[styles.container, { backgroundColor: theme.colors.bgPrimary }]}
+    >
+      <View
+        style={[styles.header, { borderColor: theme.colors.textSecondary }]}
+      >
+        <CustomButton
+          icon={
+            <Ionicons
+              name="arrow-back"
+              size={24}
+              color={step === 1 ? "gray" : `${theme.colors.textOnButton}`}
+            />
+          }
+          onPress={handleBack}
+          theme={theme}
+          disabled={step === 1}
+        />
+        <Text style={[styles.title, { color: theme.colors.textPrimary }]}>
+          {getStepTitle()}
+        </Text>
         {step < 9 ? (
-          <TouchableOpacity onPress={handleNext}>
-            <Ionicons name="arrow-forward" size={24} color="black" />
-          </TouchableOpacity>
+          <CustomButton
+            icon={
+              <Ionicons
+                name="arrow-forward"
+                size={24}
+                color={theme.colors.textOnButton}
+              />
+            }
+            onPress={handleNext}
+            theme={theme}
+          />
         ) : (
-          <TouchableOpacity onPress={handleComplete}>
-            <Ionicons name="checkmark" size={24} color="black" />
-          </TouchableOpacity>
+          <CustomButton
+            icon={
+              <Ionicons
+                name="checkmark"
+                size={24}
+                color={theme.colors.textOnButton}
+              />
+            }
+            onPress={handleComplete}
+            theme={theme}
+          />
+          // <TouchableOpacity onPress={handleComplete}>
+          //   <Ionicons name="checkmark" size={24} color="black" />
+          // </TouchableOpacity>
         )}
       </View>
 
@@ -91,7 +122,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     paddingVertical: 10,
     borderBottomWidth: 1,
-    borderBottomColor: "#ccc",
   },
   title: {
     fontSize: 18,

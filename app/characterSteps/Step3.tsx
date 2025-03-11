@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateAttribute } from "../../store/slices/characterSlice";
 import { RootState } from "../../store/index";
 import { MaterialIcons } from "@expo/vector-icons";
+import CustomButton from "@/components/CustomButton";
 
 const MAX_POINTS = {
   Young: 15,
@@ -105,13 +106,18 @@ const Step3 = () => {
             {remainingPoints}
           </Text>
         </View>
-        <TouchableOpacity onPress={handleRandomize} style={styles.randomButton}>
-          <MaterialIcons
-            name="casino"
-            size={20}
-            color={theme.colors.textPrimary}
-          />
-        </TouchableOpacity>
+        <CustomButton
+          icon={
+            <MaterialIcons
+              name="casino"
+              size={20}
+              color={theme.colors.textOnButton}
+            />
+          }
+          onPress={handleRandomize}
+          theme={theme}
+          style={styles.randomButton}
+        />
       </View>
       {Object.keys(attributes).map((key) => {
         const attributeKey = key as keyof typeof attributes;
@@ -161,12 +167,12 @@ const Step3 = () => {
                 </TouchableOpacity>
               )}
               <View style={styles.valueControls}>
-                <TouchableOpacity
+                <CustomButton
+                  title="-"
                   onPress={() => handleUpdate(attributeKey, -1)}
+                  theme={theme}
                   style={styles.button}
-                >
-                  <Text style={styles.buttonText}>-</Text>
-                </TouchableOpacity>
+                />
                 <Text
                   style={[
                     styles.attributeValue,
@@ -175,12 +181,12 @@ const Step3 = () => {
                 >
                   {attributes[attributeKey].value}
                 </Text>
-                <TouchableOpacity
+                <CustomButton
+                  title="+"
                   onPress={() => handleUpdate(attributeKey, 1)}
+                  theme={theme}
                   style={styles.button}
-                >
-                  <Text style={styles.buttonText}>+</Text>
-                </TouchableOpacity>
+                />
               </View>
             </View>
             <Text
@@ -213,13 +219,15 @@ const styles = StyleSheet.create({
   remainingPointsRow: {
     flexDirection: "row",
     justifyContent: "center",
-    marginBottom: 10,
+    marginBottom: 5,
   },
   pointsBox: {
     borderWidth: 1,
     borderRadius: 5,
     marginRight: 10,
-    paddingHorizontal: 5,
+    marginVertical: 5,
+    paddingHorizontal: 10,
+    paddingTop: 5,
   },
   remainingPoints: {
     fontSize: 20,
@@ -228,6 +236,8 @@ const styles = StyleSheet.create({
   randomButton: {
     flexDirection: "row",
     alignItems: "center",
+    paddingHorizontal: 5,
+    paddingVertical: 7,
   },
   attributeContainer: {
     padding: 10,
@@ -259,16 +269,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   button: {
+    minWidth: 30,
     paddingHorizontal: 10,
-    paddingVertical: 4,
-    marginHorizontal: 5,
-    borderWidth: 1,
-    borderRadius: 100,
-  },
-  buttonText: {
+    paddingVertical: 6,
+    borderRadius: 50,
     fontSize: 18,
     fontWeight: "bold",
   },
+
   attributeValue: {
     fontSize: 18,
     fontWeight: "bold",
