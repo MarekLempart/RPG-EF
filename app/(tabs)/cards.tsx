@@ -1,9 +1,10 @@
 // app/(tabs)/cards.tsx
 import React from "react";
-import { View, Text, StyleSheet, Button } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import { useRouter } from "expo-router";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useTranslation } from "react-i18next";
+import CustomButton from "@/components/CustomButton";
 
 
 const CardsScreen = (): JSX.Element => {
@@ -21,8 +22,16 @@ const CardsScreen = (): JSX.Element => {
             <Text style={[styles.title, { color: theme.colors.textPrimary }]}>{t("resources_page")}:</Text>
             <Text style={[styles.title, { color: theme.colors.textPrimary }]}>{t("view_character_sheets")}</Text>
             <View style={styles.buttonContainer}>
-                <Button title={t("resources")} onPress={handleResourcesPage} />
-                <Button title={t("back")} onPress={() => router.back()} />
+                <CustomButton
+                    title={t("resources")}
+                    onPress={handleResourcesPage}
+                    theme={theme}
+                />
+                <CustomButton
+                    title={t("back")}
+                    onPress={() => router.back()}
+                    theme={theme}
+                />
             </View>
         </View>
     );
@@ -37,6 +46,7 @@ const styles = StyleSheet.create({
         justifyContent: "center"
     },
     title: {
+        textAlign: "center",
         fontSize: 24
     },
     buttonContainer: {

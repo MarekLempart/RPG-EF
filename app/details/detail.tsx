@@ -1,8 +1,9 @@
 // app/details/detail.tsx
 import React, { useLayoutEffect} from "react";
-import { View, Text, StyleSheet, Button, Platform } from "react-native";
+import { View, Text, StyleSheet, Platform } from "react-native";
 import { useRouter, useNavigation } from "expo-router";
 import { useTheme } from "@/contexts/ThemeContext";
+import CustomButton from "@/components/CustomButton";
 
 const DetailScreen = (): JSX.Element => {
     const router = useRouter();
@@ -31,8 +32,16 @@ const DetailScreen = (): JSX.Element => {
                 Resource details
             </Text>
             <View style={styles.buttonContainer}>
-                <Button title="Details" onPress={handleDetails} />
-                <Button title="Back" onPress={() => router.back()} />
+                <CustomButton
+                    title="Details"
+                    onPress={handleDetails}
+                    theme={theme}
+                />
+                <CustomButton
+                    title="Back"
+                    onPress={() => router.back()}
+                    theme={theme}
+                />
             </View>
         </View>
     );

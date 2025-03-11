@@ -5,15 +5,14 @@ import { Platform } from 'react-native';
 
 type Props = Omit<ComponentProps<typeof Link>, 'href'> & { href: ExternalPathString };
 
-// Funkcja sprawdzająca, czy URL jest poprawnym linkiem zewnętrznym
 const isValidExternalLink = (url: string): url is ExternalPathString => {
-  return /^https?:\/\//.test(url); // Sprawdza, czy URL zaczyna się od "http://" lub "https://"
+  return /^https?:\/\//.test(url);
 };
 
 export function ExternalLink({ href, ...rest }: Props) {
   if (!isValidExternalLink(href)) {
     console.error(`Invalid external link: ${href}`);
-    return null; // Zwracamy `null`, jeśli `href` nie jest poprawnym linkiem
+    return null;
   }
   
   return (
