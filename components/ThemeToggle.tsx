@@ -1,4 +1,3 @@
-// components/ThemeToggle.tsx
 import React, { useEffect, useRef } from "react";
 import { TouchableOpacity, StyleSheet, Animated, Easing, View } from "react-native";
 import { useTheme } from "@/contexts/ThemeContext";

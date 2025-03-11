@@ -5,6 +5,7 @@ import { View, Text, StyleSheet, Button, FlatList } from "react-native";
 import { useRouter } from "expo-router";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useTranslation } from "react-i18next";
+import CustomButton from "@/components/CustomButton";
 
 interface Character {
   id: string;

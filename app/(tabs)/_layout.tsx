@@ -1,21 +1,27 @@
 // app/(tabs)/_layout.tsx
-import { Tabs } from "expo-router";
+import { Tabs, useRouter } from "expo-router";
 import React, { useEffect } from "react";
 import { Platform, StatusBar } from "react-native";
-
+import { useSelector } from "react-redux";
+import { RootState } from "@/store";
+import { useTheme } from "@/contexts/ThemeContext";
+import { darkTheme } from "@/styles/theme";
+import HeaderActions from "@/components/HeaderActions";
 import { HapticTab } from "@/components/HapticTab";
 import { IconSymbol } from "@/components/ui/IconSymbol";
 import TabBarBackground from "@/components/ui/TabBarBackground";
-import HeaderActions from "@/components/HeaderActions";
-// import { Colors } from "@/constants/Colors";
-// import { useColorScheme } from "@/hooks/useColorScheme";
-import { useTheme } from "@/contexts/ThemeContext";
-import { darkTheme } from "@/styles/theme";
 
 export default function TabLayout() {
-    // const colorScheme = useColorScheme();
     const { theme } = useTheme();
+    const user = useSelector((state: RootState) => state.user);
+    const router = useRouter();
     const isDarkTheme = theme === darkTheme;
+
+    useEffect(() => {
+        if (!user.token) {
+            router.replace("/");
+        }
+    }, [user.token]);
 
     useEffect(() => {
         StatusBar.setBarStyle(isDarkTheme ? "light-content" : "dark-content");
@@ -23,7 +29,6 @@ export default function TabLayout() {
 
     return (
         <>
-            {/* <StatusBar barStyle={isDarkTheme ? "light-content" : "dark-content"} /> */}
             <StatusBar
                 barStyle={isDarkTheme ? "light-content" : "dark-content"}
                 backgroundColor={theme.colors.bgPrimary}
