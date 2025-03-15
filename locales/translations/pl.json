@@ -115,7 +115,7 @@
   "attributes": {
     "strength": "Siła",
     "agility": "Zwinność",
-    "wits": "Spryt",
+    "wits": "Polot",
     "empathy": "Empatia"
   },
   "attribute_description": {
@@ -123,5 +123,7 @@
     "agility": "Motoryka, szybkość i sprawność.",
     "wits": "Inteligencja, poczytalność i spostrzegawczość.",
     "empathy": "Charyzma i zdolność manipulowania innymi."
-  }
+  },
+  "skill_name_add_placeholder": "Nazwa Umiejętności",
+  "add_skill_button": "Dodaj Umiejętność"
 }

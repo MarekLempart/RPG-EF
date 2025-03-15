@@ -269,7 +269,7 @@ const Step4 = () => {
                 (newSkills[attributeKey] ? (
                   <View>
                     <TextInput
-                      placeholder="Skill Name"
+                      placeholder={t("skill_name_add_placeholder")}
                       value={skillNames[attributeKey] || ""}
                       onChangeText={(text) =>
                         setSkillNames((prev) => ({
@@ -279,7 +279,7 @@ const Step4 = () => {
                       }
                     />
                     <CustomButton
-                      title="Add Skill"
+                      title={t("add_skill_button")}
                       onPress={() => handleAddSkill(attributeKey)}
                       theme={theme}
                       style={styles.addButton}

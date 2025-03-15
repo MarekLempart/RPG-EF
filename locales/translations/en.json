@@ -123,5 +123,7 @@
     "agility": "Motor skills, speed, and agility.",
     "wits": "Intelligence, sanity, and perception.",
     "empathy": "Charisma and the ability to manipulate others."
-  }
+  },
+  "skill_name_add_placeholder": "Skill Name",
+  "add_skill_button": "Add Skill"
 }
