@@ -13,24 +13,20 @@ const Step5 = () => {
   const dispatch = useDispatch();
   const talents = useSelector((state: RootState) => state.character.talents);
 
-  const [talent1, setTalent1] = useState(
-    talents[0] || {
-      name: "",
-      description: "",
-      bonus: "+1",
-      level: "1",
-      talentType: "Active",
-    }
-  );
-  const [talent2, setTalent2] = useState(
-    talents[1] || {
-      name: "",
-      description: "",
-      bonus: "+1",
-      level: "1",
-      talentType: "Active",
-    }
-  );
+  const talent1 = talents[0] || {
+    name: "",
+    description: "",
+    bonus: "+1",
+    level: "1",
+    talentType: "Active",
+  };
+  const talent2 = talents[1] || {
+    name: "",
+    description: "",
+    bonus: "+1",
+    level: "1",
+    talentType: "Active",
+  };
 
   const [bonusOpen1, setBonusOpen1] = useState(false);
   const [bonusOpen2, setBonusOpen2] = useState(false);
@@ -39,9 +35,15 @@ const Step5 = () => {
   const [typeOpen1, setTypeOpen1] = useState(false);
   const [typeOpen2, setTypeOpen2] = useState(false);
 
-  const handleSave = () => {
-    const newTalents = talent1.bonus === "+2" ? [talent1] : [talent1, talent2];
-    dispatch(updateTalents(newTalents));
+  // Handle updates and save directly to Redux
+  const updateTalent = (index: number, updatedTalent: any) => {
+    const newTalents = [...talents];
+    newTalents[index] = updatedTalent;
+
+    // If talent1 has "+2", disable talent2
+    dispatch(
+      updateTalents(updatedTalent.bonus === "+2" ? [newTalents[0]] : newTalents)
+    );
   };
 
   return (
@@ -56,6 +58,7 @@ const Step5 = () => {
             talent1.bonus === "+2" && index === 1 ? styles.disabled : null,
           ]}
         >
+          {/* Talent Name */}
           <View style={styles.nameContainer}>
             <Text style={[styles.label, { color: theme.colors.textPrimary }]}>
               {t("talent_name")}
@@ -72,13 +75,13 @@ const Step5 = () => {
               placeholderTextColor={theme.colors.textSecondary}
               value={talent.name}
               onChangeText={(text) =>
-                index === 0
-                  ? setTalent1({ ...talent1, name: text })
-                  : setTalent2({ ...talent2, name: text })
+                updateTalent(index, { ...talent, name: text })
               }
               editable={index === 0 || talent1.bonus !== "+2"}
             />
           </View>
+
+          {/* Dropdowns */}
           <View style={styles.dropdownBox}>
             <View style={styles.dropdownContainer}>
               <Text style={[styles.label, { color: theme.colors.textPrimary }]}>
@@ -93,15 +96,10 @@ const Step5 = () => {
                   { label: "+2", value: "+2" },
                 ]}
                 setValue={(callback) =>
-                  index === 0
-                    ? setTalent1((prev) => ({
-                        ...prev,
-                        bonus: callback(prev.bonus),
-                      }))
-                    : setTalent2((prev) => ({
-                        ...prev,
-                        bonus: callback(prev.bonus),
-                      }))
+                  updateTalent(index, {
+                    ...talent,
+                    bonus: callback(talent.bonus),
+                  })
                 }
                 disabled={index === 1 && talent1.bonus === "+2"}
                 style={[
@@ -118,6 +116,7 @@ const Step5 = () => {
                 }}
               />
             </View>
+
             <View style={styles.dropdownContainer}>
               <Text style={[styles.label, { color: theme.colors.textPrimary }]}>
                 {t("talent_level")}
@@ -132,15 +131,10 @@ const Step5 = () => {
                   { label: "3", value: "3" },
                 ]}
                 setValue={(callback) =>
-                  index === 0
-                    ? setTalent1((prev) => ({
-                        ...prev,
-                        level: callback(prev.level),
-                      }))
-                    : setTalent2((prev) => ({
-                        ...prev,
-                        level: callback(prev.level),
-                      }))
+                  updateTalent(index, {
+                    ...talent,
+                    level: callback(talent.level),
+                  })
                 }
                 disabled={index === 1 && talent1.bonus === "+2"}
                 style={[
@@ -157,6 +151,7 @@ const Step5 = () => {
                 }}
               />
             </View>
+
             <View style={styles.dropdownContainerTwo}>
               <Text style={[styles.label, { color: theme.colors.textPrimary }]}>
                 {t("talent_type")}
@@ -171,15 +166,10 @@ const Step5 = () => {
                   { label: t("types.situational"), value: "Situational" },
                 ]}
                 setValue={(callback) =>
-                  index === 0
-                    ? setTalent1((prev) => ({
-                        ...prev,
-                        talentType: callback(prev.talentType),
-                      }))
-                    : setTalent2((prev) => ({
-                        ...prev,
-                        talentType: callback(prev.talentType),
-                      }))
+                  updateTalent(index, {
+                    ...talent,
+                    talentType: callback(talent.talentType),
+                  })
                 }
                 disabled={index === 1 && talent1.bonus === "+2"}
                 style={[
