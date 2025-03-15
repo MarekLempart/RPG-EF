@@ -139,5 +139,14 @@
     "manipulate": "Manipulate",
     "senseemotion": "Sense Emot.",
     "heal": "Heal"
+  },
+  "talent_name": "Talent Name",
+  "talent_name_placeholder": "Name",
+  "talent_level": "Level",
+  "talent_type": "Type",
+  "types": {
+    "active": "Active",
+    "passive": "Passive",
+    "situational": "Situational"
   }
 }

@@ -58,7 +58,7 @@ const Step5 = () => {
         >
           <View style={styles.nameContainer}>
             <Text style={[styles.label, { color: theme.colors.textPrimary }]}>
-              {t("Talent Name")}
+              {t("talent_name")}
             </Text>
             <TextInput
               style={[
@@ -68,7 +68,7 @@ const Step5 = () => {
                   borderColor: theme.colors.textSecondary,
                 },
               ]}
-              placeholder="Name"
+              placeholder={t("talent_name_placeholder")}
               placeholderTextColor={theme.colors.textSecondary}
               value={talent.name}
               onChangeText={(text) =>
@@ -79,28 +79,10 @@ const Step5 = () => {
               editable={index === 0 || talent1.bonus !== "+2"}
             />
           </View>
-          {/* <TextInput
-            style={[
-              styles.input,
-              {
-                color: theme.colors.textPrimary,
-                borderColor: theme.colors.textSecondary,
-              },
-            ]}
-            placeholder="Description"
-            placeholderTextColor={theme.colors.textSecondary}
-            value={talent.description}
-            onChangeText={(text) =>
-              index === 0
-                ? setTalent1({ ...talent1, description: text })
-                : setTalent2({ ...talent2, description: text })
-            }
-            editable={index === 0 || talent1.bonus !== "+2"}
-          /> */}
           <View style={styles.dropdownBox}>
             <View style={styles.dropdownContainer}>
               <Text style={[styles.label, { color: theme.colors.textPrimary }]}>
-                {t("Bonus")}
+                Bonus
               </Text>
               <DropDownPicker
                 open={index === 0 ? bonusOpen1 : bonusOpen2}
@@ -138,7 +120,7 @@ const Step5 = () => {
             </View>
             <View style={styles.dropdownContainer}>
               <Text style={[styles.label, { color: theme.colors.textPrimary }]}>
-                {t("Level")}
+                {t("talent_level")}
               </Text>
               <DropDownPicker
                 open={index === 0 ? levelOpen1 : levelOpen2}
@@ -177,16 +159,16 @@ const Step5 = () => {
             </View>
             <View style={styles.dropdownContainerTwo}>
               <Text style={[styles.label, { color: theme.colors.textPrimary }]}>
-                {t("Type")}
+                {t("talent_type")}
               </Text>
               <DropDownPicker
                 open={index === 0 ? typeOpen1 : typeOpen2}
                 setOpen={index === 0 ? setTypeOpen1 : setTypeOpen2}
                 value={talent.talentType}
                 items={[
-                  { label: "Active", value: "Active" },
-                  { label: "Passive", value: "Passive" },
-                  { label: "Situational", value: "Situational" },
+                  { label: t("types.active"), value: "Active" },
+                  { label: t("types.passive"), value: "Passive" },
+                  { label: t("types.situational"), value: "Situational" },
                 ]}
                 setValue={(callback) =>
                   index === 0

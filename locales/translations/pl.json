@@ -139,5 +139,14 @@
     "manipulate": "Manipulacja",
     "senseemotion": "Wycz. Emocji",
     "heal": "Leczenie"
+  },
+  "talent_name": "Nazwa Talentu",
+  "talent_name_placeholder": "Nazwa",
+  "talent_level": "Poziom",
+  "talent_type": "Typ",
+  "types": {
+    "active": "Aktywny",
+    "passive": "Pasywny",
+    "situational": "Sytuacyjny"
   }
 }
