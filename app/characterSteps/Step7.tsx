@@ -19,7 +19,7 @@ const Step7 = () => {
       style={[styles.container, { backgroundColor: theme.colors.bgPrimary }]}
     >
       <TextInput
-        style={styles.input}
+        style={[styles.input, { color: theme.colors.textPrimary }]}
         value={appearance}
         onChangeText={(text) => dispatch(setAppearance(text))}
         multiline

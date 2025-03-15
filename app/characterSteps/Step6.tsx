@@ -27,7 +27,7 @@ const Step6 = () => {
         {t("items_weapons")}
       </Text>
       <TextInput
-        style={styles.input}
+        style={[styles.input, { color: theme.colors.textPrimary }]}
         value={items.weapons}
         onChangeText={(text) => handleInputChange("weapons", text)}
         multiline
@@ -37,7 +37,7 @@ const Step6 = () => {
         {t("items_armos")}
       </Text>
       <TextInput
-        style={styles.input}
+        style={[styles.input, { color: theme.colors.textPrimary }]}
         value={items.armor}
         onChangeText={(text) => handleInputChange("armor", text)}
         multiline
@@ -47,7 +47,7 @@ const Step6 = () => {
         {t("items_gear")}
       </Text>
       <TextInput
-        style={styles.input}
+        style={[styles.input, { color: theme.colors.textPrimary }]}
         value={items.gear}
         onChangeText={(text) => handleInputChange("gear", text)}
         multiline

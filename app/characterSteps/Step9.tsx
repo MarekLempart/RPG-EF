@@ -17,7 +17,7 @@ const Step9 = () => {
       style={[styles.container, { backgroundColor: theme.colors.bgPrimary }]}
     >
       <TextInput
-        style={styles.input}
+        style={[styles.input, { color: theme.colors.textPrimary }]}
         value={bigDream}
         onChangeText={(text) => dispatch(setBigDream(text))}
         multiline
