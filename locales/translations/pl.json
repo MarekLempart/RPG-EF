@@ -95,7 +95,7 @@
   "no_characters": "Brak postaci do wyświetlenia",
   "game_settings": "Ustawienia Gry",
   "character_description": "Opis Postaci",
-  "attributes": "Cechy",
+  "attributes_title": "Cechy",
   "skills": "Umiejętności",
   "talents": "Talenty",
   "items": "Przedmioty",
@@ -112,7 +112,7 @@
   "character_age": "Wiek",
   "character_archetype": "Archetyp",
   "character_race": "Rasa",
-  "attributes_names": {
+  "attributes": {
     "strength": "Siła",
     "agility": "Zwinność",
     "wits": "Spryt",

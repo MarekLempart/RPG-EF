@@ -157,7 +157,7 @@ const Step3 = () => {
                       { color: theme.colors.textPrimary },
                     ]}
                   >
-                    {editedNames[attributeKey]}
+                    {t(`attributes.${attributeKey.toLowerCase()}`)}
                   </Text>
                   <MaterialIcons
                     name="edit"
@@ -195,13 +195,7 @@ const Step3 = () => {
                 { color: theme.colors.textSecondary },
               ]}
             >
-              {attributeKey === "Strength"
-                ? t("attribute_description.strength")
-                : attributeKey === "Agility"
-                ? t("attribute_description.agility")
-                : attributeKey === "Wits"
-                ? t("attribute_description.wits")
-                : t("attribute_description.empathy")}
+              {t(`attribute_description.${attributeKey.toLowerCase()}`)}
             </Text>
           </View>
         );

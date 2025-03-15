@@ -95,7 +95,7 @@
   "no_characters": "No characters to display",
   "game_settings": "Game Settings",
   "character_description": "Character Description",
-  "attributes": "Attributes",
+  "attributes_title": "Attributes",
   "skills": "Skills",
   "talents": "Talents",
   "items": "Items",
@@ -112,7 +112,7 @@
   "character_age": "Age",
   "character_archetype": "Archetype",
   "character_race": "Race",
-  "attribut_names": {
+  "attributes": {
     "strength": "Strength",
     "agility": "Agility",
     "wits": "Wits",
