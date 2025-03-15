@@ -24,7 +24,7 @@ const Step6 = () => {
       style={[styles.container, { backgroundColor: theme.colors.bgPrimary }]}
     >
       <Text style={[styles.label, { color: theme.colors.textPrimary }]}>
-        Weapons
+        {t("items_weapons")}
       </Text>
       <TextInput
         style={styles.input}
@@ -34,7 +34,7 @@ const Step6 = () => {
       />
 
       <Text style={[styles.label, { color: theme.colors.textPrimary }]}>
-        Armor
+        {t("items_armos")}
       </Text>
       <TextInput
         style={styles.input}
@@ -44,7 +44,7 @@ const Step6 = () => {
       />
 
       <Text style={[styles.label, { color: theme.colors.textPrimary }]}>
-        Gear
+        {t("items_gear")}
       </Text>
       <TextInput
         style={styles.input}
