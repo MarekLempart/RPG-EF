@@ -30,6 +30,8 @@ const CardsScreen = (): JSX.Element => {
   const [loading, setLoading] = useState(true);
   const user = useSelector((state: RootState) => state.user);
 
+  const placeholderAvatar = require("../../assets/images/avatar-placeholder.png");
+
   useEffect(() => {
     fetchCharacters();
   }, []);
@@ -74,7 +76,7 @@ const CardsScreen = (): JSX.Element => {
       </View>
 
       <Text style={[styles.title, { color: theme.colors.textPrimary }]}>
-        {t("your_chcracters")}
+        {t("your_characters")}
       </Text>
 
       {loading ? (
@@ -107,7 +109,7 @@ const CardsScreen = (): JSX.Element => {
             >
               <Image
                 source={{
-                  uri: item.avatar || "https://via.placeholder.com/100",
+                  uri: item.avatar || placeholderAvatar,
                 }}
                 style={styles.avatar}
               />

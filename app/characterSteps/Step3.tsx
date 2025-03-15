@@ -13,12 +13,7 @@ import { updateAttribute } from "../../store/slices/characterSlice";
 import { RootState } from "../../store/index";
 import { MaterialIcons } from "@expo/vector-icons";
 import CustomButton from "@/components/CustomButton";
-
-const MAX_POINTS = {
-  Young: 15,
-  Adult: 14,
-  Old: 13,
-};
+import { MAX_POINTS } from "../constants/constants";
 
 const Step3 = () => {
   const { theme } = useTheme();

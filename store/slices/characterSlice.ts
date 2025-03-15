@@ -19,7 +19,7 @@ interface Talent {
   talentType: "Active" | "Passive" | "Situational";
 }
 
-interface CharacterState {
+export interface CharacterState {
   RPGSystem: string;
   name: string;
   age: "Young" | "Adult" | "Old";

@@ -17,12 +17,7 @@ import {
 import { RootState } from "../../store/index";
 import { MaterialIcons } from "@expo/vector-icons";
 import CustomButton from "@/components/CustomButton";
-
-const MAX_SKILL_POINTS = {
-  Young: 8,
-  Adult: 10,
-  Old: 12,
-};
+import { MAX_SKILL_POINTS } from "../constants/constants";
 
 const Step4 = () => {
   const { theme } = useTheme();
