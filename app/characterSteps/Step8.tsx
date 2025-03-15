@@ -21,7 +21,7 @@ const Step8 = () => {
         value={history}
         onChangeText={(text) => dispatch(setHistory(text))}
         multiline
-        placeholder="Describe your character's history"
+        placeholder={t("history_placeholder")}
         placeholderTextColor={theme.colors.textSecondary}
       />
     </View>

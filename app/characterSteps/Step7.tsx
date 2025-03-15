@@ -23,7 +23,7 @@ const Step7 = () => {
         value={appearance}
         onChangeText={(text) => dispatch(setAppearance(text))}
         multiline
-        placeholder="Describe your character's appearance"
+        placeholder={t("appearance_placeholder")}
         placeholderTextColor={theme.colors.textSecondary}
       />
     </View>

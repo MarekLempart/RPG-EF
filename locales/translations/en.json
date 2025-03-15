@@ -151,5 +151,8 @@
   },
   "items_weapons": "Weapons",
   "items_armos": "Armor",
-  "items_gear": "Gear"
+  "items_gear": "Gear",
+  "appearance_placeholder": "Describe your character's appearance",
+  "history_placeholder": "Describe your character's history",
+  "bigDream_placeholder": "Describe your character's big dream"
 }

@@ -21,7 +21,7 @@ const Step9 = () => {
         value={bigDream}
         onChangeText={(text) => dispatch(setBigDream(text))}
         multiline
-        placeholder="Describe your character's big dream"
+        placeholder={t("bigDream_placeholder")}
         placeholderTextColor={theme.colors.textSecondary}
       />
     </View>

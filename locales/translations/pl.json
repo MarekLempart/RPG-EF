@@ -151,5 +151,8 @@
   },
   "items_weapons": "Broń",
   "items_armos": "Pancerz",
-  "items_gear": "Sprzęt"
+  "items_gear": "Sprzęt",
+  "appearance_placeholder": "Opisz wygląd swojej postaci",
+  "history_placeholder": "Opisz historię swojej postaci",
+  "bigDream_placeholder": "Opisz wielkie marzenie swojej postaci"
 }
