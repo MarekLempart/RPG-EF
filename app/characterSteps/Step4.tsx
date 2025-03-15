@@ -41,7 +41,7 @@ const Step4 = () => {
     Strength: ["Craft", "Endure", "Fight"],
     Agility: ["Sneak", "Move", "Shoot"],
     Wits: ["Scout", "Comprehend", "Survive"],
-    Empathy: ["Manipulate", "Sense Emot.", "Heal"],
+    Empathy: ["Manipulate", "SenseEmotion", "Heal"],
   };
 
   const [remainingSkillPoints, setRemainingSkillPoints] = useState(
@@ -189,13 +189,13 @@ const Step4 = () => {
                     { color: theme.colors.textPrimary },
                   ]}
                 >
-                  {attributes[attributeKey].displayName}
+                  {t(`attributes.${attributeKey.toLowerCase()}`)}
                 </Text>
               </View>
               {defaultSkills[attributeKey]?.map((skillName) => (
                 <View key={skillName} style={styles.skillRow}>
                   <Text style={[{ color: theme.colors.textPrimary }]}>
-                    {skillName}
+                    {t(`skills.${skillName.toLowerCase()}`)}
                   </Text>
                   <View style={styles.valueControls}>
                     <CustomButton
@@ -368,6 +368,8 @@ const styles = StyleSheet.create({
   valueControls: {
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: "center",
+    gap: 1,
   },
   button: {
     minWidth: 20,
@@ -375,10 +377,11 @@ const styles = StyleSheet.create({
     paddingVertical: 4,
     borderRadius: 50,
     fontSize: 15,
+    marginHorizontal: 2,
   },
   skillValue: {
     fontSize: 12,
-    marginHorizontal: 10,
+    marginHorizontal: 5,
   },
   input: {
     borderWidth: 1,

@@ -60,7 +60,7 @@ const defaultSkills: Record<string, Skill> = {
     linkedAttribute: "Empathy",
   },
   SenseEmotion: {
-    displayName: "Sense Emotion",
+    displayName: "SenseEmotion",
     value: 0,
     linkedAttribute: "Empathy",
   },

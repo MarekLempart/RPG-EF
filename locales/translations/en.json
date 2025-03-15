@@ -96,7 +96,7 @@
   "game_settings": "Game Settings",
   "character_description": "Character Description",
   "attributes_title": "Attributes",
-  "skills": "Skills",
+  "skills_title": "Skills",
   "talents": "Talents",
   "items": "Items",
   "appearance": "Appearance",
@@ -125,5 +125,19 @@
     "empathy": "Charisma and the ability to manipulate others."
   },
   "skill_name_add_placeholder": "Skill Name",
-  "add_skill_button": "Add Skill"
+  "add_skill_button": "Add Skill",
+  "skills": {
+    "craft": "Craft",
+    "endure": "Endure",
+    "fight": "Fight",
+    "sneak": "Sneak",
+    "move": "Move",
+    "shoot": "Shoot",
+    "scout": "Scout",
+    "comprehend": "Comprehend",
+    "survive": "Survive",
+    "manipulate": "Manipulate",
+    "senseemotion": "Sense Emot.",
+    "heal": "Heal"
+  }
 }

@@ -36,7 +36,7 @@ const AddCharacterScreen = (): JSX.Element => {
       t("game_settings"),
       t("character_description"),
       t("attributes_title"),
-      t("skills"),
+      t("skills_title"),
       t("talents"),
       t("items"),
       t("appearance"),

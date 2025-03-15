@@ -96,7 +96,7 @@
   "game_settings": "Ustawienia Gry",
   "character_description": "Opis Postaci",
   "attributes_title": "Cechy",
-  "skills": "Umiejętności",
+  "skills_title": "Umiejętności",
   "talents": "Talenty",
   "items": "Przedmioty",
   "appearance": "Wygląd",
@@ -125,5 +125,19 @@
     "empathy": "Charyzma i zdolność manipulowania innymi."
   },
   "skill_name_add_placeholder": "Nazwa Umiejętności",
-  "add_skill_button": "Dodaj Umiejętność"
+  "add_skill_button": "Dodaj Umiejętność",
+  "skills": {
+    "craft": "Wytwarzanie",
+    "endure": "Wytrzymałość",
+    "fight": "Walka",
+    "sneak": "Skradanie",
+    "move": "Ruch",
+    "shoot": "Strzelanie",
+    "scout": "Orientacja",
+    "comprehend": "Pojmowanie",
+    "survive": "Przetrwanie",
+    "manipulate": "Manipulacja",
+    "senseemotion": "Wycz. Emocji",
+    "heal": "Leczenie"
+  }
 }
