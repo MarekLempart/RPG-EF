@@ -26,7 +26,7 @@ const Step1 = () => {
       style={[styles.container, { backgroundColor: theme.colors.bgPrimary }]}
     >
       <Text style={[styles.label, { color: theme.colors.textPrimary }]}>
-        {t("Choose RPG System")}
+        {t("choose_rpg_system")}
       </Text>
       <DropDownPicker
         open={open}
@@ -39,7 +39,7 @@ const Step1 = () => {
           dispatch(setRPGSystem(newValue)); // Ensure Redux gets a string
         }}
         setItems={setItems}
-        placeholder={t("Select an RPG System")}
+        placeholder={t("choose_rpg_system")}
         containerStyle={styles.dropdownContainer}
         style={[
           styles.dropdown,
@@ -56,10 +56,10 @@ const Step1 = () => {
       />
 
       <Text style={[styles.label, { color: theme.colors.textPrimary }]}>
-        {t("Choose Setting")}
+        {t("choose_setting")}
       </Text>
       <TextInput
-        placeholder={t("Choose Setting")}
+        placeholder={t("choose_setting")}
         placeholderTextColor={theme.colors.textSecondary}
         style={[
           styles.input,

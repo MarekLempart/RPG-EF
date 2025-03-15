@@ -33,15 +33,15 @@ const AddCharacterScreen = (): JSX.Element => {
 
   const getStepTitle = () => {
     const titles = [
-      "Game Settings",
-      "Character Description",
-      "Attributes",
-      "Skills",
-      "Talents",
-      "Items",
-      "Appearance",
-      "Character History",
-      "Big Dream",
+      t("game_settings"),
+      t("character_description"),
+      t("attributes"),
+      t("skills"),
+      t("talents"),
+      t("items"),
+      t("appearance"),
+      t("character_history"),
+      t("big_dream"),
     ];
     return titles[step - 1];
   };
@@ -92,9 +92,6 @@ const AddCharacterScreen = (): JSX.Element => {
             onPress={handleComplete}
             theme={theme}
           />
-          // <TouchableOpacity onPress={handleComplete}>
-          //   <Ionicons name="checkmark" size={24} color="black" />
-          // </TouchableOpacity>
         )}
       </View>
 

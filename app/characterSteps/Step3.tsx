@@ -196,12 +196,12 @@ const Step3 = () => {
               ]}
             >
               {attributeKey === "Strength"
-                ? "Pure strength and physical endurance."
+                ? t("attribute_description.strength")
                 : attributeKey === "Agility"
-                ? "Motor skills, speed, and agility."
+                ? t("attribute_description.agility")
                 : attributeKey === "Wits"
-                ? "Intelligence, sanity, and perception."
-                : "Charisma and the ability to manipulate others."}
+                ? t("attribute_description.wits")
+                : t("attribute_description.empathy")}
             </Text>
           </View>
         );

@@ -67,23 +67,23 @@ const CardsScreen = (): JSX.Element => {
     >
       <View style={styles.buttonContainer}>
         <CustomButton
-          title="Add New Character"
+          title={t("add_new_character")}
           onPress={() => router.push("/addCharacter")}
           theme={theme}
         />
       </View>
 
       <Text style={[styles.title, { color: theme.colors.textPrimary }]}>
-        Your Characters
+        {t("your_chcracters")}
       </Text>
 
       {loading ? (
         <Text style={[styles.message, { color: theme.colors.textSecondary }]}>
-          Loading characters...
+          {t("loading_characters")}
         </Text>
       ) : characters.length === 0 ? (
         <Text style={[styles.message, { color: theme.colors.textSecondary }]}>
-          No characters created
+          {t("no_characters")}
         </Text>
       ) : (
         <FlatList

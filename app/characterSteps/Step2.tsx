@@ -29,9 +29,9 @@ const Step2 = () => {
   // State for Age Dropdown
   const [ageOpen, setAgeOpen] = useState(false);
   const [ageItems, setAgeItems] = useState([
-    { label: "Young", value: "Young" },
-    { label: "Adult", value: "Adult" },
-    { label: "Old", value: "Old" },
+    { label: t("age_young"), value: "Young" },
+    { label: t("age_adult"), value: "Adult" },
+    { label: t("age_old"), value: "Old" },
   ]);
 
   const pickImage = async () => {
@@ -62,14 +62,14 @@ const Step2 = () => {
           <Text
             style={[styles.uploadText, { color: theme.colors.textSecondary }]}
           >
-            Upload Avatar
+            {t("upload_avatar")}
           </Text>
         </TouchableOpacity>
 
         <View style={styles.rightContainer}>
           {/* Character Name */}
           <Text style={[styles.label, { color: theme.colors.textPrimary }]}>
-            Name
+            {t("character_name")}
           </Text>
           <TextInput
             value={name}
@@ -90,7 +90,7 @@ const Step2 = () => {
 
           {/* Age Dropdown */}
           <Text style={[styles.label, { color: theme.colors.textPrimary }]}>
-            Age
+            {t("character_age")}
           </Text>
           <DropDownPicker
             open={ageOpen}
@@ -105,7 +105,6 @@ const Step2 = () => {
               );
             }}
             setItems={setAgeItems}
-            placeholder="Select Age"
             containerStyle={styles.dropdownContainer}
             style={[
               styles.dropdown,
@@ -127,7 +126,7 @@ const Step2 = () => {
         {/* Archetype */}
         <View style={styles.archBox}>
           <Text style={[styles.label, { color: theme.colors.textPrimary }]}>
-            Archetype
+            {t("character_archetype")}
           </Text>
           <TextInput
             value={archetype}
@@ -149,7 +148,7 @@ const Step2 = () => {
         {/* Race */}
         <View style={styles.raceBox}>
           <Text style={[styles.label, { color: theme.colors.textPrimary }]}>
-            Race
+            {t("character_race")}
           </Text>
           <TextInput
             value={race}
